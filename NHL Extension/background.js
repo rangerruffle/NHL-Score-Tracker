@@ -59,6 +59,7 @@ chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result
 		timeZone = result.trackedTimeZone;
 	}
 	addTimeZoneMenuOptions();
+	addBugReportingOption();
 });
 
 function addTeamSelectorMenuOptions() {
@@ -149,10 +150,31 @@ function addTimeZoneMenuOptions() {
 	});
 }
 
+function addBugReportingOption() {
+	chrome.contextMenus.create({
+		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
+		"type": "separator",
+	});
+
+	chrome.contextMenus.create({
+		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
+		"type": "normal",
+		"title": "Report a Bug",
+		"contexts": ["browser_action"],
+		"onclick": function() {
+			reportBug();
+		}
+	});
+}
+
 function saveTimeZone(newZone) {
 	timeZone = newZone;
 	chrome.storage.sync.set({'trackedTimeZone': newZone});
 	updateData();
+}
+
+function reportBug() {
+	alert("This is still being worked on. For the time being, feel free to email the developer with any bugs or concerns at erickson.russell.j@gmail.com.\n\nThank you for using my extension!");
 }
 
 function updateData() {
@@ -294,25 +316,45 @@ function updateGameData(yyyy, mm, dd) {
 								}
 								
 								var period = gameInfo.liveData.linescore.currentPeriod;
-								if (period == 1) {
-									period = "the 1st period";
-								} else if (period == 2) {
-									period = "the 2nd period";
-								} else if (period == 3) {
-									period = "the 3rd period";
-								} else if (period == 4) {
-									period = "overtime";
-								} else if (period == 5) {
-									period = "the shootout";
+								var isShootout = period === 5;
+								switch (period) {
+									case 1:
+										period = "the 1st period";
+										break;
+									case 2:
+										period = "the 2nd period";
+										break;
+									case 3:
+										period = "the 3rd period";
+										break;
+									case 4:
+										period = "overtime";
+										break;
+									case 5:
+										period = "the shootout";
+										break;
 								}
 								
 								if (gameInfo.liveData.linescore.currentPeriodTimeRemaining === "END") {
 									tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at the end of " + period + ".";
 								} else {
-									tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period + " with " + gameInfo.liveData.linescore.currentPeriodTimeRemaining + " remaining";
+									if (isShootout) {
+										home = gameInfo.liveData.linescore.shootoutInfo.home.scores;
+										away = gameInfo.liveData.linescore.shootoutInfo.away.scores;
+										if (teamIsHome) {
+											teamScore = home;
+											otherTeamScore = away;
+										} else {
+											teamScore = away;
+											otherTeamScore = home;
+										}
+										tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period;
+									} else {
+										tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period + " with " + gameInfo.liveData.linescore.currentPeriodTimeRemaining + " remaining";
+									}
 								}
-								badgeText = awayScore + "-" + homeScore;
 								
+								badgeText = awayScore + "-" + homeScore;
 								startInGameDataUpdateTimerIfNeeded();
 								currentlyPreGame = false;
 							} else {
