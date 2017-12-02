@@ -1,0 +1,813 @@
+[1023/223131:VERBOSE1:pref_proxy_config_tracker_impl.cc(206)] 23320050: set chrome proxy config service to 23555CD0
+[1023/223131:VERBOSE1:pref_proxy_config_tracker_impl.cc(347)] 23320050: Done pushing proxy to UpdateProxyConfig
+[1023/223131:VERBOSE1:child_thread_impl.cc(336)] Mojo is disabled on child
+[1023/223137:VERBOSE1:render_process_host_impl.cc(687)] Mojo Channel is enabled on host
+[1023/223137:VERBOSE1:webrtc_internals.cc(55)] Could not get the download directory.
+[1023/223137:VERBOSE1:child_thread_impl.cc(321)] Mojo is enabled on child
+[1023/223137:ERROR:renderer_main.cc(200)] Running without renderer sandbox
+[1023/223138:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/BimlExpress.html
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/BimlExpress.html" bytes_read = 3229
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/BimlExpress.html" bytes_read = 0
+[1023/223138:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/BimlExpress.html
+[1023/223138:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/css/google-fonts-open-sans-300-400-600-700.css
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/google-fonts-open-sans-300-400-600-700.css" bytes_read = 4768
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/google-fonts-open-sans-300-400-600-700.css" bytes_read = 0
+[1023/223138:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/css/google-fonts-open-sans-300-400-600-700.css
+[1023/223138:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/css/bootstrap.min.css
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/bootstrap.min.css" bytes_read = 32768
+[1023/223138:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/css/font-awesome.min.css
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/font-awesome.min.css" bytes_read = 21987
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/font-awesome.min.css" bytes_read = 0
+[1023/223138:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/css/font-awesome.min.css
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/bootstrap.min.css" bytes_read = 32768
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/bootstrap.min.css" bytes_read = 32768
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/bootstrap.min.css" bytes_read = 24240
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/bootstrap.min.css" bytes_read = 0
+[1023/223138:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/css/bootstrap.min.css
+[1023/223138:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/scripts/jquery.signalR-2.2.0.js
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.signalR-2.2.0.js" bytes_read = 32768
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.signalR-2.2.0.js" bytes_read = 32768
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.signalR-2.2.0.js" bytes_read = 32768
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.signalR-2.2.0.js" bytes_read = 27874
+[1023/223138:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.signalR-2.2.0.js" bytes_read = 0
+[1023/223138:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/scripts/jquery.signalR-2.2.0.js
+[1023/223142:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/scripts/bootstrap.min.js
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/bootstrap.min.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/bootstrap.min.js" bytes_read = 4054
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/bootstrap.min.js" bytes_read = 0
+[1023/223142:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/scripts/bootstrap.min.js
+[1023/223142:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/scripts/ace.js
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/scripts/require.js
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/require.js" bytes_read = 15255
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/require.js" bytes_read = 0
+[1023/223142:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/scripts/require.js
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 20170
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/ace.js" bytes_read = 0
+[1023/223142:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/scripts/ace.js
+[1023/223142:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/css/Style-0-1-0.min.css
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/scripts/jquery.min.js
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.min.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.min.js" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.min.js" bytes_read = 18848
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/jquery.min.js" bytes_read = 0
+[1023/223142:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/scripts/jquery.min.js
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 32768
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 14281
+[1023/223142:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/css/Style-0-1-0.min.css" bytes_read = 0
+[1023/223142:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/css/Style-0-1-0.min.css
+[1023/223153:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/hubs
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/hubs" bytes_read = 15168
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/hubs" bytes_read = 0
+[1023/223153:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/hubs
+[1023/223153:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/static-assets/scripts/main-built.js
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 32768
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 15077
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/static-assets/scripts/main-built.js" bytes_read = 0
+[1023/223153:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/static-assets/scripts/main-built.js
+[1023/223153:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/negotiate?clientProtocol=1.5&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902660
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/negotiate?clientProtocol=1.5&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902660" bytes_read = 515
+[1023/223153:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/negotiate?clientProtocol=1.5&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902660" bytes_read = 0
+[1023/223153:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/negotiate?clientProtocol=1.5&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902660
+[1023/223154:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/connect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/connect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 43
+[1023/223154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/connect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/223154:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/connect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223154:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/start?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902661
+[1023/223154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/start?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902661" bytes_read = 25
+[1023/223154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/start?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902661" bytes_read = 0
+[1023/223154:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/start?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D&_=1508815902661
+[1023/223334:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223334:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/223334:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223517:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223517:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/223517:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223654:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/ping?_=1508815902662
+[1023/223654:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902662" bytes_read = 22
+[1023/223654:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902662" bytes_read = 0
+[1023/223654:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/ping?_=1508815902662
+[1023/223700:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223700:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/223700:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223843:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/223843:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/223843:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224026:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224026:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/224026:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224154:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/ping?_=1508815902663
+[1023/224154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902663" bytes_read = 22
+[1023/224154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902663" bytes_read = 0
+[1023/224154:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/ping?_=1508815902663
+[1023/224209:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224209:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/224209:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224349:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224349:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/224349:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224532:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224532:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/224532:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224654:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/ping?_=1508815902664
+[1023/224654:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902664" bytes_read = 22
+[1023/224654:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902664" bytes_read = 0
+[1023/224654:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/ping?_=1508815902664
+[1023/224715:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224715:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/224715:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224858:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/224858:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/224858:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225041:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225041:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/225041:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225154:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/ping?_=1508815902665
+[1023/225154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902665" bytes_read = 22
+[1023/225154:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902665" bytes_read = 0
+[1023/225154:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/ping?_=1508815902665
+[1023/225221:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225221:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/225221:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225404:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225404:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/225404:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225547:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225547:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/225547:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225654:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/ping?_=1508815902666
+[1023/225654:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902666" bytes_read = 22
+[1023/225654:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/ping?_=1508815902666" bytes_read = 0
+[1023/225654:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/ping?_=1508815902666
+[1023/225727:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225727:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/225727:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/poll?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225910:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/225910:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/225910:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/230053:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/230053:VERBOSE1:resource_loader.cc(434)] OnReadCompleted: "http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D" bytes_read = 0
+[1023/230053:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/230119:VERBOSE1:resource_loader.cc(574)] CancelRequestInternal: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/230119:VERBOSE1:resource_loader.cc(364)] OnResponseStarted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/230119:VERBOSE1:resource_loader.cc(790)] ResponseCompleted: http://bimlstudio/signalr/reconnect?transport=longPolling&clientProtocol=1.5&connectionToken=AQAAANCMnd8BFdERjHoAwE%2FCl%2BsBAAAAha7hBCTK%2B06dwQa4vpKstgAAAAACAAAAAAADZgAAwAAAABAAAAACsXsUGxMGOOaitjT0%2FPLMAAAAAASAAACgAAAAEAAAALhZtsPzTQ3KMf3226zv%2BbcoAAAA53GUzlGiy6QxfmlJlbL72mAZpkRwgbby12MgcDRi%2Bi3Fj0o9XShlCRQAAABkm8cxl5p3W2WUMF4dUbGLtjQ2jg%3D%3D&connectionData=%5B%7B%22name%22%3A%22synchub%22%7D%5D
+[1023/230119:VERBOSE1:dhcp_proxy_script_adapter_fetcher_win.cc(262)] Error fetching PAC URL from DHCP: 2
+[1023/230119:VERBOSE1:dhcp_proxy_script_adapter_fetcher_win.cc(262)] Error fetching PAC URL from DHCP: 2
+[1023/230119:VERBOSE1:dhcp_proxy_script_adapter_fetcher_win.cc(262)] Error fetching PAC URL from DHCP: 2
+[1023/230120:VERBOSE1:proxy_service.cc(1259)] Failed configuring with PAC script, falling-back to manual proxy servers.
+[1023/230120:VERBOSE1:ipc_sync_channel.cc(316)] Received error reply
+[1023/230120:VERBOSE1:ipc_sync_channel.cc(386)] Canceling pending sends
+[1023/230120:VERBOSE1:ipc_sync_channel.cc(386)] Canceling pending sends
+[1023/230120:VERBOSE1:ipc_sync_channel.cc(386)] Canceling pending sends
+[1023/230120:VERBOSE1:ipc_sync_channel.cc(386)] Canceling pending sends
+[1023/230120:VERBOSE1:ipc_sync_channel.cc(386)] Canceling pending sends
+[1023/230120:VERBOSE1:ipc_sync_channel.cc(386)] Canceling pending sends
+[1023/230120:VERBOSE1:statistics_recorder.cc(294)] Collections of all histograms
+Histogram: Accessibility.InvertedColors recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.ManuallyEnabled recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.State recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.WinAudioDescription recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.WinJAWS recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.WinNVDA recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.WinSAToGo recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.WinScreenReader recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.WinStickyKeys recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Accessibility.WinZoomText recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: AsyncDNS.ConfigChange recorded 5 samples, average = 0.2 (flags = 0x1)
+0  ------------------------------------------------------------------------O (4 = 80.0%)
+1  ------------------O                                                       (1 = 20.0%) {80.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: AsyncDNS.ConfigNotifyInterval recorded 3 samples, average = 323684.3 (flags = 0x1)
+0       ... 
+6118    ------------------------------------------------------------------------O (1 = 33.3%) {0.0%}
+8289    ------------------------------------------------------------------------O (1 = 33.3%) {33.3%}
+11230   ... 
+788588  ------------------------------------------------------------------------O (1 = 33.3%) {66.7%}
+1068417 ... 
+
+Histogram: AsyncDNS.ConfigParseDuration recorded 5 samples, average = 6.6 (flags = 0x1)
+0  ... 
+4  ------------------------------------------------------------------------O (1 = 20.0%) {0.0%}
+5  ------------------------------------------------------------------------O (1 = 20.0%) {20.0%}
+6  O                                                                         (0 = 0.0%) {40.0%}
+7  ------------------------------------------------------------------------O (1 = 20.0%) {40.0%}
+8  ------------------------------------------------------------------------O (2 = 40.0%) {60.0%}
+10 ... 
+
+Histogram: AsyncDNS.ConfigParseResult recorded 5 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (5 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: AsyncDNS.ConfigParseWin recorded 5 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (5 = 100.0%)
+1  ... 
+
+Histogram: AsyncDNS.HostParseResult recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: AsyncDNS.HostsChange recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: AsyncDNS.HostsParseDuration recorded 1 samples, average = 4.0 (flags = 0x1)
+0  ... 
+4  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+5  ... 
+
+Histogram: AsyncDNS.HostsParseWin recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: AsyncDNS.HostsSize recorded 1 samples, average = 824.0 (flags = 0x1)
+0    ... 
+777  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1023 ... 
+
+Histogram: AsyncDNS.NameServersType recorded 5 samples, average = 4.0 (flags = 0x1)
+0  ... 
+4  ------------------------------------------------------------------------O (5 = 100.0%) {0.0%}
+5  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: AsyncDNS.WatchStatus recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Aura.CreatedGpuBrowserCompositor recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: ChildProcessSecurityPolicy.PerChildFilePermissions recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Compositing.NumActiveLayers recorded 3 samples, average = 7.0 (flags = 0x1)
+0  ... 
+7  ------------------------------------------------------------------------O (3 = 100.0%) {0.0%}
+10 ... 
+
+Histogram: Cookie.BetweenAccessIntervalMinutes recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.Count recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: Cookie.DeletionCause recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.DomainCount recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.DomainPerEtldp1Count recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.Etldp1Count recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.EvictedLastAccessMinutes recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.ExpirationDurationMinutes recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.TimeBlockedOnLoad recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Cookie.Type recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: DNS.JobQueueTime recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: DNS.JobQueueTimeAfterChange recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: DNS.JobQueueTimeAfterChange_HIGHEST recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: DNS.JobQueueTime_HIGHEST recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: GPU.AtExitContextGroupCount recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: GPU.AtExitMBytesAllocated recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: GPU.AtExitMBytesAllocatedMax recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: GPU.AtExitMBytesLimit recorded 1 samples, average = 512.0 (flags = 0x1)
+0    ... 
+511  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+586  ... 
+
+Histogram: GPU.AtExitManagedMemoryClientCount recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: GPU.AtExitReceivedMemoryStats recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: GPU.AtExitSurfaceCount recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: GPU.BlacklistFeatureTestResults.Accelerated2dCanvas recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: GPU.BlacklistFeatureTestResults.GpuCompositing recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: GPU.BlacklistFeatureTestResults.Webgl recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: GPU.BlacklistFeatureTestResultsWindows.Accelerated2dCanvas recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: GPU.BlacklistFeatureTestResultsWindows.GpuCompositing recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: GPU.BlacklistFeatureTestResultsWindows.Webgl recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: GPU.BlacklistTestResultsPerEntry recorded 4 samples, average = 49.5 (flags = 0x1)
+0   ------------------------------------------------------------------------O (2 = 50.0%)
+1   ... 
+99  ------------------------------------------------------------------------O (2 = 50.0%) {50.0%}
+100 ... 
+
+Histogram: GPU.CreateBrowserCompositor recorded 1 samples, average = 3.0 (flags = 0x1)
+0  ... 
+3  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+4  ... 
+
+Histogram: GPU.D3DShaderModel recorded 1 samples, average = 5.0 (flags = 0x1)
+0  ... 
+5  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+6  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: GPU.DisplayLinkInstallationStatus recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: GPU.GLResetNotificationStrategy recorded 2 samples (flags = 0x1)
+0      ------------------------------------------------------------------------O (1 = 50.0%)
+33362  ------------------------------------------------------------------------O (1 = 50.0%)
+
+Histogram: GPU.GPU.GPUProcessSoftwareRendering recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: GPU.GPUProcessInitialized recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: GPU.GPUProcessLaunchCause recorded 1 samples, average = 8.0 (flags = 0x1)
+0  ... 
+8  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+9  ... 
+
+Histogram: GPU.GPUProcessLaunchTime recorded 1 samples, average = 34.0 (flags = 0x1)
+0   ... 
+34  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+40  ... 
+
+Histogram: GPU.GPUProcessLifetimeEvents recorded 2 samples, average = 1.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 50.0%)
+1  O                                                                         (0 = 0.0%) {50.0%}
+2  ------------------------------------------------------------------------O (1 = 50.0%) {50.0%}
+3  ... 
+
+Histogram: GPU.GPUProcessTerminationStatus recorded 1 samples, average = 4.0 (flags = 0x1)
+0  ... 
+4  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+5  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: InterProcessTimeTicks.BrowserBehind_RendererToBrowser recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: InterProcessTimeTicks.IsSkewAdditive_RendererToBrowser recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: MPArch.ChildProcessLaunchFirst recorded 1 samples, average = 28.0 (flags = 0x1)
+0   ... 
+24  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+29  ... 
+
+Histogram: MPArch.ChildProcessLaunchSubsequent recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  ... 
+
+Histogram: MPArch.RWH_DidUpdateBackingStore recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: MPArch.RWH_OnMsgUpdateRect recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Navigation.OnBeforeUnloadOverheadTime recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Navigation.RedirectChainSize recorded 1 samples, average = 34.0 (flags = 0x1)
+0   ... 
+28  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+37  ... 
+
+Histogram: Navigation.TimeToCommit recorded 1 samples, average = 1386.0 (flags = 0x1)
+0     ... 
+1262  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1500  ... 
+
+Histogram: Navigation.TimeToCommit_NewRenderer_BeforeUnloadDiscounted recorded 1 samples, average = 1386.0 (flags = 0x1)
+0     ... 
+1262  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1500  ... 
+
+Histogram: Navigation.TimeToURLJobStart recorded 1 samples, average = 1235.0 (flags = 0x1)
+0     ... 
+1062  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1262  ... 
+
+Histogram: Navigation.TimeToURLJobStart_NewRenderer_BeforeUnloadDiscounted recorded 1 samples, average = 1235.0 (flags = 0x1)
+0     ... 
+1062  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1262  ... 
+
+Histogram: Net.ErrorCodesForMainFrame3 recorded 1 samples (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+
+Histogram: Net.ErrorCodesForSubresources2 recorded 37 samples (flags = 0x1)
+0  ------------------------------------------------------------------------O (36 = 97.3%)
+3  --O                                                                       (1 = 2.7%)
+
+Histogram: Net.HttpJob.TotalTime recorded 1 samples, average = 1050.0 (flags = 0x1)
+0    ... 
+894  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1062 ... 
+
+Histogram: Net.HttpJob.TotalTimeCancel recorded 1 samples, average = 1050.0 (flags = 0x1)
+0    ... 
+894  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1062 ... 
+
+Histogram: Net.HttpResponseCode recorded 37 samples, average = 277.2 (flags = 0x1)
+0    ... 
+200  ------------------------------------------------------------------------O (23 = 62.2%) {0.0%}
+201  ... 
+404  ------------------------------------------------------------------------O (14 = 37.8%) {62.2%}
+405  ... 
+
+Histogram: Net.NotifyAddrChangeFailures recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: Net.NumDuplicateCookiesInDb recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: Net.UDPSocketWinClose recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: Net.WpadQuickCheckFailure recorded 1 samples, average = 1008.0 (flags = 0x1)
+0    ... 
+894  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1062 ... 
+
+Histogram: Renderer.DrawDuration recorded 3 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (3 = 100.0%)
+1  ... 
+
+Histogram: Renderer.DrawDurationOverestimate recorded 3 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (3 = 100.0%)
+1  ... 
+
+Histogram: Renderer.DrawDurationUnderestimate recorded 3 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (3 = 100.0%)
+1  ... 
+
+Histogram: Renderer4.TextureGpuUploadTimeUS recorded 1 samples, average = 955.0 (flags = 0x1)
+0    ... 
+896  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+1122 ... 
+
+Histogram: Renderer4.renderPassCount recorded 3 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (3 = 100.0%) {0.0%}
+2  ... 
+
+Histogram: ResourceScheduler.ClientLoadedTime.Active recorded 1 samples, average = 21366.0 (flags = 0x1)
+0      ... 
+19005  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+24423  ... 
+
+Histogram: ResourceScheduler.ClientLoadedTime.Active.1Client recorded 1 samples, average = 21366.0 (flags = 0x1)
+0      ... 
+19005  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+24423  ... 
+
+Histogram: ResourceScheduler.RequestTimeDeferred.Active recorded 39 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (39 = 100.0%)
+1  ... 
+
+Histogram: ResourceScheduler.RequestTimeThrottled.Active recorded 39 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (39 = 100.0%)
+1  ... 
+
+Histogram: Windows.Win32kRendererLockdown recorded 1 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (1 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: appcache.CompletionQueueTime recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: appcache.CompletionRunTime recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: appcache.JobStartDelay.Network recorded 1 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (1 = 100.0%)
+1  ... 
+
+Histogram: appcache.TaskQueueTime recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: appcache.TaskRunTime recorded 2 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (2 = 100.0%)
+1  ... 
+
+Histogram: mime_sniffer.ShouldSniffMimeType2 recorded 37 samples, average = 1.0 (flags = 0x1)
+0  O                                                                         (0 = 0.0%)
+1  ------------------------------------------------------------------------O (37 = 100.0%) {0.0%}
+2  O                                                                         (0 = 0.0%) {100.0%}
+
+Histogram: mime_sniffer.kSniffableTypes2 recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: mime_sniffer.kUnknownMimeTypes2 recorded 0 samples (flags = 0x1)
+0 ... 
+
+Histogram: nosniff.usage recorded 37 samples, average = 0.0 (flags = 0x1)
+0  ------------------------------------------------------------------------O (37 = 100.0%)
+1  ... 
+
+

@@ -1,0 +1,2 @@
+NHL Score Tracker 
+is a Chrome Extension to allow real-time score tracking of NHL games.  It pulls data from the NHL scoreboard data source, and displays the data for your selected team, in your selected time zone.  During games, it updates more frequently to get real-time, in-game data about the score, period, outcome, etc.  This extension is based on the extension MLB Baseball Tracker developed and published by Dan Gardiner. I have received express permission from Dan to base this extension on his Baseball Tracker.
