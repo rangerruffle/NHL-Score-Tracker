@@ -199,7 +199,8 @@ function updateData() {
 
 function updateGameData(yyyy, mm, dd) {
 	teamId = teamIds[teamName];
-	var scheduleContentLink = "";
+	var gameLiveLink = "";
+	var localGameTime = false;
 	var scheduleXmlHttp = new XMLHttpRequest();
 	scheduleXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId);
 	scheduleXmlHttp.send(null);
@@ -210,7 +211,9 @@ function updateGameData(yyyy, mm, dd) {
 			if (scheduleInfo.dates[0]) {
 				if (scheduleInfo.dates[0].games[0]) {
 					currentGameId = scheduleInfo.dates[0].games[0].gamePk;
-					scheduleContentLink = scheduleInfo.dates[0].games[0].content.link;
+					var dateTime = new Date(scheduleInfo.dates[0].games[0].gameDate);
+					localGameTime = getTimeZoneAdjustedTime(dateTime);
+					gameLiveLink = scheduleInfo.dates[0].games[0].link;
 				} else {
 					currentGameId = false;
 					chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
@@ -229,7 +232,7 @@ function updateGameData(yyyy, mm, dd) {
 	setTimeout(function() {
 			if (currentGameId) {
 				var gameXmlHttp = new XMLHttpRequest();
-				gameXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/game/" + currentGameId + "/feed/live");
+				gameXmlHttp.open("GET", "https://statsapi.web.nhl.com/" + gameLiveLink);
 				gameXmlHttp.send(null);
 				gameXmlHttp.onreadystatechange = function() {
 					if (gameXmlHttp.readyState == 4 && gameXmlHttp.status == 200) {
@@ -250,38 +253,11 @@ function updateGameData(yyyy, mm, dd) {
 							var otherTeamName = "other team";
 							var goalie = "";
 							var venue = game.teams.home.venue.name;
-							
-							if (teamIsHome) {
-								otherTeamName = game.teams.away.teamName;
-								var goalies = gameInfo.liveData.boxscore.teams.home.goalies;
-								var onIce = gameInfo.liveData.boxscore.teams.home.onIce;
-								var goalieId = 0;
-								for (var i = 0; i < goalies.length; i++) {
-									for (var j = 0; j < onIce.length; j++) {
-										if (goalies[i] == onIce[j]) {
-											goalieId = goalies[i];
-										}
-									}
-								}
-								// goalie = gameInfo.liveData.boxscore.teams.home.players["ID" + goalieId].person.fullName;
-							} else {
-								otherTeamName = game.teams.home.teamName;
-								var goalies = gameInfo.liveData.boxscore.teams.away.goalies;
-								var onIce = gameInfo.liveData.boxscore.teams.away.onIce;
-								var goalieId = 0;
-								for (var i = 0; i < goalies.length; i++) {
-									for (var j = 0; j < onIce.length; j++) {
-										if (goalies[i] == onIce[j]) {
-											goalieId = goalies[i];
-										}
-									}
-								}
-								// goalie = gameInfo.liveData.boxscore.teams.away.players["ID" + goalieId].person.fullName;
-							}
+							otherTeamName = teamIsHome ? game.teams.away.teamName : game.teams.home.teamName;
 							
 							if (game.status.abstractGameState == "Preview") {
-								tagText = teamName + " vs " + otherTeamName + " at " + venue + ".";
-								badgeText = "Pre";
+								tagText = teamName + " vs " + otherTeamName + " at " + venue + ". Puck drops at " + localGameTime + ".";
+								badgeText = localGameTime.substring(0, localGameTime.length - 2);
 								currentlyPreGame = true;
 							} else if (game.status.abstractGameState == "Final") {
 								var gameResult;
@@ -358,9 +334,8 @@ function updateGameData(yyyy, mm, dd) {
 								startInGameDataUpdateTimerIfNeeded();
 								currentlyPreGame = false;
 							} else {
-								tagText = teamName + " vs " + otherTeamName + " at " + venue + ".";
-								badgeText = "Pre";
-								currentlyPreGame = true;
+								badgeText = "TBD";
+								tagText = "The status of the game could not be determined at this time. Please try reselecting your team. If that does not work, please send a bug report to the developer.";
 							}
 						}
 						
@@ -386,26 +361,23 @@ function startInGameDataUpdateTimerIfNeeded() {
 	}
 }
 
-function getTimeZoneAdjustedTime(yyyy, mm, dd, time, fromTimeZone) {
-	var fromTimeZoneString = "US/Central";
-	if (fromTimeZone.startsWith("C")) {
-		fromTimeZoneString = "US/Central";
-	} else if (fromTimeZone.startsWith("E")) {
-		fromTimeZoneString = "US/Eastern";
-	} else if (fromTimeZone.startsWith("M")) {
-		fromTimeZoneString = "US/Mountain";
-	} else if (fromTimeZone.startsWith("P")) {
-		fromTimeZoneString = "US/Pacific";
-	} else {
-		console.log("Unknown time zone for selected team game time: " + fromTimeZone);
+function getTimeZoneAdjustedTime(dateTime) {
+	var format = "HH:mm";
+	var timeInGivenZone = moment(dateTime, format).tz(timeZone).format(format);
+	var hours = parseInt(timeInGivenZone.split(':')[0]);
+	var minutes = parseInt(timeInGivenZone.split(':')[1]);
+	var pmAm = "AM";
+	if (hours >= 12) {
+		if (hours > 12) {
+			hours -= 12;
+		}
+		pmAm = "PM";
 	}
-	
-	if (time.split(':')[0].length == 1) {
-		time = "0" + time;
+	if (minutes < 10) {
+		minutes = "0" + minutes;
 	}
-	
-	var centralTime = moment.tz(yyyy + "-" + mm + "-" + dd + " " + time + ":00PM", fromTimeZoneString);
-	var localTime = centralTime.tz(timeZone).format('hh:mm');
+
+	var localTime = hours + ":" + minutes + pmAm;
 	if (localTime[0] == '0') {
 		localTime = localTime.substring(1);
 	}
