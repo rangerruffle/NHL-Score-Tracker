@@ -1,0 +1,9 @@
+To-Do List:
+-Set the refresh timers up correctly. In game updater vs. team updater
+-Deal with extra overtimes in playoff games
+-Better implementation for bug reporting
+-Add SH or PP to badge text for short-handed or power play
+-Clean up code!
+  -Use api to get/build api links. They have it set up for most of the games. This will just be for the in game stats link
+  -Add more functions for more readability
+  -Make the game states an enum and make the if-else statements a switch
