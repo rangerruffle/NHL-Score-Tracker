@@ -23,7 +23,7 @@ var gameCompleteIconSet = "20000101";
 var gameTimeDataRefreshTimer = false;
 
 chrome.alarms.create(
-	"GameUpdater",
+	"NHLGameUpdater",
 	{
 		when: Date.now() + 3000,
 		periodInMinutes: 60
@@ -31,7 +31,7 @@ chrome.alarms.create(
 );
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
-	if (alarm.name = "GameUpdater") {
+	if (alarm.name = "NHLGameUpdater") {
 		updateData();
 	}
 });
