@@ -4,7 +4,7 @@
   "name": "NHL Score Tracker",
 	"offline_enabled": false,
 	"short_name": "NhlScoreTracker",
-  "version": "1.0",
+  "version": "1.02",
 	
 	"background": {
 		"scripts": ["jquery-1.10.2.js","moment.min.js", "moment-timezone-with-data.min.js","background.js"]
