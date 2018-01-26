@@ -1,3 +1,7 @@
+.hidden {
+	display: none;
+}
+
 .headingRoot {
 	align-items: center;
 	background-color: #000;
@@ -200,4 +204,16 @@
 	position: absolute;
 	right: 40px;
 	top: calc(50% - 12px);
+}
+
+.nhlLinkContainer {
+	align-items: center;
+	background-color: black;
+	display: flex;
+	height: 60px;
+	justify-content: center;
+}
+
+.nhlLink {
+	color: white;
 }
