@@ -7,6 +7,7 @@
   </head>
 
   <body>
+	<!--Heading (v1 done)-->
     <div class="headingRoot">
 		<image class="awayImage" src="logos/nhl.png"></image>
 		<div class="score" id="awayScore">0</div>
@@ -14,7 +15,29 @@
 		<div class="score" id="homeScore">0</div>
 		<image class="homeImage" src="logos/nhl.png"></image>
     </div>
-	<div class="rinkRoot" id="rink">
+	
+	<!--Preview (v1 inprogress)-->
+	<div class="previewRoot hidden" id="preview">
+		<div class="awayTeamPreview">
+			<div class="awayTeamName" id="awayTeamName"></div>
+			<div class="awayTeamPlayersPreview">
+				<div class="awayTeamForwards"></div>
+				<div class="awayTeamDefense"></div>
+				<div class="awayTeamGoalies"></div>
+			</div>
+		</div>
+		<div class="homeTeamPreview">
+			<div class="homeTeamName" id="homeTeamName"></div>
+			<div class="homeTeamPlayersPreview">
+				<div class="homeTeamForwards"></div>
+				<div class="homeTeamDefense"></div>
+				<div class="homeTeamGoalies"></div>
+			</div>
+		</div>
+	</div>
+	
+	<!--Rink (v1 done)-->
+	<div class="rinkRoot hidden" id="rink">
 		<div class="awayGoalLine"></div>
 		<div class="awayGoal"></div>
 		<div class="awayTeam">
@@ -58,6 +81,64 @@
 		<div class="homeGoal"></div>
 		<div class="homeGoalLine"></div>
 	</div>
+	
+	<!--Final (v1 inprogress)-->
+	<div class="gameFinalRoot hidden" id="gameFinal">
+		<div class="finalTabs">
+			<div class="finalTeamTab">Team Stats</div>
+			<div class="finalPlayersTab">Player Stats</div>
+		</div>
+		<div class="finalTeamStats hidden" id="finalTeamStats">
+			<div class="awayFinal">
+				<div class="awayFinalSOG">0</div>
+				<div class="awayFinalFaceoffPercent">0%</div>
+				<div class="awayFinalPowerPlay">0/0</div>
+				<div class="awayFinalPIM">0</div>
+				<div class="awayFinalHits">0</div>
+				<div class="awayFinalBlocks">0</div>
+				<div class="awayFinalGiveaways">0</div>
+			</div>
+			<div class="finalTeamDivider">
+				<div class="finalSOG">SOG</div>
+				<div class="finalFaceoffPercent">FO%</div>
+				<div class="finalPowerPlay">PPG</div>
+				<div class="finalPIM">PIM</div>
+				<div class="finalHits">HITS</div>
+				<div class="finalBlocks">BLKS</div>
+				<div class="finalGiveaways">GVA</div>
+			</div>
+			<div class="homeFinal">
+				<div class="homeFinalSOG">0</div>
+				<div class="homeFinalFaceoffPercent">0%</div>
+				<div class="homeFinalPowerPlay">0/0</div>
+				<div class="homeFinalPIM">0</div>
+				<div class="homeFinalHits">0</div>
+				<div class="homeFinalBlocks">0</div>
+				<div class="homeFinalGiveaways">0</div>
+			</div>
+		</div>
+		<div class="finalPlayerStats hidden" id="finalPlayerStats">
+			<div class="awayTeamName" id="awayTeamName"></div>
+			<div class="awayTeamPlayersPreview">
+				<div class="awayTeamForwards"></div>
+				<div class="awayTeamDefense"></div>
+				<div class="awayTeamGoalies"></div>
+			</div>
+			<div class="finalPlayerDivider"></div>
+			<div class="homeTeamName" id="homeTeamName"></div>
+			<div class="homeTeamPlayersPreview">
+				<div class="homeTeamForwards"></div>
+				<div class="homeTeamDefense"></div>
+				<div class="homeTeamGoalies"></div>
+			</div>
+		</div>
+	</div>
+	
+	<!--Standings (v1 inprogress)-->
+	<div class="standingsRoot hidden" id="standings">
+	</div>
+	
+	<!--Footer/Link (v1 done)-->
 	<div class="nhlLinkContainer">
 		<a class="nhlLink" href="https://www.nhl.com" id="nhlLink">Go to NHL.com</a>
 	</div>

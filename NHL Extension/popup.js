@@ -187,27 +187,51 @@ function drawHomeLogo(icon) {
 }
 
 function hideShowElements(elementToShow) {
-	if (rink === elementToShow && !elementToShow.classList.contains('hidden')) {
-		rink.classList.add('hidden');
+	if (rink === elementToShow) {
+		show(rink);
 	} else {
-		rink.classList.remove('hidden');
+		hide(rink);
 	}
 
-	if (preview === elementToShow && !elementToShow.classList.contains('hidden')) {
-		preview.classList.add('hidden');
+	if (preview === elementToShow) {
+		show(preview);
 	} else {
-		preview.classList.remove('hidden');
+		hide(preview);
 	}
 
-	if (gameFinal === elementToShow && !elementToShow.classList.contains('hidden')) {
-		gameFinal.classList.add('hidden');
+	if (gameFinal === elementToShow) {
+		show(gameFinal);
 	} else {
-		gameFinal.classList.remove('hidden');
+		hide(gameFinal);
 	}
 
-	if (standings === elementToShow && !elementToShow.classList.contains('hidden')) {
-		standings.classList.add('hidden');
+	if (standings === elementToShow) {
+		show(standings);
 	} else {
-		standings.classList.remove('hidden');
+		hide(standings);
+	}
+}
+
+function addClass(element, className) {
+	if (element && !element.classList.contains(className)) {
+		element.classList.add(className);
+	}
+}
+
+function removeClass(element, className) {
+	if (element && element.classList.contains(className)) {
+		element.classList.remove(className);
+	}
+}
+
+function hide(element) {
+	if (element && !element.classList.contains('hidden')) {
+		element.classList.add('hidden');
+	}
+}
+
+function show(element) {
+	if (element && element.classList.contains('hidden')) {
+		element.classList.remove('hidden');
 	}
 }
