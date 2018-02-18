@@ -61,7 +61,6 @@ function updateGameData(yyyy, mm, dd) {
 		if (scheduleXmlHttp.readyState == 4 && scheduleXmlHttp.status == 200) {
 			var scheduleInfo = JSON.parse(scheduleXmlHttp.responseText);
 			
-			// Update the images. Hide the rink and display some text, saying there is no game today while providing a link to NHL.com if there's no game.
 			if (scheduleInfo.dates[0]) {
 				if (scheduleInfo.dates[0].games[0]) {
 					currentGameId = scheduleInfo.dates[0].games[0].gamePk;
@@ -71,13 +70,13 @@ function updateGameData(yyyy, mm, dd) {
 					currentGameId = false;
 					drawAwayLogo("logos/nhl.png", false);
 					drawHomeLogo("logos/nhl.png", false);
-					hideShowElements(standings);
+					setStandings();
 				}
 			} else {
 				currentGameId = false;
 				drawAwayLogo("logos/nhl.png", false);
 				drawHomeLogo("logos/nhl.png", false);
-				hideShowElements(standings);
+				setStandings();
 			}
 		}
 	}
@@ -108,19 +107,35 @@ function updateGameData(yyyy, mm, dd) {
 						otherTeamName = teamIsHome ? game.teams.away.teamName : game.teams.home.teamName;
 						
 						if (game.status.abstractGameState == "Preview") {
-							// Hide the rink and display some preview stats for the game.
-							hideShowElements(preview);
+							setPreview(game, gameInfo);
 							currentlyPreGame = true;
 						} else if (game.status.abstractGameState == "Final") {
-							// Hide the rink and display some stats from the game, including outcome.
-							hideShowElements(gameFinal);
-							if (gameTimeDataRefreshTimer) {
-								window.clearInterval(gameTimeDataRefreshTimer);
-								gameTimeDataRefreshTimer = false;
-							}
+							setFinal(game, gameInfo);
 							currentlyPreGame = false;
 						} else if (game.status.abstractGameState == "Live") {
-							// Update data in the rink, scores, and time.
+							setLive(game, gameInfo);
+							currentlyPreGame = false;
+						} else {
+							setStandings();
+							currentlyPreGame = false;
+						}
+					}
+				}
+			}
+		}
+		
+		drawAwayLogo(awayTeamIcon);
+		drawHomeLogo(homeTeamIcon);
+	}, 250);
+}
+
+function setPreview(game) {
+	// Hide the rink and display some preview stats for the game.
+							hideShowElements(preview);
+}
+
+function setLive(game) {
+	// Update data in the rink, scores, and time.
 							hideShowElements(rink);
 							var period = gameInfo.liveData.linescore.currentPeriod;
 							var isShootout = period === 5;
@@ -162,18 +177,19 @@ function updateGameData(yyyy, mm, dd) {
 								}
 							}
 							startInGameDataUpdateTimerIfNeeded();
-							currentlyPreGame = false;
-						} else {
-							hideShowElements(standings);
-						}
-					}
-				}
-			}
-		}
-		
-		drawAwayLogo(awayTeamIcon);
-		drawHomeLogo(homeTeamIcon);
-	}, 250);
+}
+
+function setFinal(game) {
+	// Hide the rink and display some stats from the game, including outcome.
+							hideShowElements(gameFinal);
+							if (gameTimeDataRefreshTimer) {
+								window.clearInterval(gameTimeDataRefreshTimer);
+								gameTimeDataRefreshTimer = false;
+							}
+}
+
+function setStandings() {
+	hideShowElements(standings);
 }
 
 function drawAwayLogo(icon) {
