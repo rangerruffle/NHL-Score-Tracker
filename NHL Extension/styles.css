@@ -2,6 +2,7 @@
 	display: none !important;
 }
 
+// Heading Classes
 .headingRoot {
 	align-items: center;
 	background-color: #000;
@@ -32,6 +33,55 @@
 	width: 50px;
 }
 
+// Tabs Classes
+.tabsRoot {
+	border-bottom: 1px solid black;
+	display: flex;
+	height: 40px;
+	justify-content: flex-start;
+	padding-top: 10px;
+	width: 100%;
+}
+
+.tab {
+	align-items: center;
+	background-color: #000;
+	border-radius: 2px 2px 0;
+	color: #fff;
+	display: flex;
+	font-size: 20px;
+	height: 100%;
+	justify-content: center;
+	width: 100px;
+}
+
+.tabSelected {
+	background-color: #fff;
+	color: #000;
+}
+
+// Preview Classes
+.playerStats {
+	
+}
+
+.playerTeamStats {
+	
+}
+
+.teamName {
+	
+}
+
+.teamPayersStats {
+	
+}
+
+.teamStatsLine {
+	
+}
+
+// Rink Classes
 .rinkRoot {
 	background-color: aliceblue;
 	border: 4px solid #000000;
@@ -206,6 +256,33 @@
 	top: calc(50% - 12px);
 }
 
+// Final Classes
+.finalTeamStatsRoot {
+	
+}
+
+.finalTeamStats {
+	
+}
+
+.finalStats {
+	
+}
+
+.finalTeamDivider {
+	
+}
+
+.finalStat {
+	
+}
+
+// Standings Classes
+.standingsRoot {
+	
+}
+
+// Footer Classes
 .nhlLinkContainer {
 	align-items: center;
 	background-color: black;
