@@ -9,20 +9,20 @@
   <body>
 	<!--Heading (v1 js inprogress)-->
     <div class="headingRoot">
-		<image class="awayImage" src="logos/nhl.png"></image>
+		<image class="awayImage" id="headingAwayImage" src="logos/nhl.png"></image>
 		<div class="score" id="awayScore">0</div>
-		<div class="time" id="time">20:00</div>
+		<div class="time" id="time">20:00 / 1st</div>
 		<div class="score" id="homeScore">0</div>
-		<image class="homeImage" src="logos/nhl.png"></image>
+		<image class="homeImage" id="headingHomeImage" src="logos/nhl.png"></image>
     </div>
 	
 	<!--Tabs (v1 js inprogress)-->
 	<div class="tabsRoot">
 		<div class="hidden tab" id="previewTab">Preview</div> <!--Preview Only-->
 		<div class="hidden tab" id="liveTab">Live</div> <!--Live Only-->
-		<div class="hidden tab" id="teamStatsTab">Team Stats</div> <!--Live and Final (Anytime?)-->
-		<div class="hidden tab" id="playerStatsTab">Stats</div> <!--Live and Final-->
-		<div class="hidden tab" id="standingsTab">Standings</div> <!--Anytime-->
+		<div class="hidden tab" id="teamStatsTab">Team Stats</div> <!--Live and Final-->
+		<div class="tab" id="playerStatsTab">Stats</div> <!--Anytime (Live and Final = In game version, Preview and No Game = Total)-->
+		<div class="tab" id="standingsTab">Standings</div> <!--Anytime-->
 	</div>
 	
 	<!--Main Section (v1 done)-->
@@ -79,8 +79,8 @@
 			<div class="teamStats">
 				<div class="teamStat">
 					<div class="teamStatsTeam">
-						<image class="awayImage" src="logos/nhl.png"></image>
-						<div class="teamStatsTeamName">Team Name</div>
+						<image class="awayImage" id="teamStatsAwayImage" src="logos/nhl.png"></image>
+						<div class="teamStatsTeamName" id="teamStatsAwayTeamName">Team Name</div>
 					</div>
 				</div>
 				<div class="teamStat">0</div>
@@ -104,8 +104,8 @@
 			<div class="teamStats">
 				<div class="teamStat">
 					<div class="teamStatsTeam">
-						<image class="homeImage" src="logos/nhl.png"></image>
-						<div class="teamStatsTeamName">Team Name</div>
+						<image class="homeImage" id="teamStatsHomeImage" src="logos/nhl.png"></image>
+						<div class="teamStatsTeamName" id="teamStatsHomeTeamName">Team Name</div>
 					</div>
 				</div>
 				<div class="teamStat">0</div>
@@ -119,13 +119,13 @@
 		</div>
 		
 		<!--Player Stats (v1 js inprogress)-->
-		<div class="playerStats section hidden" id="awayPlayerStats">
+		<div class="playerStats section hidden" id="playerStats">
 			<div class="statsButtons">
 				<div class="statButton awayStatsButton selected" id="awayStatsButton">Away</div>
 				<div class="statButton homeStatsButton" id="homeStatsButton">Home</div>
 			</div>
-			<div class="teamPlayersStats" id="awayTeamStats">
-				<div class="playerStatsTeamName" id="awayTeamName">Away</div>
+			<div class="teamPlayersStats">
+				<div class="playerStatsTeamName" id="awayPlayerStatsTeamName">Away</div>
 				<div class="playersStats">
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
@@ -143,26 +143,7 @@
 							<div class="stat">GW</div>
 						</div>
 					</div>
-					<div id="awayTeamForwards">
-						<!--Example Forward
-						<div class="playerStatsLine">
-							<div class="nameNumber">
-								<div class="number">40</div>
-								<div class="name">Zetterberg</div>
-							</div>
-							<div class="stats">
-								<div class="stat">40</div>
-								<div class="stat">40</div>
-								<div class="stat">40</div>
-								<div class="stat">80</div>
-								<div class="stat">80</div>
-								<div class="stat">0</div>
-								<div class="stat">20</div>
-								<div class="stat">20</div>
-							</div>
-						</div>
-						-->
-					</div>
+					<div id="awayTeamForwards"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -179,26 +160,7 @@
 							<div class="stat">GW</div>
 						</div>
 					</div>
-					<div id="awayTeamDefense">
-						<!--Example Defense
-						<div class="playerStatsLine">
-							<div class="nameNumber">
-								<div class="number">55</div>
-								<div class="name">Kronwall</div>
-							</div>
-							<div class="stats">
-								<div class="stat">40</div>
-								<div class="stat">40</div>
-								<div class="stat">40</div>
-								<div class="stat">80</div>
-								<div class="stat">80</div>
-								<div class="stat">0</div>
-								<div class="stat">20</div>
-								<div class="stat">20</div>
-							</div>
-						</div>
-						-->
-					</div>
+					<div id="awayTeamDefense"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -215,30 +177,11 @@
 							<div class="stat">SO</div>
 						</div>
 					</div>
-					<div id="awayTeamGoalies">
-						<!--Example Goalie
-						<div class="playerStatsLine">
-							<div class="nameNumber">
-								<div class="number">35</div>
-								<div class="name">Howard</div>
-							</div>
-							<div class="stats">
-								<div class="stat">49</div>
-								<div class="stat">18</div>
-								<div class="stat">21</div>
-								<div class="stat">1,408</div>
-								<div class="stat">124</div>
-								<div class="stat">2.79</div>
-								<div class="stat">.912</div>
-								<div class="stat">0</div>
-							</div>
-						</div>
-						-->
-					</div>
+					<div id="awayTeamGoalies"></div>
 				</div>
 			</div>
-			<div class="teamPlayersStats hidden" id="homeTeamStats">
-				<div class="playerStatsTeamName" id="homeTeamName">Home</div>
+			<div class="teamPlayersStats hidden">
+				<div class="playerStatsTeamName" id="homePlayerStatsTeamName">Home</div>
 				<div class="playersStats">
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
@@ -281,11 +224,13 @@
 						</div>
 						<div class="stats goalieStats">
 							<div class="stat">GP</div>
-							<div class="stat">REC</div>
-							<div class="stat">GA</div>
+							<div class="stat">W</div>
+							<div class="stat">L</div>
 							<div class="stat">SA</div>
-							<div class="stat">SV%</div>
+							<div class="stat">GA</div>
 							<div class="stat">GAA</div>
+							<div class="stat">SV%</div>
+							<div class="stat">SO</div>
 						</div>
 					</div>
 					<div id="homeTeamGoalies"></div>
@@ -293,7 +238,7 @@
 			</div>
 		</div>
 		
-		<!--Standings (v1 inprogress)-->
+		<!--Standings (v1 js inprogress)-->
 		<div class="standingsRoot section hidden" id="standings">
 			<div class="standingsTabButtons">
 				<div class="standingsTabButton divisionStandingsButton selected" id="divisionStandingsButton">Division</div>
@@ -305,8 +250,8 @@
 			<!--Division-->
 			<div class="standings" id="divisionStandings">
 				<div class="standingsHeaderLine">
-					<div class="standingSection">
-						<div class="standingSectionName" id="division">Division</div>
+					<div class="standingsTeam">
+						<div class="standingsTeamName" id="division">Division</div>
 					</div>
 					<div class="stats">
 						<div class="stat">GP</div>
@@ -317,29 +262,14 @@
 						<div class="stat">ROW</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="divisionTeamStandings">
-					<div class="standingsTeamLine">
-						<div class="standingsTeam">
-							<image class="standingsTeamImage" src="logos/nhl.png"></image>
-							<div class="standingsTeamName">Team Name</div>
-						</div>
-						<div class="stats">
-							<div class="stat">49</div>
-							<div class="stat">18</div>
-							<div class="stat">21</div>
-							<div class="stat">1,408</div>
-							<div class="stat">124</div>
-							<div class="stat">2.79</div>
-						</div>
-					</div>
-				</div>
+				<div class="standingsTeamLines" id="divisionTeamStandings"></div>
 			</div>
 			
 			<!--Wild Card-->
-			<div class="standings" id="wildCardStandings">
+			<div class="standings hidden" id="wildCardStandings">
 				<div class="standingsHeaderLine">
-					<div class="standingSection">
-						<div class="standingSectionName" id="wildCardDivision2">Division</div>
+					<div class="standingsTeam">
+						<div class="standingsTeamName" id="wildCardDivision1">Division</div>
 					</div>
 					<div class="stats">
 						<div class="stat">GP</div>
@@ -350,26 +280,11 @@
 						<div class="stat">ROW</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="wildCardDivision1TeamStandings">
-					<div class="standingsTeamLine">
-						<div class="standingsTeam">
-							<image class="standingsTeamImage" src="logos/nhl.png"></image>
-							<div class="standingsTeamName">Team Name</div>
-						</div>
-						<div class="stats">
-							<div class="stat">49</div>
-							<div class="stat">18</div>
-							<div class="stat">21</div>
-							<div class="stat">1,408</div>
-							<div class="stat">124</div>
-							<div class="stat">2.79</div>
-						</div>
-					</div>
-				</div>
-				<div class="standingsSpacer" />
+				<div class="standingsTeamLines" id="wildCardDivision1TeamStandings"></div>
+				<div class="standingsSpacer"></div>
 				<div class="standingsHeaderLine">
-					<div class="standingSection">
-						<div class="standingSectionName" id="wildCardDivision2">Division</div>
+					<div class="standingsTeam">
+						<div class="standingsTeamName" id="wildCardDivision2">Division</div>
 					</div>
 					<div class="stats">
 						<div class="stat">GP</div>
@@ -380,26 +295,11 @@
 						<div class="stat">ROW</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="wildCardDivision2TeamStandings">
-					<div class="standingsTeamLine">
-						<div class="standingsTeam">
-							<image class="standingsTeamImage" src="logos/nhl.png"></image>
-							<div class="standingsTeamName">Team Name</div>
-						</div>
-						<div class="stats">
-							<div class="stat">49</div>
-							<div class="stat">18</div>
-							<div class="stat">21</div>
-							<div class="stat">1,408</div>
-							<div class="stat">124</div>
-							<div class="stat">2.79</div>
-						</div>
-					</div>
-				</div>
-				<div class="standingsSpacer" />
+				<div class="standingsTeamLines" id="wildCardDivision2TeamStandings"></div>
+				<div class="standingsSpacer"></div>
 				<div class="standingsHeaderLine">
-					<div class="standingSection">
-						<div class="standingSectionName">Wild Card</div>
+					<div class="standingsTeam">
+						<div class="standingsTeamName">Wild Card</div>
 					</div>
 					<div class="stats">
 						<div class="stat">GP</div>
@@ -410,44 +310,14 @@
 						<div class="stat">ROW</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="wildCardTeamStandings">
-					<div class="standingsTeamLine">
-						<div class="standingsTeam">
-							<image class="standingsTeamImage" src="logos/nhl.png"></image>
-							<div class="standingsTeamName">Team Name</div>
-						</div>
-						<div class="stats">
-							<div class="stat">49</div>
-							<div class="stat">18</div>
-							<div class="stat">21</div>
-							<div class="stat">1,408</div>
-							<div class="stat">124</div>
-							<div class="stat">2.79</div>
-						</div>
-					</div>
-					<div class="standingsTeamLine">
-						<div class="standingsTeam">
-							<image class="standingsTeamImage" src="logos/nhl.png"></image>
-							<div class="standingsTeamName">Team Name</div>
-						</div>
-						<div class="stats">
-							<div class="stat">49</div>
-							<div class="stat">18</div>
-							<div class="stat">21</div>
-							<div class="stat">1,408</div>
-							<div class="stat">124</div>
-							<div class="stat">2.79</div>
-						</div>
-					</div>
-					<div class="standingsWildCardCutOff"></div>
-				</div>
+				<div class="standingsTeamLines" id="wildCardTeamStandings"></div>
 			</div>
 			
 			<!--Conference-->
-			<div class="standings" id="conferenceStandings">
+			<div class="standings hidden" id="conferenceStandings">
 				<div class="standingsHeaderLine">
-					<div class="standingSection">
-						<div class="standingSectionName" id="conference">Conference</div>
+					<div class="standingsTeam">
+						<div class="standingsTeamName" id="conference">Conference</div>
 					</div>
 					<div class="stats">
 						<div class="stat">GP</div>
@@ -458,29 +328,14 @@
 						<div class="stat">ROW</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="conferenceTeamStandings">
-					<div class="standingsTeamLine">
-						<div class="standingsTeam">
-							<image class="standingsTeamImage" src="logos/nhl.png"></image>
-							<div class="standingsTeamName">Team Name</div>
-						</div>
-						<div class="stats">
-							<div class="stat">49</div>
-							<div class="stat">18</div>
-							<div class="stat">21</div>
-							<div class="stat">1,408</div>
-							<div class="stat">124</div>
-							<div class="stat">2.79</div>
-						</div>
-					</div>
-				</div>
+				<div class="standingsTeamLines" id="conferenceTeamStandings"></div>
 			</div>
 			
 			<!--League-->
-			<div class="standings" id="leagueStandings">
+			<div class="standings hidden" id="leagueStandings">
 				<div class="standingsHeaderLine">
-					<div class="standingSection">
-						<div class="standingSectionName">NHL</div>
+					<div class="standingsTeam">
+						<div class="standingsTeamName">NHL</div>
 					</div>
 					<div class="stats">
 						<div class="stat">GP</div>
@@ -491,22 +346,7 @@
 						<div class="stat">ROW</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="leagueTeamStandings">
-					<div class="standingsTeamLine">
-						<div class="standingsTeam">
-							<image class="standingsTeamImage" src="logos/nhl.png"></image>
-							<div class="standingsTeamName">Team Name</div>
-						</div>
-						<div class="stats">
-							<div class="stat">49</div>
-							<div class="stat">18</div>
-							<div class="stat">21</div>
-							<div class="stat">1,408</div>
-							<div class="stat">124</div>
-							<div class="stat">2.79</div>
-						</div>
-					</div>
-				</div>
+				<div class="standingsTeamLines" id="leagueTeamStandings"></div>
 			</div>
 		</div>
 	</div>
