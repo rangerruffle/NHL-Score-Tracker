@@ -443,8 +443,6 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 	const homeStatsButton = document.getElementById("homeStatsButton");
 
 	const awayPlayerStatsTeamName = document.getElementById("awayPlayerStatsTeamName");
-	
-
 	const homePlayerStatsTeamName = document.getElementById("homePlayerStatsTeamName");
 	/*
 	Example Forward:
@@ -465,42 +463,112 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 		</div>
 	</div>
 	*/
-	const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
-	const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
-	switch(gameStatus) {
-		case "preview":
-			// Season stats.
-			for(var i = 0; i < awayTeamPlayers.length; i++) {
-				
+	
+	if (gameStatus === "preview") {
+		const inGamePlayerStats = document.getElementById("inGamePlayerStats");
+		const awayTeamForwards = inGamePlayerStats.getElementById("awayTeamForwards");
+		const awayTeamDefense = inGamePlayerStats.getElementById("awayTeamDefense");
+		const awayTeamGoalies = inGamePlayerStats.getElementById("awayTeamGoalies");
+
+		const homeTeamForwards = inGamePlayerStats.getElementById("homeTeamForwards");
+		const homeTeamDefense = inGamePlayerStats.getElementById("homeTeamDefense");
+		const homeTeamGoalies = inGamePlayerStats.getElementById("homeTeamGoalies");
+		
+		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
+		const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
+
+		for(var i = 0; i < awayTeamPlayers.length; i++) {
+			const player = awayTeamPlayers[i];
+			switch(/*player position*/) {
+				case "D":
+					addPlayerStat(player, awayTeamDefense);
+					break;
+				case "F":
+					addPlayerStat(player, awayTeamForwards);
+					break;
+				case "G":
+					addPlayerStat(player, awayTeamGoalies);
+					break;
 			}
-			
-			for(var i = 0; i < homeTeamPlayers.length; i++) {
-				
+		}
+		
+		for(var i = 0; i < homeTeamPlayers.length; i++) {
+			const player = homeTeamPlayers[i];
+			switch(/*player position*/) {
+				case "D":
+					addPlayerStat(player, homeTeamDefense);
+					break;
+				case "F":
+					addPlayerStat(player, homeTeamForwards);
+					break;
+				case "G":
+					addPlayerStat(player, homeTeamGoalies);
+					break;
 			}
-			break;
-		case "live":
-			// Game stats.
-			for(var i = 0; i < awayTeamPlayers.length; i++) {
-				
+		}
+	} else if (gameStatus === "live" || gameStatus === "final") {
+		const inGamePlayerStats = document.getElementById("inGamePlayerStats");
+		const awayTeamForwards = inGamePlayerStats.getElementById("awayTeamForwards");
+		const awayTeamDefense = inGamePlayerStats.getElementById("awayTeamDefense");
+		const awayTeamGoalies = inGamePlayerStats.getElementById("awayTeamGoalies");
+
+		const homeTeamForwards = inGamePlayerStats.getElementById("homeTeamForwards");
+		const homeTeamDefense = inGamePlayerStats.getElementById("homeTeamDefense");
+		const homeTeamGoalies = inGamePlayerStats.getElementById("homeTeamGoalies");
+		
+		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
+		const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
+
+		for(var i = 0; i < awayTeamPlayers.length; i++) {
+			const player = awayTeamPlayers[i];
+			switch(/*player position*/) {
+				case "D":
+					addInGamePlayerStat(player, awayTeamDefense);
+					break;
+				case "F":
+					addInGamePlayerStat(player, awayTeamForwards);
+					break;
+				case "G":
+					addInGamePlayerStat(player, awayTeamGoalies);
+					break;
 			}
-			
-			for(var i = 0; i < homeTeamPlayers.length; i++) {
-				
+		}
+		
+		for(var i = 0; i < homeTeamPlayers.length; i++) {
+			const player = homeTeamPlayers[i];
+			switch(/*player position*/) {
+				case "D":
+					addInGamePlayerStat(player, homeTeamDefense);
+					break;
+				case "F":
+					addInGamePlayerStat(player, homeTeamForwards);
+					break;
+				case "G":
+					addInGamePlayerStat(player, homeTeamGoalies);
+					break;
 			}
-			break;
-		case "final":
-			// Game stats.
-			for(var i = 0; i < awayTeamPlayers.length; i++) {
-				
+		}
+	} else {
+		const noGamePlayerStats = document.getElementById("noGamePlayerStats");
+		const teamForwards = noGamePlayerStats.getElementById("teamForwards");
+		const teamDefense = noGamePlayerStats.getElementById("teamDefense");
+		const teamGoalies = noGamePlayerStats.getElementById("teamGoalies");
+		// Figure out how to get info for this.
+		const teamPlayers = ?;
+		for(var i = 0; i < teamPlayers.length; i++) {
+			const player = teamPlayers[i];
+			switch(/*player position*/) {
+				case "D":
+					addPlayerStat(player, awayTeamDefense);
+					break;
+				case "F":
+					addPlayerStat(player, awayTeamForwards);
+					break;
+				case "G":
+					addPlayerStat(player, awayTeamGoalies);
+					break;
 			}
-			
-			for(var i = 0; i < homeTeamPlayers.length; i++) {
-				
-			}
-			break;
-		case "none":
-			// Season stats.
-			break;
+		}
 	}
 }
 
@@ -560,146 +628,89 @@ function setFooterLinkHref(gameStatus) {
 	}
 }
 
-function addAwayPlayerStat(player, gameStatus) {
-	const awayTeamForwards = document.getElementById("awayTeamForwards");
-	const awayTeamDefense = document.getElementById("awayTeamDefense");
-	const awayTeamGoalies = document.getElementById("awayTeamGoalies");
-	
+function addInGamePlayerStat(player, element) {	
 	const playerName = player.person.fullName.split(" ");
-	if(gameStatus === "live" || gameStatus === "final") {
-		switch(player.position.abbreviation) {
-			case "D":
-				awayTeamDefense.appendChild(
-					<div class="playerStatsLine">
-						<div class="nameNumber">
-							<div class="number">player.jerseyNumber</div>
-							<div class="name">playerName[playerName.length - 1]</div>
-						</div>
-						<div class="stats">
-							<div class="stat">-</div>
-							<div class="stat">player.stats.goals</div>
-							<div class="stat">player.stats.assists</div>
-							<div class="stat">(player.stats.goals + player.stats.assists)</div>
-							<div class="stat">player.stats.plusMinus</div>
-							<div class="stat">player.stats.penaltyMinutes</div>
-							<div class="stat">player.stats.powerPlayGoals</div>
-							<div class="stat">-</div>
-						</div>
-					</div>
-				);
-				break;
-			case "G":
-				awayTeamGoalies.appendChild(
-					<div class="playerStatsLine">
-						<div class="nameNumber">
-							<div class="number">player.jerseyNumber</div>
-							<div class="name">playerName[playerName.length - 1]</div>
-						</div>
-						<div class="stats">
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">(player.stats.shortHandedShotsAgainst + player.stats.evenShotsAgainst + player.stats.powerPlayShotsAgainst)</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-						</div>
-					</div>
-				);
-				break;
-			default:
-				awayTeamForwards.appendChild(
-					<div class="playerStatsLine">
-						<div class="nameNumber">
-							<div class="number">player.jerseyNumber</div>
-							<div class="name">playerName[playerName.length - 1]</div>
-						</div>
-						<div class="stats">
-							<div class="stat">-</div>
-							<div class="stat">player.stats.goals</div>
-							<div class="stat">player.stats.assists</div>
-							<div class="stat">(player.stats.goals + player.stats.assists)</div>
-							<div class="stat">player.stats.plusMinus</div>
-							<div class="stat">player.stats.penaltyMinutes</div>
-							<div class="stat">player.stats.powerPlayGoals</div>
-							<div class="stat">-</div>
-						</div>
-					</div>
-				);
-				break;
-		}
-		
+	if (!isGoalie) {
+		element.appendChild(
+			<div class="playerStatsLine">
+				<div class="nameNumber">
+					<div class="number">player.jerseyNumber</div>
+					<div class="name">playerName[playerName.length - 1]</div>
+				</div>
+				<div class="stats">
+					<div class="stat">S</div>
+					<div class="stat">G</div>
+					<div class="stat">A</div>
+					<div class="stat">P</div>
+					<div class="stat">+/-</div>
+					<div class="stat">PIM</div>
+					<div class="stat">PP</div>
+					<div class="stat">SH</div>
+				</div>
+			</div>
+		);
 	} else {
-		switch(player.position.abbreviation) {
-			case "D":
-				awayTeamDefense.appendChild(
-					<div class="playerStatsLine">
-						<div class="nameNumber">
-							<div class="number">player.jerseyNumber</div>
-							<div class="name">playerName[playerName.length - 1]</div>
-						</div>
-						<div class="stats">
-							<div class="stat">-</div>
-							<div class="stat">player.stats.goals</div>
-							<div class="stat">player.stats.assists</div>
-							<div class="stat">(player.stats.goals + player.stats.assists)</div>
-							<div class="stat">player.stats.plusMinus</div>
-							<div class="stat">player.stats.penaltyMinutes</div>
-							<div class="stat">player.stats.powerPlayGoals</div>
-							<div class="stat">-</div>
-						</div>
-					</div>
-				);
-				break;
-			case "G":
-				awayTeamGoalies.appendChild(
-					<div class="playerStatsLine">
-						<div class="nameNumber">
-							<div class="number">player.jerseyNumber</div>
-							<div class="name">playerName[playerName.length - 1]</div>
-						</div>
-						<div class="stats">
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">(player.stats.shortHandedShotsAgainst + player.stats.evenShotsAgainst + player.stats.powerPlayShotsAgainst)</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-							<div class="stat">-</div>
-						</div>
-					</div>
-				);
-				break;
-			default:
-				awayTeamForwards.appendChild(
-					<div class="playerStatsLine">
-						<div class="nameNumber">
-							<div class="number">player.jerseyNumber</div>
-							<div class="name">playerName[playerName.length - 1]</div>
-						</div>
-						<div class="stats">
-							<div class="stat">-</div>
-							<div class="stat">player.stats.goals</div>
-							<div class="stat">player.stats.assists</div>
-							<div class="stat">(player.stats.goals + player.stats.assists)</div>
-							<div class="stat">player.stats.plusMinus</div>
-							<div class="stat">player.stats.penaltyMinutes</div>
-							<div class="stat">player.stats.powerPlayGoals</div>
-							<div class="stat">-</div>
-						</div>
-					</div>
-				);
-				break;
-		}
+		element.appendChild(
+			<div class="playerStatsLine">
+				<div class="nameNumber">
+					<div class="number">player.jerseyNumber</div>
+					<div class="name">playerName[playerName.length - 1]</div>
+				</div>
+				<div class="stats">
+					<div class="stat">EV</div>
+					<div class="stat">PP</div>
+					<div class="stat">SH</div>
+					<div class="stat">SV-SA</div>
+					<div class="stat">SV%</div>
+					<div class="stat">PIM</div>
+					<div class="stat">TOI</div>
+				</div>
+			</div>
+		);
 	}
 }
 
-function addHomePlayerStat(player, gameStatus) {
-	const homeTeamForwards = document.getElementById("homeTeamForwards");
-	const homeTeamDefense = document.getElementById("homeTeamDefense");
-	const homeTeamGoalies = document.getElementById("homeTeamGoalies");
+function addPlayerStat(player, element, isGoalie) {
+	const playerName = player.person.fullName.split(" ");
+	if (!isGoalie) {
+		element.appendChild(
+			<div class="playerStatsLine">
+				<div class="nameNumber">
+					<div class="number">player.jerseyNumber</div>
+					<div class="name">playerName[playerName.length - 1]</div>
+				</div>
+				<div class="stats">
+					<div class="stat">GP</div>
+					<div class="stat">G</div>
+					<div class="stat">A</div>
+					<div class="stat">P</div>
+					<div class="stat">+/-</div>
+					<div class="stat">PIM</div>
+					<div class="stat">PP</div>
+					<div class="stat">GW</div>
+				</div>
+			</div>
+		);
+	} else {
+		element.appendChild(
+			<div class="playerStatsLine">
+				<div class="nameNumber">
+					<div class="number">player.jerseyNumber</div>
+					<div class="name">playerName[playerName.length - 1]</div>
+				</div>
+				<div class="stats">
+					<div class="stat">GP</div>
+					<div class="stat">W</div>
+					<div class="stat">L</div>
+					<div class="stat">SA</div>
+					<div class="stat">GA</div>
+					<div class="stat">GAA</div>
+					<div class="stat">SV%</div>
+					<div class="stat">SO</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 function drawAwayLogo(icon) {

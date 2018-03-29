@@ -118,6 +118,124 @@
 			</div>
 		</div>
 		
+		<!--In-Game Player Stats (v1 js inprogress)-->
+		<div class="playerStats section hidden" id="inGamePlayerStats">
+			<div class="statsButtons">
+				<div class="statButton awayStatsButton selected" id="awayStatsButton">Away</div>
+				<div class="statButton homeStatsButton" id="homeStatsButton">Home</div>
+			</div>
+			<div class="teamPlayersStats">
+				<div class="playerStatsTeamName" id="awayPlayerStatsTeamName">Away</div>
+				<div class="playersStats">
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Forwards</div>
+						</div>
+						<div class="stats">
+							<div class="stat">S</div>
+							<div class="stat">G</div>
+							<div class="stat">A</div>
+							<div class="stat">P</div>
+							<div class="stat">+/-</div>
+							<div class="stat">PIM</div>
+							<div class="stat">PP</div>
+							<div class="stat">SH</div>
+						</div>
+					</div>
+					<div id="awayTeamForwards"></div>
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Defense</div>
+						</div>
+						<div class="stats">
+							<div class="stat">S</div>
+							<div class="stat">G</div>
+							<div class="stat">A</div>
+							<div class="stat">P</div>
+							<div class="stat">+/-</div>
+							<div class="stat">PIM</div>
+							<div class="stat">PP</div>
+							<div class="stat">SH</div>
+						</div>
+					</div>
+					<div id="awayTeamDefense"></div>
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Goalies</div>
+						</div>
+						<div class="stats goalieStats">
+							<div class="stat">EV</div>
+							<div class="stat">PP</div>
+							<div class="stat">SH</div>
+							<div class="stat">SV-SA</div>
+							<div class="stat">SV%</div>
+							<div class="stat">PIM</div>
+							<div class="stat">TOI</div>
+						</div>
+					</div>
+					<div id="awayTeamGoalies"></div>
+				</div>
+			</div>
+			<div class="teamPlayersStats hidden">
+				<div class="playerStatsTeamName" id="homePlayerStatsTeamName">Home</div>
+				<div class="playersStats">
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Forwards</div>
+						</div>
+						<div class="stats">
+							<div class="stat">S</div>
+							<div class="stat">G</div>
+							<div class="stat">A</div>
+							<div class="stat">P</div>
+							<div class="stat">+/-</div>
+							<div class="stat">PIM</div>
+							<div class="stat">PP</div>
+							<div class="stat">SH</div>
+						</div>
+					</div>
+					<div id="homeTeamForwards"></div>
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Defense</div>
+						</div>
+						<div class="stats">
+							<div class="stat">S</div>
+							<div class="stat">G</div>
+							<div class="stat">A</div>
+							<div class="stat">P</div>
+							<div class="stat">+/-</div>
+							<div class="stat">PIM</div>
+							<div class="stat">PP</div>
+							<div class="stat">SH</div>
+						</div>
+					</div>
+					<div id="homeTeamDefense"></div>
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Goalies</div>
+						</div>
+						<div class="stats goalieStats">
+							<div class="stat">EV</div>
+							<div class="stat">PP</div>
+							<div class="stat">SH</div>
+							<div class="stat">SV-SA</div>
+							<div class="stat">SV%</div>
+							<div class="stat">PIM</div>
+							<div class="stat">TOI</div>
+						</div>
+					</div>
+					<div id="homeTeamGoalies"></div>
+				</div>
+			</div>
+		</div>
+		
 		<!--Player Stats (v1 js inprogress)-->
 		<div class="playerStats section hidden" id="playerStats">
 			<div class="statsButtons">
@@ -234,6 +352,66 @@
 						</div>
 					</div>
 					<div id="homeTeamGoalies"></div>
+				</div>
+			</div>
+		</div>
+		
+		<!--No Game Player Stats (v1 js inprogress)-->
+		<div class="playerStats section hidden" id="noGamePlayerStats">
+			<div class="teamPlayersStats">
+				<div class="playerStatsTeamName" id="awayPlayerStatsTeamName">Away</div>
+				<div class="playersStats">
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Forwards</div>
+						</div>
+						<div class="stats">
+							<div class="stat">GP</div>
+							<div class="stat">G</div>
+							<div class="stat">A</div>
+							<div class="stat">P</div>
+							<div class="stat">+/-</div>
+							<div class="stat">PIM</div>
+							<div class="stat">PP</div>
+							<div class="stat">GW</div>
+						</div>
+					</div>
+					<div id="teamForwards"></div>
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Defense</div>
+						</div>
+						<div class="stats">
+							<div class="stat">GP</div>
+							<div class="stat">G</div>
+							<div class="stat">A</div>
+							<div class="stat">P</div>
+							<div class="stat">+/-</div>
+							<div class="stat">PIM</div>
+							<div class="stat">PP</div>
+							<div class="stat">GW</div>
+						</div>
+					</div>
+					<div id="teamDefense"></div>
+					<div class="playerStatsHeaderLine">
+						<div class="nameNumber">
+							<div class="number">##</div>
+							<div class="name">Goalies</div>
+						</div>
+						<div class="stats goalieStats">
+							<div class="stat">GP</div>
+							<div class="stat">W</div>
+							<div class="stat">L</div>
+							<div class="stat">SA</div>
+							<div class="stat">GA</div>
+							<div class="stat">GAA</div>
+							<div class="stat">SV%</div>
+							<div class="stat">SO</div>
+						</div>
+					</div>
+					<div id="teamGoalies"></div>
 				</div>
 			</div>
 		</div>
