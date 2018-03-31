@@ -630,44 +630,66 @@ function setFooterLinkHref(gameStatus) {
 
 function addInGamePlayerStat(player, element) {	
 	const playerName = player.person.fullName.split(" ");
-	if (!isGoalie) {
-		element.appendChild(
-			<div class="playerStatsLine">
-				<div class="nameNumber">
-					<div class="number">player.jerseyNumber</div>
-					<div class="name">playerName[playerName.length - 1]</div>
-				</div>
-				<div class="stats">
-					<div class="stat">S</div>
-					<div class="stat">G</div>
-					<div class="stat">A</div>
-					<div class="stat">P</div>
-					<div class="stat">+/-</div>
-					<div class="stat">PIM</div>
-					<div class="stat">PP</div>
-					<div class="stat">SH</div>
-				</div>
-			</div>
-		);
-	} else {
-		element.appendChild(
-			<div class="playerStatsLine">
-				<div class="nameNumber">
-					<div class="number">player.jerseyNumber</div>
-					<div class="name">playerName[playerName.length - 1]</div>
-				</div>
-				<div class="stats">
-					<div class="stat">EV</div>
-					<div class="stat">PP</div>
-					<div class="stat">SH</div>
-					<div class="stat">SV-SA</div>
-					<div class="stat">SV%</div>
-					<div class="stat">PIM</div>
-					<div class="stat">TOI</div>
-				</div>
-			</div>
-		);
+	const statLine = document.createElement("div");
+	statLine.addClass("playerStatsLine");
+	const nameNumber = document.createElement("div").addClass("nameNumber");
+	const number = document.createElement("div").addClass("number");
+	const name = document.createElement("div").addClass("name");
+	nameNumber.appendChild(number.appendChild(document.createTextNode(player.jerseyNumber)));
+	nameNumber.appendChild(name.appendChild(document.createTextNode(playerName[playerName.length - 1])));
+	statLine.appendChild(nameNumber);
+	const stats = document.createElement("div").addClass("stats");
+	if (player.stats) {
+		if (!isGoalie) {
+			const shots = document.createElement("div").addClass("stat");
+			shots.innerHTML = player.stats.skaterStats.shots;
+			stats.appendChild(shots);
+			const goals = document.createElement("div").addClass("stat");
+			goals.innerHTML = player.stats.skaterStats.goals;
+			stats.appendChild(goals);
+			const assists = document.createElement("div").addClass("stat");
+			assists.innerHTML = player.stats.skaterStats.assists;
+			stats.appendChild(assists);
+			const points = document.createElement("div").addClass("stat");
+			points.innerHTML = player.stats.skaterStats.assists + player.stats.skaterStats.goals;
+			stats.appendChild(points);
+			const plusMinus = document.createElement("div").addClass("stat");
+			plusMinus.innerHTML = player.stats.skaterStats.plusMinus;
+			stats.appendChild(plusMinus);
+			const penaltyMinutes = document.createElement("div").addClass("stat");
+			penaltyMinutes.innerHTML = player.stats.skaterStats.penaltyMinutes;
+			stats.appendChild(penaltyMinutes);
+			const powerPlay = document.createElement("div").addClass("stat");
+			powerPlay.innerHTML = player.stats.skaterStats.powerPlayGoals;
+			stats.appendChild(powerPlay);
+			const shortHanded = document.createElement("div").addClass("stat");
+			shortHanded.innerHTML = player.stats.skaterStats.shortHandedGoals;
+			stats.appendChild(shortHanded);
+		} else {
+			const evenShotsAgainst = document.createElement("div").addClass("stat");
+			evenShotsAgainst.innerHTML = player.stats.goalieStats.evenShotsAgainst;
+			stats.appendChild(evenShotsAgainst);
+			const powerPlayShotsAgainst = document.createElement("div").addClass("stat");
+			powerPlayShotsAgainst.innerHTML = player.stats.goalieStats.powerPlayShotsAgainst;
+			stats.appendChild(powerPlayShotsAgainst);
+			const shortHandedShotsAgainst = document.createElement("div").addClass("stat");
+			shortHandedShotsAgainst.innerHTML = player.stats.goalieStats.shortHandedShotsAgainst;
+			stats.appendChild(shortHandedShotsAgainst);
+			const savesShotsAgainst = document.createElement("div").addClass("stat");
+			savesShotsAgainst.innerHTML = player.stats.goalieStats.savePercentage + "%-" + player.stats.goalieStats.shots;
+			stats.appendChild(savesShotsAgainst);
+			const savePercent = document.createElement("div").addClass("stat");
+			savePercent.innerHTML = player.stats.goalieStats.savePercentage + "%";
+			stats.appendChild(savePercent);
+			const penaltyMinutes = document.createElement("div").addClass("stat");
+			penaltyMinutes.innerHTML = player.stats.goalieStats.pim;
+			stats.appendChild(penaltyMinutes);
+			const timeOnIce = document.createElement("div").addClass("stat");
+			timeOnIce.innerHTML = player.stats.goalieStats.timeOnIce;
+			stats.appendChild(timeOnIce);
+		}
 	}
+	element.appendChild(stats);
 }
 
 function addPlayerStat(player, element, isGoalie) {
