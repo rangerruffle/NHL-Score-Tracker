@@ -65,6 +65,7 @@
 	border-right: 1px solid #fff;
 	border-radius: 10px 10px 0 0;
 	color: #000;
+	cursor: pointer;
 	display: flex;
 	font-size: 20px;
 	height: 100%;
@@ -147,6 +148,7 @@
 	background-color: #000;
 	border-radius: 50%;
 	color: #fff;
+	cursor: pointer;
 	display: flex;
 	font-size: 14px;
 	font-weight: bold;
@@ -332,6 +334,7 @@
 	background-color: #fff;
 	border: 1px solid #000;
 	color: #000;
+	cursor: pointer;
 	display: flex;
 	font-size: 20px;
 	height: 100%;

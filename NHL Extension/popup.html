@@ -121,11 +121,11 @@
 		<!--In-Game Player Stats (v1 js inprogress)-->
 		<div class="playerStats section hidden" id="inGamePlayerStats">
 			<div class="statsButtons">
-				<div class="statButton awayStatsButton selected" id="awayStatsButton">Away</div>
-				<div class="statButton homeStatsButton" id="homeStatsButton">Home</div>
+				<div class="statButton awayStatsButton selected" id="inGameAwayStatsButton">Away</div>
+				<div class="statButton homeStatsButton" id="inGameHomeStatsButton">Home</div>
 			</div>
-			<div class="teamPlayersStats">
-				<div class="playerStatsTeamName" id="awayPlayerStatsTeamName">Away</div>
+			<div class="teamPlayersStats" id="inGameAwayTeam">
+				<div class="playerStatsTeamName" id="inGameAwayPlayerStatsTeamName">Away</div>
 				<div class="playersStats">
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
@@ -143,7 +143,7 @@
 							<div class="stat">SH</div>
 						</div>
 					</div>
-					<div id="awayTeamForwards"></div>
+					<div id="inGameAwayTeamForwards"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -160,7 +160,7 @@
 							<div class="stat">SH</div>
 						</div>
 					</div>
-					<div id="awayTeamDefense"></div>
+					<div id="inGameAwayTeamDefense"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -176,11 +176,11 @@
 							<div class="stat">TOI</div>
 						</div>
 					</div>
-					<div id="awayTeamGoalies"></div>
+					<div id="inGameAwayTeamGoalies"></div>
 				</div>
 			</div>
-			<div class="teamPlayersStats hidden">
-				<div class="playerStatsTeamName" id="homePlayerStatsTeamName">Home</div>
+			<div class="teamPlayersStats hidden" id="inGameHomeTeam">
+				<div class="playerStatsTeamName" id="inGameHomePlayerStatsTeamName">Home</div>
 				<div class="playersStats">
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
@@ -198,7 +198,7 @@
 							<div class="stat">SH</div>
 						</div>
 					</div>
-					<div id="homeTeamForwards"></div>
+					<div id="inGameHomeTeamForwards"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -215,7 +215,7 @@
 							<div class="stat">SH</div>
 						</div>
 					</div>
-					<div id="homeTeamDefense"></div>
+					<div id="inGameHomeTeamDefense"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -231,7 +231,7 @@
 							<div class="stat">TOI</div>
 						</div>
 					</div>
-					<div id="homeTeamGoalies"></div>
+					<div id="inGameHomeTeamGoalies"></div>
 				</div>
 			</div>
 		</div>
@@ -359,7 +359,7 @@
 		<!--No Game Player Stats (v1 js inprogress)-->
 		<div class="playerStats section hidden" id="noGamePlayerStats">
 			<div class="teamPlayersStats">
-				<div class="playerStatsTeamName" id="awayPlayerStatsTeamName">Away</div>
+				<div class="playerStatsTeamName" id="noGameAwayPlayerStatsTeamName">Team</div>
 				<div class="playersStats">
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
@@ -377,7 +377,7 @@
 							<div class="stat">GW</div>
 						</div>
 					</div>
-					<div id="teamForwards"></div>
+					<div id="noGameForwards"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -394,7 +394,7 @@
 							<div class="stat">GW</div>
 						</div>
 					</div>
-					<div id="teamDefense"></div>
+					<div id="noGameDefense"></div>
 					<div class="playerStatsHeaderLine">
 						<div class="nameNumber">
 							<div class="number">##</div>
@@ -411,7 +411,7 @@
 							<div class="stat">SO</div>
 						</div>
 					</div>
-					<div id="teamGoalies"></div>
+					<div id="noGameGoalies"></div>
 				</div>
 			</div>
 		</div>

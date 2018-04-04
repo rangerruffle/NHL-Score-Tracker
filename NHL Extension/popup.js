@@ -6,6 +6,8 @@ var awayTeamIcon = "logos/nhl.png";
 var awayTeamName = "";
 var awayTeamOnIce = [];
 var awayTeamDefense = [];
+var firstOpen = true;
+var gameStatus = "None";
 var homeScore = "0";
 var homeTeamIcon = "logos/nhl.png";
 var homeTeamName = "";
@@ -20,26 +22,24 @@ var todayYear = "";
 var todayMonth = "";
 var todayDay = "";
 
-// Heading
-const headingAwayScore = document.getElementById("awayScore");
-const timeLeft = document.getElementById("time");
-const headingHomeScore = document.getElementById("homeScore");
-
 // Tabs
-const previewTab = document.getElementById("previewTab");
-const liveTab = document.getElementById("liveTab");
-const teamStatsTab = document.getElementById("teamStatsTab");
-const playerStatsTab = document.getElementById("playerStatsTab");
-const standingsTab = document.getElementById("standingsTab");
+var previewTab;
+var liveTab;
+var teamStatsTab;
+var playerStatsTab;
+var standingsTab;
+var activeTab;
 
 // Sections
-const rink = document.getElementById("rink");
-const teamStats = document.getElementById("gameTeamStats");
-const playerStats = document.getElementById("playerStats");
-const standings = document.getElementById("standings");
+var rink;
+var teamStats;
+var inGamePlayerStats;
+var playerStats;
+var noGamePlayerStats;
+var standings;
 
 // Footer
-const nhlLink = document.getElementById("nhlLink");
+var nhlLink;
 
 chrome.storage.sync.get([ "trackedTeamName","trackedTimeZone" ], function(result) {
 	if (result.trackedTeamName) {
@@ -76,6 +76,23 @@ function updateData() {
 }
 
 function updateGameData(yyyy, mm, dd) {
+	previewTab = document.getElementById("previewTab");
+	liveTab = document.getElementById("liveTab");
+	teamStatsTab = document.getElementById("teamStatsTab");
+	playerStatsTab = document.getElementById("playerStatsTab");
+	standingsTab = document.getElementById("standingsTab");
+	
+	rink = document.getElementById("rink");
+	teamStats = document.getElementById("gameTeamStats");
+	inGamePlayerStats = document.getElementById("inGamePlayerStats");
+	playerStats = document.getElementById("playerStats");
+	noGamePlayerStats = document.getElementById("noGamePlayerStats");
+	standings = document.getElementById("standings");
+	
+	nhlLink = document.getElementById("nhlLink");
+	
+	setListeners();
+
 	teamId = teamIds[teamName];
 	var gameLiveLink = "";
 	var localGameTime = false;
@@ -91,10 +108,12 @@ function updateGameData(yyyy, mm, dd) {
 					currentGameId = scheduleInfo.dates[0].games[0].gamePk;
 					gameLiveLink = scheduleInfo.dates[0].games[0].link;
 				} else {
+					gameStatus = "None";
 					currentGameId = false;
 					setNoGame();
 				}
 			} else {
+				gameStatus = "None";
 				currentGameId = false;
 				setNoGame();
 			}
@@ -119,32 +138,35 @@ function updateGameData(yyyy, mm, dd) {
 						otherTeamName = teamIsHome ? game.teams.away.teamName : game.teams.home.teamName;
 						
 						if (teamIsHome) {
-							awayTeamIcon = "icons/" + otherTeamName + ".png";
+							awayTeamIcon = "logos/" + otherTeamName + ".png";
 							homeTeamIcon = teamIcon;
 
 							awayTeamName = otherTeamName;
 							homeTeamName = teamName;
 
-							drawAwayLogo("icons/" + otherTeamName + ".png");
+							drawAwayLogo("logos/" + otherTeamName + ".png");
 							drawHomeLogo(teamIcon);
 						} else {
 							awayTeamIcon = teamIcon;
-							homeTeamIcon = "icons/" + otherTeamName + ".png";
+							homeTeamIcon = "logos/" + otherTeamName + ".png";
 
 							awayTeamName = teamName;
 							homeTeamName = otherTeamName;
 
 							drawAwayLogo(teamIcon);
-							drawHomeLogo("icons/" + otherTeamName + ".png");
+							drawHomeLogo("logos/" + otherTeamName + ".png");
 						}
 						
 						if (game.status.abstractGameState == "Preview") {
+							gameStatus = "Preview";
 							setPreview(gameInfo);
 							currentlyPreGame = true;
 						} else if (game.status.abstractGameState == "Final") {
+							gameStatus = "Final";
 							setFinal(gameInfo);
 							currentlyPreGame = false;
 						} else if (game.status.abstractGameState == "Live") {
+							gameStatus = "Live";
 							setLive(gameInfo);
 							currentlyPreGame = false;
 						}
@@ -155,14 +177,33 @@ function updateGameData(yyyy, mm, dd) {
 	}, 250);
 }
 
+function setListeners() {
+	previewTab.addEventListener('click', function () {hideShowElements(preview);}, false);
+	liveTab.addEventListener('click', function () {hideShowElements(rink);}, false);
+	teamStatsTab.addEventListener('click', function () {hideShowElements(teamStats);}, false);
+	playerStatsTab.addEventListener('click', function () {
+		if (gameStatus === "Preview") {
+			hideShowElements(playerStats);
+		} else if (gameStatus === "Final") {
+			hideShowElements(inGamePlayerStats);
+		} else if (gameStatus == "Live") {
+			hideShowElements(inGamePlayerStats);
+		} else {
+			hideShowElements(noGamePlayerStats);
+		}
+	}, false);
+	standingsTab.addEventListener('click', function () {hideShowElements(standings);}, false);
+}
+
 function setPreview(gameInfo) {
 	show(previewTab);
 	hide(liveTab);
 	hide(teamStatsTab);
 	show(playerStatsTab);
 	show(standingsTab);
+	setActiveTab(playerStats, "Preview");
 	
-	// Possible will need to get the correct gameInfo here
+	// Possibly will need to get the correct gameInfo here
 	setPlayerStatsSection(gameInfo, "preview");
 	setStandingsSection(gameInfo, "preview");
 }
@@ -173,6 +214,7 @@ function setLive(gameInfo) {
 	show(teamStatsTab);
 	show(playerStatsTab);
 	show(standingsTab);
+	setActiveTab(rink, "Live");
 	
 	setHeadingSection(gameInfo, "live");
 	setRinkSection(gameInfo);
@@ -187,12 +229,14 @@ function setFinal(gameInfo) {
 	show(teamStatsTab);
 	show(playerStatsTab);
 	show(standingsTab);
+	setActiveTab(teamStats, "Final");
 
 	if (gameTimeDataRefreshTimer) {
 		window.clearInterval(gameTimeDataRefreshTimer);
 		gameTimeDataRefreshTimer = false;
 	}
 	
+	setHeadingSection(gameInfo, "final");
 	setTeamStatsSection(gameInfo);
 	setPlayerStatsSection(gameInfo, "final");
 	setStandingsSection(gameInfo, "final");
@@ -204,6 +248,7 @@ function setNoGame() {
 	hide(teamStatsTab);
 	show(playerStatsTab);
 	show(standingsTab);
+	setActiveTab(noGamePlayerStats, "None");
 	
 	// Get the correct gameInfo here
 	setHeadingSection(gameInfo, "none");
@@ -212,6 +257,10 @@ function setNoGame() {
 }
 
 function setHeadingSection(gameInfo, gameStatus) {
+	const headingAwayScore = document.getElementById("awayScore");
+	const timeLeft = document.getElementById("time");
+	const headingHomeScore = document.getElementById("homeScore");
+
 	switch(gameStatus) {
 		case "preview":
 			timeLeft.innerHTML = "20:00";
@@ -291,47 +340,55 @@ function setRinkSection(gameInfo) {
 	const homeTeamSkaters = gameInfo.liveData.boxscore.teams.home.skaters;
 	const homeOnIce = gameInfo.liveData.boxscore.teams.home.onIce;
 	
-	if(awayTeamOnIce !== awayOnIce) {		
+	if(awayTeamOnIce !== awayOnIce) {
 		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
 		for(var i = 0; i < awayOnIce.length; i++) {
-			const player = awayTeamPlayers[ID + awayOnIce[i]];
+			const player = awayTeamPlayers['ID' + awayOnIce[i]];
 			
 			switch(player.position.abbreviation) {
 				case "RW":
 					if (awayRightWing.innerHTML !== player.jerseyNumber) {
 						awayRightWing.innerHTML = player.jerseyNumber;
+						awayRightWing.setAttribute('title', player.person.fullName);
 					}
 					break;
 				case "C":
 					if (awayCenter.innerHTML !== player.jerseyNumber) {
 						awayCenter.innerHTML = player.jerseyNumber;
+						awayCenter.setAttribute('title', player.person.fullName);
 					}
 					break;
 				case "LW":
 					if (awayLeftWing.innerHTML !== player.jerseyNumber) {
 						awayLeftWing.innerHTML = player.jerseyNumber;
+						awayLeftWing.setAttribute('title', player.person.fullName);
 					}
 					break;
 				case "D":
 					if(awayTeamDefense.length === 0) {
 						awayTeamDefense.push(awayOnIce[i]);
 						awayLeftDefense.innerHTML = player.jerseyNumber;
+						awayLeftDefense.setAttribute('title', player.person.fullName);
 					} else if (awayTeamDefense.length === 1) {
 						awayTeamDefense.push(awayOnIce[i]);
 						awayRightDefense.innerHTML = player.jerseyNumber;
+						awayRightDefense.setAttribute('title', player.person.fullName);
 					} else {
-						if (!awayOnIce.includes(awayTeamDefense[0]) {
+						if (!awayOnIce.includes(awayTeamDefense[0])) {
 							awayTeamDefense = [awayOnIce[i], awayTeamDefense[1]];
 							awayLeftDefense.innerHTML = player.jerseyNumber;
-						} else if (!awayOnIce.includes(awayTeamDefense[1]) {
+							awayLeftDefense.setAttribute('title', player.person.fullName);
+						} else if (!awayOnIce.includes(awayTeamDefense[1])) {
 							awayTeamDefense = [awayTeamDefense[0], awayOnIce[i]];
 							awayRightDefense.innerHTML = player.jerseyNumber;
+							awayRightDefense.setAttribute('title', player.person.fullName);
 						}
 					}
 					break;
 				case "G":
 					if (awayGoalie.innerHTML !== player.jerseyNumber) {
 						awayGoalie.innerHTML = player.jerseyNumber;
+						awayGoalie.setAttribute('title', player.person.fullName);
 					}
 					break;
 			}
@@ -343,44 +400,52 @@ function setRinkSection(gameInfo) {
 	if(homeTeamOnIce !== homeOnIce) {
 		const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
 		for(var i = 0; i < homeOnIce.length; i++) {
-			const player = homeTeamPlayers[ID + homeOnIce[i]];
+			const player = homeTeamPlayers['ID' + homeOnIce[i]];
 			
 			switch(player.position.abbreviation) {
 				case "RW":
 					if (homeRightWing.innerHTML !== player.jerseyNumber) {
 						homeRightWing.innerHTML = player.jerseyNumber;
+						homeRightWing.setAttribute('title', player.person.fullName);
 					}
 					break;
 				case "C":
 					if (homeCenter.innerHTML !== player.jerseyNumber) {
 						homeCenter.innerHTML = player.jerseyNumber;
+						homeCenter.setAttribute('title', player.person.fullName);
 					}
 					break;
 				case "LW":
 					if (homeLeftWing.innerHTML !== player.jerseyNumber) {
 						homeLeftWing.innerHTML = player.jerseyNumber;
+						homeLeftWing.setAttribute('title', player.person.fullName);
 					}
 					break;
 				case "D":
 					if(homeTeamDefense.length === 0) {
 						homeTeamDefense.push(homeOnIce[i]);
 						homeLeftDefense.innerHTML = player.jerseyNumber;
+						homeLeftDefense.setAttribute('title', player.person.fullName);
 					} else if (homeTeamDefense.length === 1) {
 						homeTeamDefense.push(homeOnIce[i]);
 						homeRightDefense.innerHTML = player.jerseyNumber;
+						homeRightDefense.setAttribute('title', player.person.fullName);
 					} else {
-						if (!homeOnIce.includes(homeTeamDefense[0]) {
+						if (!homeOnIce.includes(homeTeamDefense[0])) {
 							homeTeamDefense = [homeOnIce[i], homeTeamDefense[1]];
 							homeLeftDefense.innerHTML = player.jerseyNumber;
-						} else if (!homeOnIce.includes(homeTeamDefense[1]) {
+							homeLeftDefense.setAttribute('title', player.person.fullName);
+						} else if (!homeOnIce.includes(homeTeamDefense[1])) {
 							homeTeamDefense = [homeTeamDefense[0], homeOnIce[i]];
 							homeRightDefense.innerHTML = player.jerseyNumber;
+							homeRightDefense.setAttribute('title', player.person.fullName);
 						}
 					}
 					break;
 				case "G":
 					if (homeGoalie.innerHTML !== player.jerseyNumber) {
 						homeGoalie.innerHTML = player.jerseyNumber;
+						homeGoalie.setAttribute('title', player.person.fullName);
 					}
 					break;
 			}
@@ -441,16 +506,9 @@ function setTeamStatsSection(gameInfo) {
 }
 
 function setPlayerStatsSection(gameInfo, gameStatus) {
-	// Set loading spinner
-	const awayStatsButton = document.getElementById("awayStatsButton");
-	const homeStatsButton = document.getElementById("homeStatsButton");
-
-	const awayPlayerStatsTeamName = document.getElementById("awayPlayerStatsTeamName");
-	const homePlayerStatsTeamName = document.getElementById("homePlayerStatsTeamName");
-	
 	if (gameStatus === "preview") {
-		const inGamePlayerStats = document.getElementById("inGamePlayerStats");
-		inGamePlayerStats.innerHTML = "Coming Soon";
+		const playerStats = document.getElementById("playerStats");
+		playerStats.innerHTML = "Coming Soon";
 		/*const awayTeamForwards = inGamePlayerStats.getElementById("awayTeamForwards");
 		const awayTeamDefense = inGamePlayerStats.getElementById("awayTeamDefense");
 		const awayTeamGoalies = inGamePlayerStats.getElementById("awayTeamGoalies");
@@ -491,13 +549,38 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 		}*/
 	} else if (gameStatus === "live" || gameStatus === "final") {
 		const inGamePlayerStats = document.getElementById("inGamePlayerStats");
-		const awayTeamForwards = inGamePlayerStats.getElementById("awayTeamForwards");
-		const awayTeamDefense = inGamePlayerStats.getElementById("awayTeamDefense");
-		const awayTeamGoalies = inGamePlayerStats.getElementById("awayTeamGoalies");
 
-		const homeTeamForwards = inGamePlayerStats.getElementById("homeTeamForwards");
-		const homeTeamDefense = inGamePlayerStats.getElementById("homeTeamDefense");
-		const homeTeamGoalies = inGamePlayerStats.getElementById("homeTeamGoalies");
+		const inGameAwayStatsButton = document.getElementById("inGameAwayStatsButton");
+		const inGameHomeStatsButton = document.getElementById("inGameHomeStatsButton");
+		const inGameAwayTeam = document.getElementById("inGameAwayTeam");
+		const inGameHomeTeam = document.getElementById("inGameHomeTeam");
+		inGameAwayStatsButton.addEventListener('click', function () {
+			hide(inGameHomeTeam);
+			removeClass(inGameHomeStatsButton, "selected");
+			show(inGameAwayTeam);
+			addClass(inGameAwayStatsButton, "selected");
+		}, false);
+		inGameHomeStatsButton.addEventListener('click', function () {
+			hide(inGameAwayTeam);
+			removeClass(inGameAwayStatsButton, "selected");
+			show(inGameHomeTeam);
+			addClass(inGameHomeStatsButton, "selected");
+		}, false);
+
+		const inGameAwayPlayerStatsTeamName = document.getElementById("inGameAwayPlayerStatsTeamName");
+		const inGameHomePlayerStatsTeamName = document.getElementById("inGameHomePlayerStatsTeamName");
+		inGameAwayStatsButton.innerHTML = awayTeamName;
+		inGameHomeStatsButton.innerHTML = homeTeamName;
+		inGameAwayPlayerStatsTeamName.innerHTML = awayTeamName;
+		inGameHomePlayerStatsTeamName.innerHTML = homeTeamName;
+
+		const inGameAwayTeamForwards = document.getElementById("inGameAwayTeamForwards");
+		const inGameAwayTeamDefense = document.getElementById("inGameAwayTeamDefense");
+		const inGameAwayTeamGoalies = document.getElementById("inGameAwayTeamGoalies");
+
+		const inGameHomeTeamForwards = document.getElementById("inGameHomeTeamForwards");
+		const inGameHomeTeamDefense = document.getElementById("inGameHomeTeamDefense");
+		const inGameHomeTeamGoalies = document.getElementById("inGameHomeTeamGoalies");
 		
 		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
 		const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
@@ -506,13 +589,13 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 			const player = awayTeamPlayers[i];
 			switch(player.position.type) {
 				case "Defenseman":
-					addInGamePlayerStat(player, awayTeamDefense);
+					addInGamePlayerStat(player, inGameAwayTeamDefense);
 					break;
 				case "Forward":
-					addInGamePlayerStat(player, awayTeamForwards);
+					addInGamePlayerStat(player, inGameAwayTeamForwards);
 					break;
 				case "Goalie":
-					addInGamePlayerStat(player, awayTeamGoalies);
+					addInGamePlayerStat(player, inGameAwayTeamGoalies);
 					break;
 			}
 		}
@@ -521,13 +604,13 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 			const player = homeTeamPlayers[i];
 			switch(player.position.type) {
 				case "Defenseman":
-					addInGamePlayerStat(player, homeTeamDefense);
+					addInGamePlayerStat(player, inGameHomeTeamDefense);
 					break;
 				case "Forward":
-					addInGamePlayerStat(player, homeTeamForwards);
+					addInGamePlayerStat(player, inGameHomeTeamForwards);
 					break;
 				case "Goalie":
-					addInGamePlayerStat(player, homeTeamGoalies);
+					addInGamePlayerStat(player, inGameHomeTeamGoalies);
 					break;
 			}
 		}
@@ -629,7 +712,8 @@ function setFooterLinkHref(gameStatus) {
 	}
 }
 
-function addInGamePlayerStat(player, element) {	
+function addInGamePlayerStat(player, element) {
+	console.loge(player);
 	const playerName = player.person.fullName.split(" ");
 	const statLine = document.createElement("div");
 	statLine.addClass("playerStatsLine");
@@ -773,6 +857,12 @@ function addPlayerStat(player, element, isGoalie) {
 	element.appendChild(stats);*/
 }
 
+function startInGameDataUpdateTimerIfNeeded() {
+	if (gameTimeDataRefreshTimer == false) {
+		gameTimeDataRefreshTimer = setInterval(updateData, 1000);
+	}
+}
+
 function drawAwayLogo(icon) {
 	const headingAwayImage = document.getElementById("headingAwayImage");
 	headingAwayImage.src = icon;
@@ -783,17 +873,37 @@ function drawHomeLogo(icon) {
 	headingHomeImage.src = icon;
 }
 
+function setActiveTab(elementToShow, gameStatusToCheck) {
+	if (firstOpen && gameStatus == gameStatusToCheck) {
+		hideShowElements(elementToShow);
+		firstOpen = false;
+	}
+	if (!firstOpen && gameStatus != gameStatusToCheck) {
+		hideShowElements(elementToShow);
+	}
+}
+
 function hideShowElements(elementToShow) {
 	if (rink === elementToShow) {
 		show(rink);
+		addClass(liveTab, 'tabSelected');
 	} else {
 		hide(rink);
+		removeClass(liveTab, 'tabSelected');
 	}
 
 	if (teamStats === elementToShow) {
 		show(teamStats);
+		addClass(teamStatsTab, 'tabSelected');
 	} else {
 		hide(teamStats);
+		removeClass(teamStatsTab, 'tabSelected');
+	}
+	
+	if (inGamePlayerStats === elementToShow) {
+		show(inGamePlayerStats);
+	} else {
+		hide(inGamePlayerStats);
 	}
 
 	if (playerStats === elementToShow) {
@@ -801,11 +911,25 @@ function hideShowElements(elementToShow) {
 	} else {
 		hide(playerStats);
 	}
+	
+	if (noGamePlayerStats === elementToShow) {
+		show(noGamePlayerStats);
+	} else {
+		hide(noGamePlayerStats);
+	}
+	
+	if (inGamePlayerStats === elementToShow || playerStats === elementToShow || noGamePlayerStats === elementToShow) {
+		addClass(playerStatsTab, 'tabSelected');
+	} else {
+		removeClass(playerStatsTab, 'tabSelected');
+	}
 
 	if (standings === elementToShow) {
 		show(standings);
+		addClass(standingsTab, 'tabSelected');
 	} else {
 		hide(standings);
+		removeClass(standingsTab, 'tabSelected');
 	}
 }
 
