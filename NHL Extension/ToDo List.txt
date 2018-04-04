@@ -1,12 +1,13 @@
 To-Do List:
+-Cycle forwards in a similar fashion to the defensemen for the rink view
+-Figure out why the players' stats are not being added to the view
 -Finish implementation of sections (rink, player stats, team stats, and standings) in JS
 -Onclick functions for the tabs and buttons
--Player tooltips for rink
 -Tooltips for stat abbreviations
 -Links for teams in standings?
 -Deal with extra overtimes in playoff games
 -Better implementation for bug reporting
--Add SH or PP to badge text for short-handed or power play
+-Add SH or PP to badge text for short-handed or power play and something for UI.
 -Clean up code!
   -Add more functions for more readability
   -Make the game states an enum and make the if-else statements a switch
