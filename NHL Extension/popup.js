@@ -7,6 +7,7 @@ var awayTeamName = "";
 var awayTeamOnIce = [];
 var awayTeamDefense = [];
 var firstOpen = true;
+var firstStatsSet = true;
 var gameStatus = "None";
 var homeScore = "0";
 var homeTeamIcon = "logos/nhl.png";
@@ -251,9 +252,9 @@ function setNoGame() {
 	setActiveTab(noGamePlayerStats, "None");
 	
 	// Get the correct gameInfo here
-	setHeadingSection(gameInfo, "none");
-	setPlayerStatsSection(gameInfo, "none");
-	setStandingsSection(gameInfo, "none");
+	setHeadingSection(null, "none");
+	setPlayerStatsSection(null, "none");
+	setStandingsSection(null, "none");
 }
 
 function setHeadingSection(gameInfo, gameStatus) {
@@ -507,8 +508,10 @@ function setTeamStatsSection(gameInfo) {
 
 function setPlayerStatsSection(gameInfo, gameStatus) {
 	if (gameStatus === "preview") {
-		const playerStats = document.getElementById("playerStats");
-		playerStats.innerHTML = "Coming Soon";
+		const awayPlayerStatsTeamName = document.getElementById("awayPlayerStatsTeamName");
+		awayPlayerStatsTeamName.innerHTML = "Coming Soon!";
+		const homePlayerStatsTeamName = document.getElementById("homePlayerStatsTeamName");
+		homePlayerStatsTeamName.innerHTML = "Coming Soon!";
 		/*const awayTeamForwards = inGamePlayerStats.getElementById("awayTeamForwards");
 		const awayTeamDefense = inGamePlayerStats.getElementById("awayTeamDefense");
 		const awayTeamGoalies = inGamePlayerStats.getElementById("awayTeamGoalies");
@@ -577,16 +580,23 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 		const inGameAwayTeamForwards = document.getElementById("inGameAwayTeamForwards");
 		const inGameAwayTeamDefense = document.getElementById("inGameAwayTeamDefense");
 		const inGameAwayTeamGoalies = document.getElementById("inGameAwayTeamGoalies");
+		clearElement(inGameAwayTeamForwards);
+		clearElement(inGameAwayTeamDefense);
+		clearElement(inGameAwayTeamGoalies);
 
 		const inGameHomeTeamForwards = document.getElementById("inGameHomeTeamForwards");
 		const inGameHomeTeamDefense = document.getElementById("inGameHomeTeamDefense");
 		const inGameHomeTeamGoalies = document.getElementById("inGameHomeTeamGoalies");
+		clearElement(inGameHomeTeamForwards);
+		clearElement(inGameHomeTeamDefense);
+		clearElement(inGameHomeTeamGoalies);
 		
 		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
 		const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
 
-		for(var i = 0; i < awayTeamPlayers.length; i++) {
-			const player = awayTeamPlayers[i];
+		for(const playerID in awayTeamPlayers) {
+			const player = awayTeamPlayers[playerID];
+			isGoalie = false;
 			switch(player.position.type) {
 				case "Defenseman":
 					addInGamePlayerStat(player, inGameAwayTeamDefense);
@@ -595,13 +605,15 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 					addInGamePlayerStat(player, inGameAwayTeamForwards);
 					break;
 				case "Goalie":
+					isGoalie = true;
 					addInGamePlayerStat(player, inGameAwayTeamGoalies);
 					break;
 			}
 		}
 		
-		for(var i = 0; i < homeTeamPlayers.length; i++) {
-			const player = homeTeamPlayers[i];
+		for(const playerID in homeTeamPlayers) {
+			const player = homeTeamPlayers[playerID];
+			isGoalie = false;
 			switch(player.position.type) {
 				case "Defenseman":
 					addInGamePlayerStat(player, inGameHomeTeamDefense);
@@ -610,6 +622,7 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 					addInGamePlayerStat(player, inGameHomeTeamForwards);
 					break;
 				case "Goalie":
+					isGoalie = true;
 					addInGamePlayerStat(player, inGameHomeTeamGoalies);
 					break;
 			}
@@ -651,8 +664,8 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 				}
 			}
 		}*/
-		const noGamePlayerStats = document.getElementById("noGamePlayerStats");
-		noGamePlayerStats.innerHTML = "Coming Soon";
+		const noGamePlayerStatsTeamName = document.getElementById("noGamePlayerStatsTeamName");
+		noGamePlayerStatsTeamName.innerHTML = "Coming Soon!";
 	}
 }
 
@@ -713,68 +726,92 @@ function setFooterLinkHref(gameStatus) {
 }
 
 function addInGamePlayerStat(player, element) {
-	console.loge(player);
 	const playerName = player.person.fullName.split(" ");
 	const statLine = document.createElement("div");
-	statLine.addClass("playerStatsLine");
-	const nameNumber = document.createElement("div").addClass("nameNumber");
-	const number = document.createElement("div").addClass("number");
-	const name = document.createElement("div").addClass("name");
-	nameNumber.appendChild(number.appendChild(document.createTextNode(player.jerseyNumber)));
-	nameNumber.appendChild(name.appendChild(document.createTextNode(playerName[playerName.length - 1])));
+	addClass(statLine, "playerStatsLine");
+	const nameNumber = document.createElement("div");
+	addClass(nameNumber, "nameNumber");
+	const number = document.createElement("div");
+	addClass(number, "number");
+	number.innerHTML = player.jerseyNumber;
+	const name = document.createElement("div");
+	addClass(name, "name");
+	name.innerHTML = playerName[playerName.length - 1];
+	nameNumber.appendChild(number);
+	nameNumber.appendChild(name);
 	statLine.appendChild(nameNumber);
-	const stats = document.createElement("div").addClass("stats");
+	const stats = document.createElement("div");
+	addClass(stats, "stats");
 	if (player.stats) {
 		if (!isGoalie) {
-			const shots = document.createElement("div").addClass("stat");
+			const shots = document.createElement("div");
+			addClass(shots, "stat");
 			shots.innerHTML = player.stats.skaterStats.shots;
 			stats.appendChild(shots);
-			const goals = document.createElement("div").addClass("stat");
+			const goals = document.createElement("div");
+			addClass(goals, "stat");
 			goals.innerHTML = player.stats.skaterStats.goals;
 			stats.appendChild(goals);
-			const assists = document.createElement("div").addClass("stat");
+			const assists = document.createElement("div");
+			addClass(assists, "stat");
 			assists.innerHTML = player.stats.skaterStats.assists;
 			stats.appendChild(assists);
-			const points = document.createElement("div").addClass("stat");
+			const points = document.createElement("div");
+			addClass(points, "stat");
 			points.innerHTML = player.stats.skaterStats.assists + player.stats.skaterStats.goals;
 			stats.appendChild(points);
-			const plusMinus = document.createElement("div").addClass("stat");
+			const plusMinus = document.createElement("div");
+			addClass(plusMinus, "stat");
 			plusMinus.innerHTML = player.stats.skaterStats.plusMinus;
 			stats.appendChild(plusMinus);
-			const penaltyMinutes = document.createElement("div").addClass("stat");
+			const penaltyMinutes = document.createElement("div");
+			addClass(penaltyMinutes, "stat");
 			penaltyMinutes.innerHTML = player.stats.skaterStats.penaltyMinutes;
 			stats.appendChild(penaltyMinutes);
-			const powerPlay = document.createElement("div").addClass("stat");
+			const powerPlay = document.createElement("div");
+			addClass(powerPlay, "stat");
 			powerPlay.innerHTML = player.stats.skaterStats.powerPlayGoals;
 			stats.appendChild(powerPlay);
-			const shortHanded = document.createElement("div").addClass("stat");
+			const shortHanded = document.createElement("div");
+			addClass(shortHanded, "stat");
 			shortHanded.innerHTML = player.stats.skaterStats.shortHandedGoals;
 			stats.appendChild(shortHanded);
 		} else {
-			const evenShotsAgainst = document.createElement("div").addClass("stat");
+			const evenShotsAgainst = document.createElement("div");
+			addClass(evenShotsAgainst, "stat");
 			evenShotsAgainst.innerHTML = player.stats.goalieStats.evenShotsAgainst;
 			stats.appendChild(evenShotsAgainst);
-			const powerPlayShotsAgainst = document.createElement("div").addClass("stat");
+			const powerPlayShotsAgainst = document.createElement("div");
+			addClass(powerPlayShotsAgainst, "stat");
 			powerPlayShotsAgainst.innerHTML = player.stats.goalieStats.powerPlayShotsAgainst;
 			stats.appendChild(powerPlayShotsAgainst);
-			const shortHandedShotsAgainst = document.createElement("div").addClass("stat");
+			const shortHandedShotsAgainst = document.createElement("div");
+			addClass(shortHandedShotsAgainst, "stat");
 			shortHandedShotsAgainst.innerHTML = player.stats.goalieStats.shortHandedShotsAgainst;
 			stats.appendChild(shortHandedShotsAgainst);
-			const savesShotsAgainst = document.createElement("div").addClass("stat");
-			savesShotsAgainst.innerHTML = player.stats.goalieStats.savePercentage + "%-" + player.stats.goalieStats.shots;
+			const savesShotsAgainst = document.createElement("div");
+			addClass(savesShotsAgainst, "stat");
+			addClass(savesShotsAgainst, "savesShots");
+			savesShotsAgainst.innerHTML = player.stats.goalieStats.saves + "-" + player.stats.goalieStats.shots;
 			stats.appendChild(savesShotsAgainst);
-			const savePercent = document.createElement("div").addClass("stat");
-			savePercent.innerHTML = player.stats.goalieStats.savePercentage + "%";
+			const savePercent = document.createElement("div");
+			addClass(savePercent, "stat");
+			let savePercentText = Number(player.stats.goalieStats.savePercentage);
+			savePercentText = savePercentText ? savePercentText : 0;
+			savePercent.innerHTML = savePercentText.toFixed(2) + "%";
 			stats.appendChild(savePercent);
-			const penaltyMinutes = document.createElement("div").addClass("stat");
+			const penaltyMinutes = document.createElement("div");
+			addClass(penaltyMinutes, "stat");
 			penaltyMinutes.innerHTML = player.stats.goalieStats.pim;
 			stats.appendChild(penaltyMinutes);
-			const timeOnIce = document.createElement("div").addClass("stat");
+			const timeOnIce = document.createElement("div");
+			addClass(timeOnIce, "stat");
 			timeOnIce.innerHTML = player.stats.goalieStats.timeOnIce;
 			stats.appendChild(timeOnIce);
 		}
 	}
-	element.appendChild(stats);
+	statLine.appendChild(stats)
+	element.appendChild(statLine);
 }
 
 function addPlayerStat(player, element, isGoalie) {
@@ -954,5 +991,11 @@ function hide(element) {
 function show(element) {
 	if (element && element.classList.contains("hidden")) {
 		element.classList.remove("hidden");
+	}
+}
+
+function clearElement(element) {
+	while (element.lastChild) {
+			element.removeChild(element.lastChild);
 	}
 }

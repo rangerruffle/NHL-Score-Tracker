@@ -1,4 +1,7 @@
 To-Do List:
+-Order player stats by number
+-Center numbers in column and make the player name line up with the others in the column
+-Loading spinner
 -Cycle forwards in a similar fashion to the defensemen for the rink view
 -Figure out why the players' stats are not being added to the view
 -Finish implementation of sections (rink, player stats, team stats, and standings) in JS
