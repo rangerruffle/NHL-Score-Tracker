@@ -215,21 +215,16 @@ function updateGameData(yyyy, mm, dd) {
 					localGameTime = getTimeZoneAdjustedTime(dateTime);
 					gameLiveLink = scheduleInfo.dates[0].games[0].link;
 				} else {
-					currentGameId = false;
-					chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
-					chrome.browserAction.setBadgeText({text: ""});
-					drawLogo(teamIcon, false);
+					setNoGame();
 				}
 			} else {
-				currentGameId = false;
-				chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
-				chrome.browserAction.setBadgeText({text: ""});
-				drawLogo(teamIcon, false);
+				setNoGame();
 			}
 		}
 	}
 
-	setTimeout(function() {
+	setTimeout(
+		function() {
 			if (currentGameId) {
 				var gameXmlHttp = new XMLHttpRequest();
 				gameXmlHttp.open("GET", "https://statsapi.web.nhl.com/" + gameLiveLink);
@@ -292,24 +287,46 @@ function updateGameData(yyyy, mm, dd) {
 								}
 								
 								var period = gameInfo.liveData.linescore.currentPeriod;
-								var isShootout = period === 5;
-								switch (period) {
-									case 1:
-										period = "the 1st period";
-										break;
-									case 2:
-										period = "the 2nd period";
-										break;
-									case 3:
-										period = "the 3rd period";
-										break;
-									case 4:
-										period = "overtime";
-										break;
-									case 5:
-										period = "the shootout";
-										break;
+								var isShootout = false;
+								if (game.game.type === "R") {
+									isShootout = period === 5;
+									switch (period) {
+										case 1:
+											period = "the 1st period";
+											break;
+										case 2:
+											period = "the 2nd period";
+											break;
+										case 3:
+											period = "the 3rd period";
+											break;
+										case 4:
+											period = "overtime";
+											break;
+										case 5:
+											period = "the shootout";
+											break;
+									}
+								} else if (game.game.type === "P") {
+									isShootout = false;
+									switch (period) {
+										case 1:
+											period = "the 1st period";
+											break;
+										case 2:
+											period = "the 2nd period";
+											break;
+										case 3:
+											period = "the 3rd period";
+											break;
+										case 4:
+											period = "overtime";
+											break;
+										default:
+											period = "the " + getPeriodSuffix(period) + " overtime";
+									}
 								}
+								
 								
 								if (gameInfo.liveData.linescore.currentPeriodTimeRemaining === "END") {
 									tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at the end of " + period + ".";
@@ -335,7 +352,7 @@ function updateGameData(yyyy, mm, dd) {
 								currentlyPreGame = false;
 							} else {
 								badgeText = "TBD";
-								tagText = "The status of the game could not be determined at this time. Please try reselecting your team. If that does not work, please send a bug report to the developer.";
+								tagText = "The status of the game could not be determined at this time. Please try reselecting your team and waiting a second for the system to update. If that does not work, please send a bug report to the developer.";
 							}
 						}
 						
@@ -346,6 +363,7 @@ function updateGameData(yyyy, mm, dd) {
 							chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
 							chrome.browserAction.setBadgeText({text: badgeText});
 						}
+
 						drawLogo(icon, gameToday);
 					}
 				}
@@ -355,9 +373,16 @@ function updateGameData(yyyy, mm, dd) {
 	);
 }
 
+function setNoGame() {
+	currentGameId = false;
+	chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
+	chrome.browserAction.setBadgeText({text: ""});
+	drawLogo(teamIcon, false);
+}
+
 function startInGameDataUpdateTimerIfNeeded() {
 	if (gameTimeDataRefreshTimer == false) {
-		gameTimeDataRefreshTimer = setInterval(updateData, 1000);
+		gameTimeDataRefreshTimer = setInterval(updateData, 10000);
 	}
 }
 
@@ -390,28 +415,44 @@ function drawLogo(logoSource, useColorImage) {
 
 	var bgImage = new Image();
 	bgImage.onload = function() {
-    context.clearRect(0, 0, bgImage.height, bgImage.width);
+	    context.clearRect(0, 0, bgImage.height, bgImage.width);
 		context.drawImage(bgImage, 0, 0);
 		var imageData = context.getImageData(0, 0, 128, 128);
-		
+			
 		if(!useColorImage) {
-      for(var y = 0; y < imageData.height; y++){
-       for(var x = 0; x < imageData.width; x++){
-          var i = (y * 4) * imageData.width + x * 4;
-          var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
-          imageData.data[i] = avg;
-          imageData.data[i + 1] = avg;
-          imageData.data[i + 2] = avg;
-          if(avg > 0) {
-            imageData.data[i + 3] = 100;
-          }
-        }
-      }
-    }
-    
-    chrome.browserAction.setIcon({
+			for(var y = 0; y < imageData.height; y++){
+				for(var x = 0; x < imageData.width; x++){
+					var i = (y * 4) * imageData.width + x * 4;
+					var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
+					imageData.data[i] = avg;
+					imageData.data[i + 1] = avg;
+					imageData.data[i + 2] = avg;
+					if(avg > 0) {
+					imageData.data[i + 3] = 100;
+					}
+				}
+			}
+	    }
+	    
+	    chrome.browserAction.setIcon({
 		  imageData: imageData
 		});
 	};
+
 	bgImage.src = logoSource;
+}
+
+function getPeriodSuffix(period) {
+    const moduloTen = period % 10;
+    const moduleHundred = period % 100;
+
+    if (moduloTen == 1 && moduleHundred != 11) {
+        return period + "st";
+    } else if (moduloTen == 2 && moduleHundred != 12) {
+        return period + "nd";
+    } else if (moduloTen == 3 && moduleHundred != 13) {
+        return period + "rd";
+    }
+
+    return period + "th";
 }
