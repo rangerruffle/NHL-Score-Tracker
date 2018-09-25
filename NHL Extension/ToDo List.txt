@@ -1,18 +1,22 @@
 To-Do List:
--Order player stats by number
--Center numbers in column and make the player name line up with the others in the column
--Loading spinner
--Cycle forwards in a similar fashion to the defensemen for the rink view
--Figure out why the players' stats are not being added to the view
--Finish implementation of sections (rink, player stats, team stats, and standings) in JS
--Onclick functions for the tabs and buttons
--Tooltips for stat abbreviations
--Links for teams in standings?
--Deal with extra overtimes in playoff games
--Better implementation for bug reporting
--Add SH or PP to badge text for short-handed or power play and something for UI.
--Clean up code!
-  -Add more functions for more readability
-  -Make the game states an enum and make the if-else statements a switch
-  -Clean up CSS
-  -Clean up HTML?
+-High Pri:
+
+-Next Season:
+	-Center numbers in column and make the player name line up with the others in the column
+	-Loading spinner
+	-Cycle forwards in a similar fashion to the defensemen for the rink view
+	-Figure out why the players' stats are not being added to the view
+	-Finish implementation of sections (rink, player stats, team stats, and standings) in JS
+	-Onclick functions for the tabs and buttons
+	-Tooltips for stat abbreviations
+	-Links for teams in standings?
+	-Deal with extra overtimes in playoff games
+	-Better implementation for bug reporting
+	-Add SH or PP to badge text for short-handed or power play and something for UI.
+	
+-Wishlist:
+	-Clean up code!
+		-Add more functions for more readability
+		-Make the game states an enum and make the if-else statements a switch
+		-Clean up CSS
+		-Clean up HTML?

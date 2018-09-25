@@ -1,6 +1,3 @@
-const teams = [ "Avalanche", "Blackhawks", "Blue Jackets", "Blues", "Bruins", "Canadiens", "Canucks", "Capitals", "Coyotes", "Devils", "Ducks", "Flames", "Flyers", "Golden Knights", "Hurricanes", "Islanders", "Jets", "Kings", "Lightning", "Maple Leafs", "Oilers", "Panthers", "Penguins", "Predators", "Rangers", "Red Wings", "Sabres", "Senators", "Sharks", "Stars", "Wild" ];
-const teamIds = { "Avalanche": 21, "Blackhawks": 16, "Blue Jackets": 29, "Blues": 19, "Bruins": 6, "Canadiens": 8, "Canucks": 23, "Capitals": 15, "Coyotes": 53, "Devils": 1, "Ducks": 24, "Flames": 20, "Flyers": 4, "Golden Knights": 54, "Hurricanes": 12, "Islanders": 2, "Jets": 52, "Kings": 26, "Lightning": 14, "Maple Leafs": 10, "Oilers": 22, "Panthers": 13, "Penguins": 5, "Predators": 18, "Rangers": 3, "Red Wings": 17, "Sabres": 7, "Senators": 9, "Sharks": 28, "Stars": 25, "Wild": 30 };
-
 var awayScore = "0";
 var awayTeamIcon = "logos/nhl.png";
 var awayTeamName = "";
@@ -15,13 +12,6 @@ var homeTeamName = "";
 var homeTeamOnIce = [];
 var homeTeamDefense = [];
 var otherTeamName = "";
-var teamName = "";
-var teamIcon = "logos/nhl.png";
-var teamId = "";
-var timeZone = "US/Central";
-var todayYear = "";
-var todayMonth = "";
-var todayDay = "";
 
 // Tabs
 var previewTab;
@@ -42,39 +32,7 @@ var standings;
 // Footer
 var nhlLink;
 
-chrome.storage.sync.get([ "trackedTeamName","trackedTimeZone" ], function(result) {
-	if (result.trackedTeamName) {
-		teamName = result.trackedTeamName;
-		teamIcon = "logos/" + result.trackedTeamName + ".png";
-		teamId = teamIds[teamName];
-	}
-	
-	if (result.trackedTimeZone) {
-		timeZone = result.trackedTimeZone;
-	}
-});
-
-var gameTimeDataRefreshTimer = setInterval(updateData, 1000);
-
-function updateData() {
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth() + 1;
-	var yyyy = today.getFullYear();
-	
-	if (mm < 10) {
-		mm = "0" + mm;
-	}
-	if (dd < 10) {
-		dd = "0" + dd;
-	}
-	
-	todayYear = yyyy;
-	todayMonth = mm;
-	todayDay = dd;
-	
-	updateGameData(yyyy, mm, dd);
-}
+CommonUtilities.init("NHLScoreTrackerPopup");
 
 function updateGameData(yyyy, mm, dd) {
 	previewTab = document.getElementById("previewTab");
@@ -92,14 +50,13 @@ function updateGameData(yyyy, mm, dd) {
 	
 	nhlLink = document.getElementById("nhlLink");
 	
-	setListeners();
+	setTabListeners();
 
 	teamId = teamIds[teamName];
 	var gameLiveLink = "";
 	var localGameTime = false;
 	var scheduleXmlHttp = new XMLHttpRequest();
 	scheduleXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId);
-	scheduleXmlHttp.send(null);
 	scheduleXmlHttp.onreadystatechange = function () {
 		if (scheduleXmlHttp.readyState == 4 && scheduleXmlHttp.status == 200) {
 			var scheduleInfo = JSON.parse(scheduleXmlHttp.responseText);
@@ -120,12 +77,11 @@ function updateGameData(yyyy, mm, dd) {
 			}
 		}
 	}
-
-	setTimeout(function() {
+	
+	Promise.resolve(scheduleXmlHttp.onreadystatechange()).then(function() {
 		if (currentGameId) {
 			var gameXmlHttp = new XMLHttpRequest();
 			gameXmlHttp.open("GET", "https://statsapi.web.nhl.com/" + gameLiveLink);
-			gameXmlHttp.send(null);
 			gameXmlHttp.onreadystatechange = function() {
 				if (gameXmlHttp.readyState == 4 && gameXmlHttp.status == 200) {
 					const gameInfo = JSON.parse(gameXmlHttp.responseText);
@@ -174,11 +130,14 @@ function updateGameData(yyyy, mm, dd) {
 					}
 				}
 			}
+			Promise.resolve(gameXmlHttp.onreadystatechange());
+			gameXmlHttp.send(null);
 		}
-	}, 250);
+	});
+	scheduleXmlHttp.send(null);
 }
 
-function setListeners() {
+function setTabListeners() {
 	previewTab.addEventListener('click', function () {hideShowElements(preview);}, false);
 	liveTab.addEventListener('click', function () {hideShowElements(rink);}, false);
 	teamStatsTab.addEventListener('click', function () {hideShowElements(teamStats);}, false);
@@ -967,35 +926,5 @@ function hideShowElements(elementToShow) {
 	} else {
 		hide(standings);
 		removeClass(standingsTab, 'tabSelected');
-	}
-}
-
-function addClass(element, className) {
-	if (element && !element.classList.contains(className)) {
-		element.classList.add(className);
-	}
-}
-
-function removeClass(element, className) {
-	if (element && element.classList.contains(className)) {
-		element.classList.remove(className);
-	}
-}
-
-function hide(element) {
-	if (element && !element.classList.contains("hidden")) {
-		element.classList.add("hidden");
-	}
-}
-
-function show(element) {
-	if (element && element.classList.contains("hidden")) {
-		element.classList.remove("hidden");
-	}
-}
-
-function clearElement(element) {
-	while (element.lastChild) {
-			element.removeChild(element.lastChild);
 	}
 }
