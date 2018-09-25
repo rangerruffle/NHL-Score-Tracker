@@ -138,19 +138,14 @@ updateGameData: function(yyyy, mm, dd) {
 					localGameTime = getTimeZoneAdjustedTime(dateTime);
 					gameLiveLink = scheduleInfo.dates[0].games[0].link;
 				} else {
-					currentGameId = false;
-					chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
-					chrome.browserAction.setBadgeText({text: ""});
-					drawLogo(teamIcon, false);
+					setNoGame();
 				}
 			} else {
-				currentGameId = false;
-				chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
-				chrome.browserAction.setBadgeText({text: ""});
-				drawLogo(teamIcon, false);
+				setNoGame();
 			}
 		}
 	}
+<<<<<<< HEAD
 	
 	Promise.resolve(scheduleXmlHttp.onreadystatechange()).then(function() {
 		if (currentGameId) {
@@ -177,6 +172,27 @@ updateGameData: function(yyyy, mm, dd) {
 						var goalie = "";
 						var venue = game.teams.home.venue.name;
 						otherTeamName = teamIsHome ? game.teams.away.teamName : game.teams.home.teamName;
+=======
+
+	setTimeout(
+		function() {
+			if (currentGameId) {
+				var gameXmlHttp = new XMLHttpRequest();
+				gameXmlHttp.open("GET", "https://statsapi.web.nhl.com/" + gameLiveLink);
+				gameXmlHttp.send(null);
+				gameXmlHttp.onreadystatechange = function() {
+					if (gameXmlHttp.readyState == 4 && gameXmlHttp.status == 200) {
+						var gameInfo = JSON.parse(gameXmlHttp.responseText);
+						var game = gameInfo.gameData;
+						teamIsHome = game.teams.home.id === teamId;
+						awayTeamInitial = game.teams.away.abbreviation.toLowerCase();
+						homeTeamInitial = game.teams.home.abbreviation.toLowerCase();
+						
+						var tagText = "No " + teamName + " game today.";
+						var badgeText = "";
+						var icon = teamIcon;
+						var gameToday = currentGameId != false;
+>>>>>>> origin/master
 						
 						if (game.status.abstractGameState == "Preview") {
 							tagText = teamName + " vs " + otherTeamName + " at " + venue + ". Puck drops at " + localGameTime + ".";
@@ -194,6 +210,7 @@ updateGameData: function(yyyy, mm, dd) {
 								icon = winIcon;
 							}
 							
+<<<<<<< HEAD
 							tagText = "The " + teamName + " " + gameResult + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at " + venue;
 							badgeText = awayScore + "-" + homeScore;
 							
@@ -243,6 +260,100 @@ updateGameData: function(yyyy, mm, dd) {
 									if (teamIsHome) {
 										teamScore = home;
 										otherTeamScore = away;
+=======
+							if (game.status.abstractGameState == "Preview") {
+								tagText = teamName + " vs " + otherTeamName + " at " + venue + ". Puck drops at " + localGameTime + ".";
+								badgeText = localGameTime.substring(0, localGameTime.length - 2);
+								currentlyPreGame = true;
+							} else if (game.status.abstractGameState == "Final") {
+								var gameResult;
+								var teamScore = teamIsHome ? homeScore : awayScore;
+								var otherTeamScore = teamIsHome ? awayScore : homeScore;
+								if (otherTeamScore > teamScore) {
+									gameResult = "lost to";
+									icon = lossIcon;
+								} else {
+									gameResult = "beat";
+									icon = winIcon;
+								}
+								
+								tagText = "The " + teamName + " " + gameResult + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at " + venue;
+								badgeText = awayScore + "-" + homeScore;
+								
+								if (gameTimeDataRefreshTimer) {
+									window.clearInterval(gameTimeDataRefreshTimer);
+									gameTimeDataRefreshTimer = false;
+								}
+								currentlyPreGame = false;
+							} else if (game.status.abstractGameState == "Live") {
+								var scoreStatus;
+								var teamScore = teamIsHome ? homeScore : awayScore;
+								var otherTeamScore = teamIsHome ? awayScore : homeScore;
+								if (teamScore > otherTeamScore) {
+									scoreStatus = "leading";
+								} else if (teamScore < otherTeamScore) {
+									scoreStatus = "trailing"
+								} else if (awayScore == homeScore) {
+									scoreStatus = "tied with";
+								}
+								
+								var period = gameInfo.liveData.linescore.currentPeriod;
+								var isShootout = false;
+								if (game.game.type === "R") {
+									isShootout = period === 5;
+									switch (period) {
+										case 1:
+											period = "the 1st period";
+											break;
+										case 2:
+											period = "the 2nd period";
+											break;
+										case 3:
+											period = "the 3rd period";
+											break;
+										case 4:
+											period = "overtime";
+											break;
+										case 5:
+											period = "the shootout";
+											break;
+									}
+								} else if (game.game.type === "P") {
+									isShootout = false;
+									switch (period) {
+										case 1:
+											period = "the 1st period";
+											break;
+										case 2:
+											period = "the 2nd period";
+											break;
+										case 3:
+											period = "the 3rd period";
+											break;
+										case 4:
+											period = "overtime";
+											break;
+										default:
+											period = "the " + getPeriodSuffix(period) + " overtime";
+									}
+								}
+								
+								
+								if (gameInfo.liveData.linescore.currentPeriodTimeRemaining === "END") {
+									tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at the end of " + period + ".";
+								} else {
+									if (isShootout) {
+										home = gameInfo.liveData.linescore.shootoutInfo.home.scores;
+										away = gameInfo.liveData.linescore.shootoutInfo.away.scores;
+										if (teamIsHome) {
+											teamScore = home;
+											otherTeamScore = away;
+										} else {
+											teamScore = away;
+											otherTeamScore = home;
+										}
+										tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period;
+>>>>>>> origin/master
 									} else {
 										teamScore = away;
 										otherTeamScore = home;
@@ -251,6 +362,16 @@ updateGameData: function(yyyy, mm, dd) {
 								} else {
 									tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period + " with " + gameInfo.liveData.linescore.currentPeriodTimeRemaining + " remaining";
 								}
+<<<<<<< HEAD
+=======
+								
+								badgeText = awayScore + "-" + homeScore;
+								startInGameDataUpdateTimerIfNeeded();
+								currentlyPreGame = false;
+							} else {
+								badgeText = "TBD";
+								tagText = "The status of the game could not be determined at this time. Please try reselecting your team and waiting a second for the system to update. If that does not work, please send a bug report to the developer.";
+>>>>>>> origin/master
 							}
 							
 							badgeText = awayScore + "-" + homeScore;
@@ -260,6 +381,19 @@ updateGameData: function(yyyy, mm, dd) {
 							badgeText = "TBD";
 							tagText = "The status of the game could not be determined at this time. Please try reselecting your team. If that does not work, please send a bug report to the developer.";
 						}
+<<<<<<< HEAD
+=======
+						
+						if (tagText) {
+							chrome.browserAction.setTitle({title: tagText});
+						}
+						if (badgeText !== false) {
+							chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+							chrome.browserAction.setBadgeText({text: badgeText});
+						}
+
+						drawLogo(icon, gameToday);
+>>>>>>> origin/master
 					}
 					
 					if (tagText) {
@@ -275,7 +409,21 @@ updateGameData: function(yyyy, mm, dd) {
 		}
 	});
 
+<<<<<<< HEAD
 	scheduleXmlHttp.send(null);
+=======
+function setNoGame() {
+	currentGameId = false;
+	chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
+	chrome.browserAction.setBadgeText({text: ""});
+	drawLogo(teamIcon, false);
+}
+
+function startInGameDataUpdateTimerIfNeeded() {
+	if (gameTimeDataRefreshTimer == false) {
+		gameTimeDataRefreshTimer = setInterval(updateData, 10000);
+	}
+>>>>>>> origin/master
 }
 
 getTimeZoneAdjustedTime: function(dateTime) {
@@ -307,28 +455,44 @@ drawLogo: function(logoSource, useColorImage) {
 
 	var bgImage = new Image();
 	bgImage.onload = function() {
-    context.clearRect(0, 0, bgImage.height, bgImage.width);
+	    context.clearRect(0, 0, bgImage.height, bgImage.width);
 		context.drawImage(bgImage, 0, 0);
 		var imageData = context.getImageData(0, 0, 128, 128);
-		
+			
 		if(!useColorImage) {
-      for(var y = 0; y < imageData.height; y++){
-       for(var x = 0; x < imageData.width; x++){
-          var i = (y * 4) * imageData.width + x * 4;
-          var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
-          imageData.data[i] = avg;
-          imageData.data[i + 1] = avg;
-          imageData.data[i + 2] = avg;
-          if(avg > 0) {
-            imageData.data[i + 3] = 100;
-          }
-        }
-      }
-    }
-    
-    chrome.browserAction.setIcon({
+			for(var y = 0; y < imageData.height; y++){
+				for(var x = 0; x < imageData.width; x++){
+					var i = (y * 4) * imageData.width + x * 4;
+					var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
+					imageData.data[i] = avg;
+					imageData.data[i + 1] = avg;
+					imageData.data[i + 2] = avg;
+					if(avg > 0) {
+					imageData.data[i + 3] = 100;
+					}
+				}
+			}
+	    }
+	    
+	    chrome.browserAction.setIcon({
 		  imageData: imageData
 		});
 	};
+
 	bgImage.src = logoSource;
+}
+
+function getPeriodSuffix(period) {
+    const moduloTen = period % 10;
+    const moduleHundred = period % 100;
+
+    if (moduloTen == 1 && moduleHundred != 11) {
+        return period + "st";
+    } else if (moduloTen == 2 && moduleHundred != 12) {
+        return period + "nd";
+    } else if (moduloTen == 3 && moduleHundred != 13) {
+        return period + "rd";
+    }
+
+    return period + "th";
 }
