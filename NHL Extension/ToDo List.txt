@@ -1,22 +1,22 @@
 To-Do List:
 -High Pri:
+	-Finish implementation of standings section in JS
+	-Decide how to deal with not enough players on ice.
 
--Next Season:
-	-Center numbers in column and make the player name line up with the others in the column
-	-Loading spinner
-	-Cycle forwards in a similar fashion to the defensemen for the rink view
-	-Figure out why the players' stats are not being added to the view
-	-Finish implementation of sections (rink, player stats, team stats, and standings) in JS
-	-Onclick functions for the tabs and buttons
-	-Tooltips for stat abbreviations
-	-Links for teams in standings?
-	-Deal with extra overtimes in playoff games
+-Low Pri:
+	-Make the UI reflect the selected team's color.
+	-Make toggle switches more clear of which one is selected.
 	-Better implementation for bug reporting
 	-Add SH or PP to badge text for short-handed or power play and something for UI.
+	-Loading spinner?
+	-Center numbers in column and make the player name line up with the others in the column? (Follow how nhl.com does it.)
+	-Make forwards correspond to their actual, current position on the ice?
+
+-Next Season:
 	
 -Wishlist:
 	-Clean up code!
 		-Add more functions for more readability
-		-Make the game states an enum and make the if-else statements a switch
-		-Clean up CSS
+		-Make the game states an enum and make the if-else statements a switch?
+		-Clean up CSS?
 		-Clean up HTML?
