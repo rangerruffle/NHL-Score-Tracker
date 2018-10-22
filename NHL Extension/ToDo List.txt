@@ -2,6 +2,7 @@ To-Do List:
 -High Pri:
 	-Finish implementation of standings section in JS
 	-Decide how to deal with not enough players on ice.
+	-Cache data returned from API calls to avoid max API calls.
 
 -Low Pri:
 	-Make the UI reflect the selected team's color.

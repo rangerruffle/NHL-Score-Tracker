@@ -779,7 +779,6 @@ function getNonLivePlayersPromises(team) {
 function getTeamDataPromise(team) {
 	return new Promise(function(resolve, reject) {
 		var teamXmlHttp = new XMLHttpRequest();
-		console.log(team);
 		teamXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/teams/" + team + "/roster");
 
 		teamXmlHttp.onload = function() {
@@ -845,38 +844,66 @@ function setStandingsSection() {
 	const wildCardStandingsButton = document.getElementById("wildCardStandingsButton");
 	const conferenceStandingsButton = document.getElementById("conferenceStandingsButton");
 	const leagueStandingsButton = document.getElementById("leagueStandingsButton");
-	const divisionStandings = document.getElementById("divisionStandings");
-	const division = document.getElementById("division");
+	inGameAwayStatsButton.addEventListener('click', function () {
+		hide(inGameHomeTeam);
+		removeClass(inGameHomeStatsButton, "selected");
+		show(inGameAwayTeam);
+		addClass(inGameAwayStatsButton, "selected");
+	}, false);
+	inGameHomeStatsButton.addEventListener('click', function () {
+		hide(inGameAwayTeam);
+		removeClass(inGameAwayStatsButton, "selected");
+		show(inGameHomeTeam);
+		addClass(inGameHomeStatsButton, "selected");
+	}, false);
+
 	const divisionTeamStandings = document.getElementById("divisionTeamStandings");
-	const wildCardStandings = document.getElementById("wildCardStandings");
-	const wildCardDivision1 = document.getElementById("wildCardDivision1");
-	const wildCardDivision1TeamStandings = document.getElementById("wildCardDivision1TeamStandings");
-	const wildCardDivision2 = document.getElementById("wildCardDivision2");
-	const wildCardDivision2TeamStandings = document.getElementById("wildCardDivision2TeamStandings");
-	const wildCardTeamStandings = document.getElementById("wildCardTeamStandings");
-	const conferenceStandings = document.getElementById("conferenceStandings");
-	const conference = document.getElementById("conference");
 	const conferenceTeamStandings = document.getElementById("conferenceTeamStandings");
-	const leagueStandings = document.getElementById("leagueStandings");
 	const leagueTeamStandings = document.getElementById("leagueTeamStandings");
-	// Division, Wild Card, Conference, and League
-	/*
-	Example Standing:
-	<div class="standingsTeamLine"> Add wildCardCutOff class after the second team line in the wild card section of the wild card tab.
-		<div class="standingsTeam">
-			<image class="standingsTeamImage" src="logos/nhl.png"></image>
-			<div class="standingsTeamName">Team Name</div>
-		</div>
-		<div class="stats">
-			<div class="stat">49</div>
-			<div class="stat">18</div>
-			<div class="stat">21</div>
-			<div class="stat">1,408</div>
-			<div class="stat">124</div>
-			<div class="stat">2.79</div>
-		</div>
-	</div>
-	*/
+	clearElement(divisionTeamStandings);
+	clearElement(conferenceTeamStandings);
+	clearElement(leagueTeamStandings);
+
+	const standingsPromise = new Promise(function(resolve, reject) {
+		var standingsXmlHttp = new XMLHttpRequest();
+		standingsXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings");
+
+		standingsXmlHttp.onload = function() {
+			if (standingsXmlHttp.status == 200) {
+				resolve(JSON.parse(standingsXmlHttp.responseText));
+			} else {
+				reject(Error(standingsXmlHttp.statusText));
+			}
+		};
+
+		standingsXmlHttp.onerror = function() {
+			reject(Error("Network Error"));
+		};
+
+		standingsXmlHttp.send();
+	});
+
+	return standingsPromise.then(
+		function(standingsInfo) {
+			const divisions = standingsInfo.records;
+			console.log(divisions);
+			// for (var i = 0; i < divisions.length; i++) {
+			// 	if (divisions[i].division.id == commonUtilities.getTeamDivisionId()) {
+			// 		addDivisionLines(divisions[i], divisionTeamStandings);
+			// 		addWildCardLines(divisions[i]);
+			// 	}
+
+			// 	if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
+			// 		addConferenceLines(divisions[i], conferenceTeamStandings);
+			// 	}
+
+			// 	addLeagueLines(divisions[i], leagueTeamStandings);
+			// }
+		},
+		function(error) {
+			return null;
+		},
+	);
 }
 
 function setFooterLinkHref(gameStatus, currentGameId, awayTeamInitial, homeTeamInitial) {
@@ -904,6 +931,7 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 	const playerName = player.person.fullName.split(" ");
 	const statLine = document.createElement("div");
 	addClass(statLine, "playerStatsLine");
+
 	const nameNumber = document.createElement("div");
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
@@ -915,8 +943,10 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 	nameNumber.appendChild(number);
 	nameNumber.appendChild(name);
 	statLine.appendChild(nameNumber);
+
 	const stats = document.createElement("div");
 	addClass(stats, "stats");
+
 	if (player.stats) {
 		if (!isGoalie) {
 			const shots = document.createElement("div");
@@ -985,6 +1015,7 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 			stats.appendChild(timeOnIce);
 		}
 	}
+
 	statLine.appendChild(stats);
 	element.appendChild(statLine);
 }
@@ -997,9 +1028,11 @@ function addPlayerStat(player, element, isGoalie = false) {
 		return;
 	}
 	stats = stats[0].stat;
+
 	const playerName = person.lastName;
 	const statLine = document.createElement("div");
 	addClass(statLine, "playerStatsLine");
+
 	const nameNumber = document.createElement("div");
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
@@ -1011,8 +1044,10 @@ function addPlayerStat(player, element, isGoalie = false) {
 	nameNumber.appendChild(number);
 	nameNumber.appendChild(name);
 	statLine.appendChild(nameNumber);
+
 	const statsElement = document.createElement("div");
 	addClass(statsElement, "stats");
+
 	if (!isGoalie) {
 		const games = document.createElement("div");
 		addClass(games, "stat");
@@ -1082,6 +1117,76 @@ function addPlayerStat(player, element, isGoalie = false) {
 		shutouts.innerHTML = stats.shutouts;
 		statsElement.appendChild(shutouts);
 	}
+
+	statLine.appendChild(statsElement);
+	element.appendChild(statLine);
+}
+
+function addDivisionLines(division, element) {
+	
+}
+
+function addWildCardLines(division, element) {
+	const wildCardLeadersTeamStandings = document.getElementById("wildCardLeadersTeamStandings");
+	const wildCardTop2TeamStandings = document.getElementById("wildCardTop2TeamStandings");
+	const wildCardTeamStandings = document.getElementById("wildCardTeamStandings");
+	clearElement(wildCardLeadersTeamStandings);
+	clearElement(wildCardTop2TeamStandings);
+	clearElement(wildCardTeamStandings);
+}
+
+function addConferenceLines(conference, element) {
+
+}
+
+function addLeagueLines(standing, element) {
+
+}
+
+function addStandingsLine(team, element) {
+	const statLine = document.createElement("div");
+	addClass(statLine, "standingsTeamLine");
+
+	const standingsTeam = document.createElement("div");
+	addClass(standingsTeam, "standingsTeam");
+	const image = document.createElement("img");
+	addClass(image, "standingsTeamImage");
+	image.src = "logos/" + team.teamName + ".png";
+	const name = document.createElement("div");
+	addClass(name, "standingsTeamName");
+	name.innerHTML = team.teamName;
+	standingsTeam.appendChild(image);
+	standingsTeam.appendChild(name);
+	statLine.appendChild(standingsTeam);
+
+	const statsElement = document.createElement("div");
+	addClass(statsElement, "stats");
+
+	const games = document.createElement("div");
+	addClass(games, "stat");
+	games.innerHTML = stats.games;
+	statsElement.appendChild(games);
+	const wins = document.createElement("div");
+	addClass(wins, "stat");
+	wins.innerHTML = stats.wins;
+	statsElement.appendChild(wins);
+	const losses = document.createElement("div");
+	addClass(losses, "stat");
+	losses.innerHTML = stats.losses;
+	statsElement.appendChild(losses);
+	const overtime = document.createElement("div");
+	addClass(overtime, "stat");
+	overtime.innerHTML = stats.overtime;
+	statsElement.appendChild(overtime);
+	const points = document.createElement("div");
+	addClass(points, "stat");
+	points.innerHTML = stats.points;
+	statsElement.appendChild(points);
+	const row = document.createElement("div");
+	addClass(row, "stat");
+	row.innerHTML = stats.row;
+	statsElement.appendChild(row);
+
 	statLine.appendChild(statsElement);
 	element.appendChild(statLine);
 }
