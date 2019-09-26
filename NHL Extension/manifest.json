@@ -1,11 +1,13 @@
 {
+"update_url": "https://clients2.google.com/service/update2/crx",
+
   "description": "Adds an icon with your selected NHL team's game information with real-time score and in-game data.",
   "manifest_version": 2,
   "name": "NHL Score Tracker",
 
   "offline_enabled": false,
   "short_name": "NhlScoreTracker",
-  "version": "1.30",
+  "version": "1.60",
 
   "background": {
     "scripts": ["jquery-1.10.2.js","moment.min.js", "moment-timezone-with-data.min.js", "CommonUtilities.js", "background.js"]

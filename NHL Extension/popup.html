@@ -3,6 +3,7 @@
   <head>
     <title>NHL Score Tracker</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="teamStyles.css" />
     <script src="jquery-1.10.2.js"></script>
     <script src="moment.min.js"></script>
     <script src="moment-timezone-with-data.min.js"></script>
@@ -13,7 +14,7 @@
 
   <body>
 	<!--Heading (v1 js done)-->
-    <div class="headingRoot">
+    <div class="headingRoot" id="headingRoot">
 		<image class="awayImage" id="headingAwayImage" src="logos/nhl.png"></image>
 		<div class="score" id="awayScore">0</div>
 		<div class="time" id="time">Loading...</div>
@@ -22,7 +23,7 @@
     </div>
 	
 	<!--Tabs (v1 js done)-->
-	<div class="tabsRoot">
+	<div class="tabsRoot" id="tabsRoot">
 		<div class="hidden tab" id="previewTab">Preview</div> <!--Preview Only-->
 		<div class="hidden tab" id="liveTab">Live</div> <!--Live Only-->
 		<div class="hidden tab" id="teamStatsTab">Team Stats</div> <!--Live and Final-->
@@ -31,7 +32,7 @@
 	</div>
 	
 	<!--Main Section (v1 done)-->
-	<div class="mainSection">
+	<div class="mainSection" id="mainSection">
 	
 		<!--Rink (v1 js done)-->
 		<div class="rinkRoot section hidden" id="rink">
@@ -421,7 +422,7 @@
 			</div>
 		</div>
 		
-		<!--Standings (v1 js inprogress)-->
+		<!--Standings (v1 js done)-->
 		<div class="standingsRoot section hidden" id="standings">
 			<div class="standingsTabButtons">
 				<div class="standingsTabButton divisionStandingsButton selected" id="divisionStandingsButton">Division</div>
@@ -443,6 +444,7 @@
 						<div class="stat" title="Overtime Losses">OT</div>
 						<div class="stat" title="Points">PTS</div>
 						<div class="stat" title="Regulation Plus Overtime Wins">ROW</div>
+						<div class="stat" title="Streak">STRK</div>
 					</div>
 				</div>
 				<div class="standingsTeamLines" id="divisionTeamStandings"></div>
@@ -452,7 +454,7 @@
 			<div class="standings hidden" id="wildCardStandings">
 				<div class="standingsHeaderLine">
 					<div class="standingsTeam">
-						<div class="standingsTeamName" id="wildCardDivision1">Division</div>
+						<div class="standingsTeamName" id="wildCardDivision">Division</div>
 					</div>
 					<div class="stats">
 						<div class="stat" title="Games Played">GP</div>
@@ -461,13 +463,14 @@
 						<div class="stat" title="Overtime Losses">OT</div>
 						<div class="stat" title="Points">PTS</div>
 						<div class="stat" title="Regulation Plus Overtime Wins">ROW</div>
+						<div class="stat" title="Streak">STRK</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="wildCardLeadersTeamStandings"></div>
+				<div class="standingsTeamLines" id="wildCardDivisionLeadersTeamStandings"></div>
 				<div class="standingsSpacer"></div>
 				<div class="standingsHeaderLine">
 					<div class="standingsTeam">
-						<div class="standingsTeamName" id="wildCardDivision2">Wild Card</div>
+						<div class="standingsTeamName" id="wildCardDivision2">Division</div>
 					</div>
 					<div class="stats">
 						<div class="stat" title="Games Played">GP</div>
@@ -476,9 +479,10 @@
 						<div class="stat" title="Overtime Losses">OT</div>
 						<div class="stat" title="Points">PTS</div>
 						<div class="stat" title="Regulation Plus Overtime Wins">ROW</div>
+						<div class="stat" title="Streak">STRK</div>
 					</div>
 				</div>
-				<div class="standingsTeamLines" id="wildCardTop2TeamStandings"></div>
+				<div class="standingsTeamLines" id="wildCardDivision2LeadersTeamStandings"></div>
 				<div class="standingsSpacer"></div>
 				<div class="standingsHeaderLine">
 					<div class="standingsTeam">
@@ -491,8 +495,11 @@
 						<div class="stat" title="Overtime Losses">OT</div>
 						<div class="stat" title="Points">PTS</div>
 						<div class="stat" title="Regulation Plus Overtime Wins">ROW</div>
+						<div class="stat" title="Streak">STRK</div>
 					</div>
 				</div>
+				<div class="standingsTeamLines" id="wildCardTop2TeamStandings"></div>
+				<div class="standingsSpacerLine"></div>
 				<div class="standingsTeamLines" id="wildCardTeamStandings"></div>
 			</div>
 			
@@ -509,6 +516,7 @@
 						<div class="stat" title="Overtime Losses">OT</div>
 						<div class="stat" title="Points">PTS</div>
 						<div class="stat" title="Regulation Plus Overtime Wins">ROW</div>
+						<div class="stat" title="Streak">STRK</div>
 					</div>
 				</div>
 				<div class="standingsTeamLines" id="conferenceTeamStandings"></div>
@@ -527,6 +535,7 @@
 						<div class="stat" title="Overtime Losses">OT</div>
 						<div class="stat" title="Points">PTS</div>
 						<div class="stat" title="Regulation Plus Overtime Wins">ROW</div>
+						<div class="stat" title="Streak">STRK</div>
 					</div>
 				</div>
 				<div class="standingsTeamLines" id="leagueTeamStandings"></div>

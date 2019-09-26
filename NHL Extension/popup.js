@@ -24,6 +24,16 @@ var teamData = null;
 var teamIcon = "";
 var teamId = "";
 var teamName = "";
+var today = new Date();
+var todayMonth = today.getMonth() + 1;
+if (todayMonth < 10) {
+	todayMonth = '0' + todayMonth;
+}
+var todayDay = today.getDate();
+if (todayDay < 10) {
+	todayDay = '0' + todayDay;
+}
+var todayYear = today.getFullYear();
 
 // Tabs
 var previewTab;
@@ -42,7 +52,12 @@ var noGamePlayerStats;
 var standings;
 
 const commonUtilities = CommonUtilities.init();
-const teams = commonUtilities.getTeams();
+chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result) {
+	teamName = result.trackedTeamName;
+	teamId = CommonUtilities.getTeamIdMapping()[teamName];
+	teamIcon = "logos/" + teamName + ".png";
+});
+const teams = CommonUtilities.getTeams();
 chrome.alarms.create(
 	"NHLScoreTrackerPopup",
 	{
@@ -54,6 +69,14 @@ chrome.alarms.create(
 chrome.alarms.onAlarm.addListener(function(alarm) {
 	if (alarm.name = "NHLScoreTrackerPopup") {
 		commonUtilities.updateData();
+
+		// const headingRoot = document.getElementById("headingRoot");
+		// const tabsRoot = document.getElementById("tabsRoot");
+		// const mainSection = document.getElementById("mainSection");
+		// addClass(headingRoot, commonUtilities.getTeamColorClass());
+		// addClass(tabsRoot, commonUtilities.getTeamColorClass());
+		// addClass(mainSection, commonUtilities.getTeamColorClass());
+
 		updateGameData();
 	}
 });
@@ -76,30 +99,28 @@ function updateGameData() {
 	
 	setTabListeners();
 
-	teamIcon = commonUtilities.getTeamIcon();
-	teamId = commonUtilities.getTeamId();
-	teamName = commonUtilities.getTeamName();
-	const todayYear = commonUtilities.getTodayYear();
-	const todayMonth = commonUtilities.getTodayMonth();
-	const todayDay = commonUtilities.getTodayDay();
-
 	const schedulePromise = new Promise(function(resolve, reject) {
-	    const scheduleXmlHttp = new XMLHttpRequest();
-		scheduleXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId);
+		chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result) {
+			teamName = result.trackedTeamName;
+			teamId = CommonUtilities.getTeamIdMapping()[teamName];
 
-		scheduleXmlHttp.onload = function() {
-			if (scheduleXmlHttp.status == 200) {
-				resolve(JSON.parse(scheduleXmlHttp.responseText));
-			} else {
-				reject(Error(scheduleXmlHttp.statusText));
-			}
-		};
+			const scheduleXmlHttp = new XMLHttpRequest();
+			scheduleXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId);
 
-		scheduleXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
+			scheduleXmlHttp.onload = function() {
+				if (scheduleXmlHttp.status == 200) {
+					resolve(JSON.parse(scheduleXmlHttp.responseText));
+				} else {
+					reject(Error(scheduleXmlHttp.statusText));
+				}
+			};
 
-		scheduleXmlHttp.send();
+			scheduleXmlHttp.onerror = function() {
+				reject(Error("Network Error"));
+			};
+
+			scheduleXmlHttp.send();
+		});
 	});
 
 	schedulePromise.then(
@@ -220,7 +241,7 @@ function startInGameDataUpdateTimerIfNeeded() {
 
 function updateData() {
 	commonUtilities.updateData();
-	updateGameData(commonUtilities.getTodayYear(), commonUtilities.getTodayMonth(), commonUtilities.getTodayDay());
+	updateGameData(todayYear, todayMonth, todayDay);
 }
 
 function setTabListeners() {
@@ -247,11 +268,14 @@ function setPreview(gameInfo) {
 	hide(teamStatsTab);
 	hide(playerStatsTab);
 	show(standingsTab);
-	setActiveTab(playerStats, "Preview");
 	
 	setHeadingSection(gameInfo, "preview");
 	setPlayerStatsSection(gameInfo, "preview");
-	setStandingsSection();
+	if (firstOpen) {
+		setStandingsSection();
+	}
+
+	setActiveTab(playerStats, "Preview");
 }
 
 function setLive(gameInfo) {
@@ -261,12 +285,15 @@ function setLive(gameInfo) {
 	show(teamStatsTab);
 	show(playerStatsTab);
 	show(standingsTab);
-	setActiveTab(rink, "Live");
 	
 	setHeadingSection(gameInfo, "live");
 	setTeamStatsSection(gameInfo);
 	setPlayerStatsSection(gameInfo, "live");
-	setStandingsSection();
+	if (firstOpen) {
+		setStandingsSection();
+	}
+
+	setActiveTab(rink, "Live");
 }
 
 function setFinal(gameInfo) {
@@ -275,7 +302,6 @@ function setFinal(gameInfo) {
 	show(teamStatsTab);
 	show(playerStatsTab);
 	show(standingsTab);
-	setActiveTab(teamStats, "Final");
 
 	if (gameTimeDataRefreshTimer) {
 		window.clearInterval(gameTimeDataRefreshTimer);
@@ -285,7 +311,11 @@ function setFinal(gameInfo) {
 	setHeadingSection(gameInfo, "final");
 	setTeamStatsSection(gameInfo);
 	setPlayerStatsSection(gameInfo, "final");
-	setStandingsSection();
+	if (firstOpen) {
+		setStandingsSection();
+	}
+
+	setActiveTab(teamStats, "Final");
 }
 
 function setNoGame() {
@@ -294,11 +324,14 @@ function setNoGame() {
 	hide(teamStatsTab);
 	show(playerStatsTab);
 	show(standingsTab);
-	setActiveTab(noGamePlayerStats, "None");
 	
 	setHeadingSection(null, "none");
 	setPlayerStatsSection(null, "none");
-	setStandingsSection();
+	if (firstOpen) {
+		setStandingsSection();
+	}
+
+	setActiveTab(noGamePlayerStats, "None");
 }
 
 function setHeadingSection(gameInfo, gameStatus) {
@@ -363,7 +396,6 @@ function setHeadingSection(gameInfo, gameStatus) {
 			headingHomeScore.innerHTML = homeScore;
 			break;
 		case "none":
-			const teamIcon = commonUtilities.getTeamIcon();
 			drawAwayLogo(teamIcon);
 			drawHomeLogo(teamIcon);
 			timeLeft.innerHTML = "No Game";
@@ -641,6 +673,7 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 				});
 			});
 		});
+
 		const homePlayersPromise = getNonLivePlayersPromises(homeTeamId);
 		homePlayersPromise.then(function(homePlayersPromise) {
 			Promise.all(homePlayersPromise[0]).then(function(homePlayerPromises) {
@@ -840,21 +873,54 @@ function getPlayersDataPromises(teamPromise) {
 }
 
 function setStandingsSection() {
+	const divisionStandings = document.getElementById("divisionStandings");
+	const wildCardStandings = document.getElementById("wildCardStandings");
+	const conferenceStandings = document.getElementById("conferenceStandings");
+	const leagueStandings = document.getElementById("leagueStandings");
+
 	const divisionStandingsButton = document.getElementById("divisionStandingsButton");
 	const wildCardStandingsButton = document.getElementById("wildCardStandingsButton");
 	const conferenceStandingsButton = document.getElementById("conferenceStandingsButton");
 	const leagueStandingsButton = document.getElementById("leagueStandingsButton");
-	inGameAwayStatsButton.addEventListener('click', function () {
-		hide(inGameHomeTeam);
-		removeClass(inGameHomeStatsButton, "selected");
-		show(inGameAwayTeam);
-		addClass(inGameAwayStatsButton, "selected");
+	divisionStandingsButton.addEventListener('click', function () {
+		hide(wildCardStandings);
+		hide(conferenceStandings);
+		hide(leagueStandings);
+		removeClass(wildCardStandingsButton, "selected");
+		removeClass(conferenceStandingsButton, "selected");
+		removeClass(leagueStandingsButton, "selected");
+		show(divisionStandings);
+		addClass(divisionStandingsButton, "selected");
 	}, false);
-	inGameHomeStatsButton.addEventListener('click', function () {
-		hide(inGameAwayTeam);
-		removeClass(inGameAwayStatsButton, "selected");
-		show(inGameHomeTeam);
-		addClass(inGameHomeStatsButton, "selected");
+	wildCardStandingsButton.addEventListener('click', function () {
+		hide(divisionStandings);
+		hide(conferenceStandings);
+		hide(leagueStandings);
+		removeClass(divisionStandingsButton, "selected");
+		removeClass(conferenceStandingsButton, "selected");
+		removeClass(leagueStandingsButton, "selected");
+		show(wildCardStandings);
+		addClass(wildCardStandingsButton, "selected");
+	}, false);
+	conferenceStandingsButton.addEventListener('click', function () {
+		hide(divisionStandings);
+		hide(wildCardStandings);
+		hide(leagueStandings);
+		removeClass(divisionStandingsButton, "selected");
+		removeClass(wildCardStandingsButton, "selected");
+		removeClass(leagueStandingsButton, "selected");
+		show(conferenceStandings);
+		addClass(conferenceStandingsButton, "selected");
+	}, false);
+	leagueStandingsButton.addEventListener('click', function () {
+		hide(divisionStandings);
+		hide(wildCardStandings);
+		hide(conferenceStandings);
+		removeClass(divisionStandingsButton, "selected");
+		removeClass(wildCardStandingsButton, "selected");
+		removeClass(conferenceStandingsButton, "selected");
+		show(leagueStandings);
+		addClass(leagueStandingsButton, "selected");
 	}, false);
 
 	const divisionTeamStandings = document.getElementById("divisionTeamStandings");
@@ -864,53 +930,13 @@ function setStandingsSection() {
 	clearElement(conferenceTeamStandings);
 	clearElement(leagueTeamStandings);
 
-	const standingsPromise = new Promise(function(resolve, reject) {
-		var standingsXmlHttp = new XMLHttpRequest();
-		standingsXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings");
-
-		standingsXmlHttp.onload = function() {
-			if (standingsXmlHttp.status == 200) {
-				resolve(JSON.parse(standingsXmlHttp.responseText));
-			} else {
-				reject(Error(standingsXmlHttp.statusText));
-			}
-		};
-
-		standingsXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		standingsXmlHttp.send();
-	});
-
-	return standingsPromise.then(
-		function(standingsInfo) {
-			const divisions = standingsInfo.records;
-			console.log(divisions);
-			// for (var i = 0; i < divisions.length; i++) {
-			// 	if (divisions[i].division.id == commonUtilities.getTeamDivisionId()) {
-			// 		addDivisionLines(divisions[i], divisionTeamStandings);
-			// 		addWildCardLines(divisions[i]);
-			// 	}
-
-			// 	if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
-			// 		addConferenceLines(divisions[i], conferenceTeamStandings);
-			// 	}
-
-			// 	addLeagueLines(divisions[i], leagueTeamStandings);
-			// }
-		},
-		function(error) {
-			return null;
-		},
-	);
+	setDivisionData(divisionTeamStandings);
+	setConferenceData(conferenceTeamStandings);
+	setLeagueData(leagueTeamStandings);
 }
 
 function setFooterLinkHref(gameStatus, currentGameId, awayTeamInitial, homeTeamInitial) {
 	const nhlLink = document.getElementById("nhlLink");
-	const todayYear = commonUtilities.getTodayYear();
-	const todayMonth = commonUtilities.getTodayMonth();
-	const todayDay = commonUtilities.getTodayDay();
 	switch(gameStatus) {
 		case "preview":
 			nhlLink.setAttribute("href", "http://www.nhl.com/gamecenter/" + awayTeamInitial + "-vs-" + homeTeamInitial + "/" + todayYear + "/" + todayMonth + "/" + todayDay + "/" + currentGameId + "#game=" + currentGameId + ",game_state=preview");
@@ -1122,39 +1148,225 @@ function addPlayerStat(player, element, isGoalie = false) {
 	element.appendChild(statLine);
 }
 
-function addDivisionLines(division, element) {
-	
+function setDivisionData(divisionElement) {
+	const divisionPromise = new Promise(function(resolve, reject) {
+		var divisionXmlHttp = new XMLHttpRequest();
+		divisionXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/byDivision");
+
+		divisionXmlHttp.onload = function() {
+			if (divisionXmlHttp.status == 200) {
+				resolve(JSON.parse(divisionXmlHttp.responseText));
+			} else {
+				reject(Error(divisionXmlHttp.statusText));
+			}
+		};
+
+		divisionXmlHttp.onerror = function() {
+			reject(Error("Network Error"));
+		};
+
+		divisionXmlHttp.send();
+	});
+
+	divisionPromise.then(
+		function(divisionInfo) {
+			const divisions = divisionInfo.records;
+			const wildCardDivisions = [];
+			for (var i = 0; i < divisions.length; i++) {
+				if (divisions[i].division.id == commonUtilities.getTeamDivisionId()) {
+					addDivisionLines(divisions[i], divisionElement);
+				}
+				if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
+					wildCardDivisions.push(divisions[i]);
+					if (wildCardDivisions.length == 2) {
+						addWildCardLines(wildCardDivisions[0], wildCardDivisions[1]);
+					}
+				}
+			}
+		},
+		function(error) {
+			return null;
+		},
+	);
 }
 
-function addWildCardLines(division, element) {
-	const wildCardLeadersTeamStandings = document.getElementById("wildCardLeadersTeamStandings");
+function addDivisionLines(division, element) {
+	const divisionElement = document.getElementById("division");
+	divisionElement.innerHTML = division.division.name;
+	const teams = division.teamRecords;
+	for (let i = 0; i < teams.length; i++) {
+		addStandingsLine(teams[i], element);
+	}
+}
+
+function addWildCardLines(division1, division2) {
+	const wildCardDivision = document.getElementById("wildCardDivision");
+	const wildCardDivision2 = document.getElementById("wildCardDivision2");
+	wildCardDivision.innerHTML = division1.division.name;
+	wildCardDivision2.innerHTML = division2.division.name;
+
+	const wildCardDivisionLeadersTeamStandings = document.getElementById("wildCardDivisionLeadersTeamStandings");
+	const wildCardDivision2LeadersTeamStandings = document.getElementById("wildCardDivision2LeadersTeamStandings");
 	const wildCardTop2TeamStandings = document.getElementById("wildCardTop2TeamStandings");
 	const wildCardTeamStandings = document.getElementById("wildCardTeamStandings");
-	clearElement(wildCardLeadersTeamStandings);
+	clearElement(wildCardDivisionLeadersTeamStandings);
+	clearElement(wildCardDivision2LeadersTeamStandings);
 	clearElement(wildCardTop2TeamStandings);
 	clearElement(wildCardTeamStandings);
+
+	const teams1 = division1.teamRecords;
+	const teams2 = division2.teamRecords;
+	for (let i = 0; i < teams1.length; i++) {
+		if (teams1[i].wildCardRank === "0") {
+			addStandingsLine(teams1[i], wildCardDivisionLeadersTeamStandings);
+		}
+	}
+	for (let i = 0; i < teams2.length; i++) {
+		if (teams2[i].wildCardRank === "0") {
+			addStandingsLine(teams2[i], wildCardDivision2LeadersTeamStandings);
+		}
+	}
+
+	const wildCardPromise = new Promise(function(resolve, reject) {
+		var wildCardXmlHttp = new XMLHttpRequest();
+		wildCardXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/wildCard");
+
+		wildCardXmlHttp.onload = function() {
+			if (wildCardXmlHttp.status == 200) {
+				resolve(JSON.parse(wildCardXmlHttp.responseText));
+			} else {
+				reject(Error(wildCardXmlHttp.statusText));
+			}
+		};
+
+		wildCardXmlHttp.onerror = function() {
+			reject(Error("Network Error"));
+		};
+
+		wildCardXmlHttp.send();
+	});
+
+	wildCardPromise.then(
+		function(wildCardInfo) {
+			const wildCard = wildCardInfo.records;
+			for (let i = 0; i < wildCard.length; i++) {
+				if (wildCard[i].conference.id == commonUtilities.getTeamConferenceId()) {
+					const teams = wildCard[i].teamRecords;
+					for (let j = 0; j < teams.length; j++) {
+						if (teams[j].wildCardRank === "1") {
+							addStandingsLine(teams[j], wildCardTop2TeamStandings);
+						} else if (teams[j].wildCardRank === "2") {
+							addStandingsLine(teams[j], wildCardTop2TeamStandings);
+						} else {
+							addStandingsLine(teams[j], wildCardTeamStandings);
+						}
+					}
+				}
+			}
+		},
+		function(error) {
+			return null;
+		},
+	);
+}
+
+function setConferenceData(conferenceElement) {
+	const conferencePromise = new Promise(function(resolve, reject) {
+		var conferenceXmlHttp = new XMLHttpRequest();
+		conferenceXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/byConference");
+
+		conferenceXmlHttp.onload = function() {
+			if (conferenceXmlHttp.status == 200) {
+				resolve(JSON.parse(conferenceXmlHttp.responseText));
+			} else {
+				reject(Error(conferenceXmlHttp.statusText));
+			}
+		};
+
+		conferenceXmlHttp.onerror = function() {
+			reject(Error("Network Error"));
+		};
+
+		conferenceXmlHttp.send();
+	});
+
+	conferencePromise.then(
+		function(conferenceInfo) {
+			const conferences = conferenceInfo.records;
+			for (var i = 0; i < conferences.length; i++) {
+				if (conferences[i].conference.id == commonUtilities.getTeamConferenceId()) {
+					addConferenceLines(conferences[i], conferenceElement);
+				}
+			}
+		},
+		function(error) {
+			return null;
+		},
+	);
 }
 
 function addConferenceLines(conference, element) {
+	const conferenceElement = document.getElementById("conference");
+	conferenceElement.innerHTML = conference.conference.name;
 
+	let teams = conference.teamRecords;
+	for (let j = 0; j < teams.length; j++) {
+		addStandingsLine(teams[j], element);
+	}
 }
 
-function addLeagueLines(standing, element) {
+function setLeagueData(leagueElement) {
+	const leaguePromise = new Promise(function(resolve, reject) {
+		var leagueXmlHttp = new XMLHttpRequest();
+		leagueXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/byLeague");
 
+		leagueXmlHttp.onload = function() {
+			if (leagueXmlHttp.status == 200) {
+				resolve(JSON.parse(leagueXmlHttp.responseText));
+			} else {
+				reject(Error(leagueXmlHttp.statusText));
+			}
+		};
+
+		leagueXmlHttp.onerror = function() {
+			reject(Error("Network Error"));
+		};
+
+		leagueXmlHttp.send();
+	});
+
+	leaguePromise.then(
+		function(leagueInfo) {
+			const leagueRecords = leagueInfo.records;
+			addLeagueLines(leagueRecords[0], leagueElement);
+		},
+		function(error) {
+			return null;
+		},
+	);
+}
+
+function addLeagueLines(league, element) {
+	let teams = league.teamRecords;
+	for (let j = 0; j < teams.length; j++) {
+		addStandingsLine(teams[j], element);
+	}
 }
 
 function addStandingsLine(team, element) {
 	const statLine = document.createElement("div");
 	addClass(statLine, "standingsTeamLine");
 
+	var shortName = CommonUtilities.getTeamNameIdMapping()[team.team.id];
+
 	const standingsTeam = document.createElement("div");
 	addClass(standingsTeam, "standingsTeam");
 	const image = document.createElement("img");
 	addClass(image, "standingsTeamImage");
-	image.src = "logos/" + team.teamName + ".png";
+	image.src = "logos/" + shortName + ".png";
 	const name = document.createElement("div");
 	addClass(name, "standingsTeamName");
-	name.innerHTML = team.teamName;
+	name.innerHTML = shortName;
 	standingsTeam.appendChild(image);
 	standingsTeam.appendChild(name);
 	statLine.appendChild(standingsTeam);
@@ -1164,28 +1376,32 @@ function addStandingsLine(team, element) {
 
 	const games = document.createElement("div");
 	addClass(games, "stat");
-	games.innerHTML = stats.games;
+	games.innerHTML = team.gamesPlayed;
 	statsElement.appendChild(games);
 	const wins = document.createElement("div");
 	addClass(wins, "stat");
-	wins.innerHTML = stats.wins;
+	wins.innerHTML = team.leagueRecord.wins;
 	statsElement.appendChild(wins);
 	const losses = document.createElement("div");
 	addClass(losses, "stat");
-	losses.innerHTML = stats.losses;
+	losses.innerHTML = team.leagueRecord.losses;
 	statsElement.appendChild(losses);
 	const overtime = document.createElement("div");
 	addClass(overtime, "stat");
-	overtime.innerHTML = stats.overtime;
+	overtime.innerHTML = team.leagueRecord.ot;
 	statsElement.appendChild(overtime);
 	const points = document.createElement("div");
 	addClass(points, "stat");
-	points.innerHTML = stats.points;
+	points.innerHTML = team.points;
 	statsElement.appendChild(points);
 	const row = document.createElement("div");
 	addClass(row, "stat");
-	row.innerHTML = stats.row;
+	row.innerHTML = team.row;
 	statsElement.appendChild(row);
+	const streak = document.createElement("div");
+	addClass(streak, "stat");
+	streak.innerHTML = team.streak.streakCode;
+	statsElement.appendChild(streak);
 
 	statLine.appendChild(statsElement);
 	element.appendChild(statLine);

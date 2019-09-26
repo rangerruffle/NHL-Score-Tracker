@@ -28,7 +28,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 	}
 });
 
-const teams = commonUtilities.getTeams();
+const teams = CommonUtilities.getTeams();
 addTeamSelectorMenuOptions();
 addTimeZoneMenuOptions();
 addBugReportingOption();

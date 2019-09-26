@@ -269,7 +269,6 @@
 	display: flex;
 	flex-direction: column;
 	height: auto;
-	justify-content: space-around;
 	margin: 0 20px;
 	padding: 0 20px;
 	width: 40px;
@@ -461,6 +460,7 @@
 	background-color: #fff;
 	border: 1px solid #000;
 	color: #000;
+	cursor: pointer;
 	display: flex;
 	font-size: 12px;
 	height: 100%;
@@ -471,6 +471,7 @@
 .selected.standingsTabButton {
 	background-color: #000;
 	color: #fff;
+	text-decoration: underline;
 }
 
 .divisionStandingsButton {
@@ -493,6 +494,12 @@
 .standingsSpacer {
 	border: 0;
 	padding-bottom: 10px;
+}
+
+.standingsSpacerLine {
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 5px solid #ccc;
 }
 
 .standings {

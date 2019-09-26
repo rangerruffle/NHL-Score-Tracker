@@ -1,12 +1,10 @@
 To-Do List:
 -High Pri:
-	-Finish implementation of standings section in JS
 	-Decide how to deal with not enough players on ice.
 	-Cache data returned from API calls to avoid max API calls.
 
 -Low Pri:
 	-Make the UI reflect the selected team's color.
-	-Make toggle switches more clear of which one is selected.
 	-Better implementation for bug reporting
 	-Add SH or PP to badge text for short-handed or power play and something for UI.
 	-Loading spinner?
