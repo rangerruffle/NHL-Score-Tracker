@@ -2,6 +2,9 @@ To-Do List:
 -High Pri:
 	-Decide how to deal with not enough players on ice.
 	-Cache data returned from API calls to avoid max API calls.
+	-Add calendar tab.
+		-Ability to preview future games?
+		-Ability to view final stats from old games?
 
 -Low Pri:
 	-Make the UI reflect the selected team's color.
