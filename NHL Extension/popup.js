@@ -422,12 +422,11 @@ function setRinkSection(gameInfo) {
 	// Live rink stats
 	const awayOnIce = gameInfo.liveData.boxscore.teams.away.onIce;
 	const homeOnIce = gameInfo.liveData.boxscore.teams.home.onIce;
-	
+
 	if(awayTeamOnIce !== awayOnIce) {
 		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
 		for(var i = 0; i < awayOnIce.length; i++) {
 			const player = awayTeamPlayers['ID' + awayOnIce[i]];
-
 			switch(player.position.abbreviation) {
 				case "RW":
 				case "C":
@@ -603,6 +602,7 @@ function setTeamStatsSection(gameInfo) {
 	awayTeamHITS.innerHTML = awayTeamStats.hits;
 	awayTeamBLKS.innerHTML = awayTeamStats.blocked;
 	awayTeamGVA.innerHTML = awayTeamStats.giveaways;
+	console.log(awayTeamStats);
 	
 	const homeTeamStats = gameInfo.liveData.boxscore.teams.home.teamStats.teamSkaterStats;
 	homeTeamSOG.innerHTML = homeTeamStats.shots;
@@ -997,7 +997,8 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 			stats.appendChild(plusMinus);
 			const penaltyMinutes = document.createElement("div");
 			addClass(penaltyMinutes, "stat");
-			penaltyMinutes.innerHTML = player.stats.skaterStats.penaltyMinutes;
+			const penaltyMinutesStat = player.stats.skaterStats.penaltyMinutes;
+			penaltyMinutes.innerHTML =  penaltyMinutesStat ? penaltyMinutesStat : 0;
 			stats.appendChild(penaltyMinutes);
 			const powerPlay = document.createElement("div");
 			addClass(powerPlay, "stat");
@@ -1033,7 +1034,8 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 			stats.appendChild(savePercent);
 			const penaltyMinutes = document.createElement("div");
 			addClass(penaltyMinutes, "stat");
-			penaltyMinutes.innerHTML = player.stats.goalieStats.pim;
+			const penaltyMinutesStat = player.stats.goalieStats.pim;
+			penaltyMinutes.innerHTML = penaltyMinutesStat ? penaltyMinutesStat : 0;
 			stats.appendChild(penaltyMinutes);
 			const timeOnIce = document.createElement("div");
 			addClass(timeOnIce, "stat");
@@ -1097,7 +1099,8 @@ function addPlayerStat(player, element, isGoalie = false) {
 		statsElement.appendChild(plusMinus);
 		const penaltyMinutes = document.createElement("div");
 		addClass(penaltyMinutes, "stat");
-		penaltyMinutes.innerHTML = stats.penaltyMinutes;
+		const penaltyMinutesStat = stats.penaltyMinutes;
+		penaltyMinutes.innerHTML = penaltyMinutesStat ? penaltyMinutesStat : 0;
 		statsElement.appendChild(penaltyMinutes);
 		const powerPlay = document.createElement("div");
 		addClass(powerPlay, "stat");

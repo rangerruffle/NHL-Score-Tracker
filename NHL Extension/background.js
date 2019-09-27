@@ -50,7 +50,7 @@ function addTeamSelectorMenuOptions() {
 			"parentId": teamMenuItem,
 			"contexts": ["browser_action"],
 			"onclick": function(info, tab) {
-				commonUtilities.saveSelectedTeam(teamMenuItems[info.menuItemId]);
+				CommonUtilities.saveSelectedTeam(teamMenuItems[info.menuItemId]);
 				updateGameData();
 			}
 		}, function() {
