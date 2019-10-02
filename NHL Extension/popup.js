@@ -786,6 +786,7 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 				Promise.all(playerPromises).then(function(players) {
 					for (var i = 0; i < players.length; i++) {
 						const player = players[i];
+						console.log(player);
 						switch(player.people[0].primaryPosition.type) {
 							case "Defenseman":
 								addPlayerStat(player, teamDefense);
@@ -1052,10 +1053,11 @@ function addPlayerStat(player, element, isGoalie = false) {
 	const person = player.people[0];
 	const position = person.primaryPosition;
 	var stats = person.stats[0].splits;
-	if (stats.length == 0) {
-		return;
+	if (stats.length > 0) {
+		stats = stats[0].stat;
+	} else {
+		stats = JSON.parse('{"games": 0, "goals": 0, "assists": 0, "plusMinus": 0, "penaltyMinutes": 0, "powerPlayGoals": 0, "gameWinningGoals": 0, "wins": 0, "losses": 0, "shotsAgainst": 0, "goalsAgainst": 0, "goalAgainstAverage": 0, "savePercentage": 0, "shutouts": 0}');
 	}
-	stats = stats[0].stat;
 
 	const playerName = person.lastName;
 	const statLine = document.createElement("div");
@@ -1079,23 +1081,27 @@ function addPlayerStat(player, element, isGoalie = false) {
 	if (!isGoalie) {
 		const games = document.createElement("div");
 		addClass(games, "stat");
-		games.innerHTML = stats.games;
+		const gamesStat = stats.games;
+		games.innerHTML = gamesStat ? gamesStat : 0;
 		statsElement.appendChild(games);
 		const goals = document.createElement("div");
 		addClass(goals, "stat");
-		goals.innerHTML = stats.goals;
+		const goalsStat = stats.goals;
+		goals.innerHTML = goalsStat ? goalsStat : 0;
 		statsElement.appendChild(goals);
 		const assists = document.createElement("div");
 		addClass(assists, "stat");
-		assists.innerHTML = stats.assists;
+		const assistsStat = stats.assists;
+		assists.innerHTML = assistsStat ? assistsStat : 0;
 		statsElement.appendChild(assists);
 		const points = document.createElement("div");
 		addClass(points, "stat");
-		points.innerHTML = stats.assists + stats.goals;
+		points.innerHTML = assistsStat && goalsStat ? assistsStat + goalsStat : 0;
 		statsElement.appendChild(points);
 		const plusMinus = document.createElement("div");
 		addClass(plusMinus, "stat");
-		plusMinus.innerHTML = stats.plusMinus;
+		const plusMinusStat = stats.plusMinus;
+		plusMinus.innerHTML = plusMinusStat ? plusMinusStat : 0;
 		statsElement.appendChild(plusMinus);
 		const penaltyMinutes = document.createElement("div");
 		addClass(penaltyMinutes, "stat");
@@ -1104,46 +1110,59 @@ function addPlayerStat(player, element, isGoalie = false) {
 		statsElement.appendChild(penaltyMinutes);
 		const powerPlay = document.createElement("div");
 		addClass(powerPlay, "stat");
-		powerPlay.innerHTML = stats.powerPlayGoals;
+		const powerPlayStat = stats.powerPlayGoals;
+		powerPlay.innerHTML = powerPlayStat ? powerPlayStat : 0;
 		statsElement.appendChild(powerPlay);
 		const gameWinning = document.createElement("div");
 		addClass(gameWinning, "stat");
-		gameWinning.innerHTML = stats.gameWinningGoals;
+		const gameWinningStat = stats.gameWinningGoals;
+		gameWinning.innerHTML = gameWinningStat ? gameWinningStat : 0;
 		statsElement.appendChild(gameWinning);
 	} else {
 		const games = document.createElement("div");
 		addClass(games, "stat");
-		games.innerHTML = stats.games;
+		const gamesStat = stats.games;
+		games.innerHTML = gamesStat ? gamesStat : 0;
 		statsElement.appendChild(games);
 		const wins = document.createElement("div");
 		addClass(wins, "stat");
-		wins.innerHTML = stats.wins;
+		const winsStat = stats.wins;
+		wins.innerHTML = winsStat ? winsStat : 0;
 		statsElement.appendChild(wins);
 		const losses = document.createElement("div");
 		addClass(losses, "stat");
-		losses.innerHTML = stats.losses;
+		const lossesStat = stats.losses;
+		losses.innerHTML = lossesStat ? lossesStat : 0;
 		statsElement.appendChild(losses);
 		const shotsAgainst = document.createElement("div");
 		addClass(shotsAgainst, "stat");
-		shotsAgainst.innerHTML = stats.shotsAgainst;
+		const shotsAgainstStat = stats.shotsAgainst;
+		shotsAgainst.innerHTML = shotsAgainstStat ? shotsAgainstStat : 0;
 		statsElement.appendChild(shotsAgainst);
 		const goalsAgainst = document.createElement("div");
 		addClass(goalsAgainst, "stat");
-		goalsAgainst.innerHTML = stats.goalsAgainst;
+		const goalsAgainstStat = stats.goalsAgainst;
+		goalsAgainst.innerHTML = goalsAgainstStat ? goalsAgainstStat : 0;
 		statsElement.appendChild(goalsAgainst);
 		const goalAgainstAverage = document.createElement("div");
 		addClass(goalAgainstAverage, "stat");
-		goalAgainstAverage.innerHTML = stats.goalAgainstAverage;
+		const goalsAgainstAverageStat = stats.goalAgainstAverage;
+		goalAgainstAverage.innerHTML = goalsAgainstAverageStat ? goalsAgainstAverageStat : 0;
 		statsElement.appendChild(goalAgainstAverage);
 		const savePercent = document.createElement("div");
 		addClass(savePercent, "stat");
-		let savePercentText = Number(stats.savePercentage) * 100;
-		savePercentText = savePercentText ? savePercentText : 0;
+		const savePercentageStat = stats.savePercentage;
+		let savePercentText = 0;
+		if (savePercentageStat) {
+			savePercentText = Number(savePercentageStat) * 100
+		}
+		savePercentText = savePercentText;
 		savePercent.innerHTML = savePercentText.toFixed(2) + "%";
 		statsElement.appendChild(savePercent);
 		const shutouts = document.createElement("div");
 		addClass(shutouts, "stat");
-		shutouts.innerHTML = stats.shutouts;
+		const shutoutsStat = stats.shutouts;
+		shutouts.innerHTML = shutoutsStat ? shutoutsStat : 0;
 		statsElement.appendChild(shutouts);
 	}
 
@@ -1403,7 +1422,12 @@ function addStandingsLine(team, element) {
 	statsElement.appendChild(row);
 	const streak = document.createElement("div");
 	addClass(streak, "stat");
-	streak.innerHTML = team.streak.streakCode;
+	let streakCode = "-";
+	if (team.streak) {
+		streakCode = team.streak.streakCode;
+	}
+	
+	streak.innerHTML = streakCode !== null ? streakCode : "-";
 	statsElement.appendChild(streak);
 
 	statLine.appendChild(statsElement);
