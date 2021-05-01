@@ -875,25 +875,25 @@ function getPlayersDataPromises(teamPromise) {
 
 function setStandingsSection() {
 	const divisionStandings = document.getElementById("divisionStandings");
-	const wildCardStandings = document.getElementById("wildCardStandings");
-	const conferenceStandings = document.getElementById("conferenceStandings");
+	// const wildCardStandings = document.getElementById("wildCardStandings");
+	// const conferenceStandings = document.getElementById("conferenceStandings");
 	const leagueStandings = document.getElementById("leagueStandings");
 
 	const divisionStandingsButton = document.getElementById("divisionStandingsButton");
-	const wildCardStandingsButton = document.getElementById("wildCardStandingsButton");
-	const conferenceStandingsButton = document.getElementById("conferenceStandingsButton");
+	// const wildCardStandingsButton = document.getElementById("wildCardStandingsButton");
+	// const conferenceStandingsButton = document.getElementById("conferenceStandingsButton");
 	const leagueStandingsButton = document.getElementById("leagueStandingsButton");
 	divisionStandingsButton.addEventListener('click', function () {
-		hide(wildCardStandings);
-		hide(conferenceStandings);
+		// (wildCardStandings);
+		// hide(conferenceStandings);
 		hide(leagueStandings);
-		removeClass(wildCardStandingsButton, "selected");
-		removeClass(conferenceStandingsButton, "selected");
+		// removeClass(wildCardStandingsButton, "selected");
+		// removeClass(conferenceStandingsButton, "selected");
 		removeClass(leagueStandingsButton, "selected");
 		show(divisionStandings);
 		addClass(divisionStandingsButton, "selected");
 	}, false);
-	wildCardStandingsButton.addEventListener('click', function () {
+	/*wildCardStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
 		hide(conferenceStandings);
 		hide(leagueStandings);
@@ -912,27 +912,27 @@ function setStandingsSection() {
 		removeClass(leagueStandingsButton, "selected");
 		show(conferenceStandings);
 		addClass(conferenceStandingsButton, "selected");
-	}, false);
+	}, false);*/
 	leagueStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
-		hide(wildCardStandings);
-		hide(conferenceStandings);
+		// hide(wildCardStandings);
+		// hide(conferenceStandings);
 		removeClass(divisionStandingsButton, "selected");
-		removeClass(wildCardStandingsButton, "selected");
-		removeClass(conferenceStandingsButton, "selected");
+		// removeClass(wildCardStandingsButton, "selected");
+		// removeClass(conferenceStandingsButton, "selected");
 		show(leagueStandings);
 		addClass(leagueStandingsButton, "selected");
 	}, false);
 
 	const divisionTeamStandings = document.getElementById("divisionTeamStandings");
-	const conferenceTeamStandings = document.getElementById("conferenceTeamStandings");
+	// const conferenceTeamStandings = document.getElementById("conferenceTeamStandings");
 	const leagueTeamStandings = document.getElementById("leagueTeamStandings");
 	clearElement(divisionTeamStandings);
-	clearElement(conferenceTeamStandings);
+	// clearElement(conferenceTeamStandings);
 	clearElement(leagueTeamStandings);
 
 	setDivisionData(divisionTeamStandings);
-	setConferenceData(conferenceTeamStandings);
+	// setConferenceData(conferenceTeamStandings);
 	setLeagueData(leagueTeamStandings);
 }
 
@@ -1198,12 +1198,12 @@ function setDivisionData(divisionElement) {
 				if (divisions[i].division.id == commonUtilities.getTeamDivisionId()) {
 					addDivisionLines(divisions[i], divisionElement);
 				}
-				if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
+				/*if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
 					wildCardDivisions.push(divisions[i]);
 					if (wildCardDivisions.length == 2) {
 						addWildCardLines(wildCardDivisions[0], wildCardDivisions[1]);
 					}
-				}
+				}*/
 			}
 		},
 		function(error) {

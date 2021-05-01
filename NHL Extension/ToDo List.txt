@@ -5,16 +5,22 @@ To-Do List:
 	-Add calendar tab.
 		-Ability to preview future games?
 		-Ability to view final stats from old games?
+	-Add wild card cutoff bar to division stats page
 
 -Low Pri:
 	-Make the UI reflect the selected team's color.
 	-Better implementation for bug reporting
 	-Add SH or PP to badge text for short-handed or power play and something for UI.
 	-Loading spinner?
+		-Draw one?
 	-Center numbers in column and make the player name line up with the others in the column? (Follow how nhl.com does it.)
 	-Make forwards correspond to their actual, current position on the ice?
 
 -Next Season:
+	-Add Seattle Kraken
+	-Update division ids as needed
+		-Grab the ids from the API and store them rather than hard-coding
+	-Update standings design to align with NHL app
 	
 -Wishlist:
 	-Clean up code!
