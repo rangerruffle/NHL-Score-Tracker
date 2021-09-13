@@ -7,7 +7,7 @@
 
   "offline_enabled": false,
   "short_name": "NhlScoreTracker",
-  "version": "1.65",
+  "version": "1.70.0",
 
   "background": {
     "scripts": [
