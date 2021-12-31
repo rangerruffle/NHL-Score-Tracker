@@ -602,7 +602,6 @@ function setTeamStatsSection(gameInfo) {
 	awayTeamHITS.innerHTML = awayTeamStats.hits;
 	awayTeamBLKS.innerHTML = awayTeamStats.blocked;
 	awayTeamGVA.innerHTML = awayTeamStats.giveaways;
-	console.log(awayTeamStats);
 	
 	const homeTeamStats = gameInfo.liveData.boxscore.teams.home.teamStats.teamSkaterStats;
 	homeTeamSOG.innerHTML = homeTeamStats.shots;
@@ -786,7 +785,6 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 				Promise.all(playerPromises).then(function(players) {
 					for (var i = 0; i < players.length; i++) {
 						const player = players[i];
-						console.log(player);
 						switch(player.people[0].primaryPosition.type) {
 							case "Defenseman":
 								addPlayerStat(player, teamDefense);
