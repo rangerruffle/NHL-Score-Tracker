@@ -36,6 +36,7 @@ if (todayDay < 10) {
 var todayYear = today.getFullYear();
 
 // Tabs
+var calendarTab;
 var previewTab;
 var liveTab;
 var teamStatsTab;
@@ -44,6 +45,7 @@ var standingsTab;
 var activeTab;
 
 // Sections
+var calendar;
 var rink;
 var teamStats;
 var inGamePlayerStats;
@@ -82,12 +84,14 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 });
 
 function updateGameData() {
+	calendarTab = document.getElementById("calendarTab");
 	previewTab = document.getElementById("previewTab");
 	liveTab = document.getElementById("liveTab");
 	teamStatsTab = document.getElementById("teamStatsTab");
 	playerStatsTab = document.getElementById("playerStatsTab");
 	standingsTab = document.getElementById("standingsTab");
 	
+	calendar = document.getElementById("calendar");
 	rink = document.getElementById("rink");
 	teamStats = document.getElementById("gameTeamStats");
 	inGamePlayerStats = document.getElementById("inGamePlayerStats");
@@ -98,6 +102,8 @@ function updateGameData() {
 	nhlLink = document.getElementById("nhlLink");
 	
 	setTabListeners();
+	setCalendarButtonListeners();
+	setCalendar();
 
 	const schedulePromise = new Promise(function(resolve, reject) {
 		chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result) {
@@ -245,6 +251,7 @@ function updateData() {
 }
 
 function setTabListeners() {
+	calendarTab.addEventListener('click', function () {hideShowElements(calendar);}, false);
 	previewTab.addEventListener('click', function () {hideShowElements(playerStats);}, false);
 	liveTab.addEventListener('click', function () {hideShowElements(rink);}, false);
 	teamStatsTab.addEventListener('click', function () {hideShowElements(teamStats);}, false);
@@ -260,6 +267,62 @@ function setTabListeners() {
 		}
 	}, false);
 	standingsTab.addEventListener('click', function () {hideShowElements(standings);}, false);
+}
+
+function setCalendarButtonListeners() {
+	const previousMonth = document.getElementById("previousMonth");
+	const nextMonth = document.getElementById("nextMonth");
+
+	previousMonth.addEventListener(
+		'click',
+		function() {
+			commonUtilities.setPreviousCurrentMonth();
+			setCalendar();
+		},
+		false
+	);
+	nextMonth.addEventListener(
+		'click',
+		function() {
+			commonUtilities.setNextCurrentMonth();
+			setCalendar();
+		},
+		false
+	);
+}
+
+function setCalendar() {
+	const calendarPromise = new Promise(function(resolve, reject) {
+		var calendarXmlHttp = new XMLHttpRequest();
+		const startDate = commonUtilities.getCurrentMonthStartDateText();
+		const endDate = commonUtilities.getCurrentMonthEndDateText();
+		const currentTeamId = commonUtilities.getTeamId();
+		calendarXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + startDate + "&endDate=" + endDate + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + currentTeamId);
+
+		calendarXmlHttp.onload = function() {
+			if (calendarXmlHttp.status == 200) {
+				resolve(JSON.parse(calendarXmlHttp.responseText));
+			} else {
+				reject(Error(calendarXmlHttp.statusText));
+			}
+		};
+
+		calendarXmlHttp.onerror = function() {
+			reject(Error("Network Error"));
+		};
+
+		calendarXmlHttp.send();
+	});
+
+	calendarPromise.then(
+		function(calendarInfo) {
+			setCalendarHeader();
+			setCalendarDates(calendarInfo.dates);
+		},
+		function(error) {
+			return null;
+		},
+	);
 }
 
 function setPreview(gameInfo) {
@@ -331,7 +394,7 @@ function setNoGame() {
 		setStandingsSection();
 	}
 
-	setActiveTab(noGamePlayerStats, "None");
+	setActiveTab(calendar, "None");
 }
 
 function setHeadingSection(gameInfo, gameStatus) {
@@ -402,6 +465,93 @@ function setHeadingSection(gameInfo, gameStatus) {
 			headingAwayScore.innerHTML = "";
 			headingHomeScore.innerHTML = "";
 			break;
+	}
+}
+
+function setCalendarHeader() {
+	const monthName = document.getElementById("monthName");
+	monthName.innerHTML = commonUtilities.getCurrentMonthName() + " " + commonUtilities.getCurrentMonthStartDate().getFullYear();
+}
+
+function setCalendarDates(dates) {
+	clearCalendar();
+	const firstDay = commonUtilities.getCurrentMonthStartDay();
+	const lastDay = commonUtilities.getCurrentMonthEndDate().getDate();
+	const todayDate = new Date(commonUtilities.getTodayYear(), commonUtilities.getTodayMonth() - 1, commonUtilities.getTodayDay());
+
+	for (let i = 1; i <= lastDay; i++) {
+		const currentDate = firstDay + i;
+		const calendarDay = document.getElementById("calendarDay" + currentDate);
+		const calendarDate = document.getElementById("calendarDate" + currentDate);
+		const calendarGameLogo = document.getElementById("calendarGameLogo" + currentDate);
+		const calendarGameTime = document.getElementById("calendarGameTime" + currentDate);
+
+		calendarDate.innerHTML = i;
+
+		const startDate = commonUtilities.getCurrentMonthStartDate();
+		if (startDate.getFullYear() === todayDate.getFullYear() && startDate.getMonth() === todayDate.getMonth() && todayDate.getDate() === i) {
+			calendarDay.innerHTML += "<div class='today' id='today'></div>";
+		}
+
+		for (let j = 0; j < dates.length; j++) {
+			const gameDate = new Date(dates[j].games[0].gameDate);
+
+			if (gameDate.getDate() === i) {
+				const gameInfo = dates[j].games[0];
+				let awayScore = gameInfo.teams.away.score;
+				let homeScore = gameInfo.teams.home.score;
+				let isHomeTeam = false;
+
+				if (gameInfo.teams.away.team.id === teamId) {
+					isHomeTeam = false;
+					calendarGameLogo.src = "logos/" + gameInfo.teams.home.team.teamName + ".png";
+					addClass(calendarDay, "awayGame");
+				} else {
+					isHomeTeam = true;
+					calendarGameLogo.src = "logos/" + gameInfo.teams.away.team.teamName + ".png";
+					addClass(calendarDay, "homeGame");
+				}
+
+				if (gameInfo.status.abstractGameState === "Final") {
+					const winOrLoss = isHomeTeam ? homeScore > awayScore ? "W" : "L" : awayScore > homeScore ? "W" : "L";
+					calendarGameTime.innerHTML = awayScore + " - " + homeScore + " " + winOrLoss;
+				} else if (gameInfo.status.abstractGameState === "Preview") {
+					if (gameInfo.status.detailedState === "Postponed") {
+						calendarGameTime.innerHTML = "PPD";
+					} else {
+						const dateTime = new Date(gameInfo.gameDate);
+						calendarGameTime.innerHTML = getTimeZoneAdjustedTime(dateTime);
+					}
+				} else {
+					calendarGameTime.innerHTML = awayScore + " - " + homeScore;
+				}
+				
+				show(calendarGameLogo);
+			}
+		}
+	}
+}
+
+function clearCalendar() {
+	for (let i = 1; i < 42; i++) {
+		const calendarDay = document.getElementById("calendarDay" + i);
+		const calendarDate = document.getElementById("calendarDate" + i);
+		const calendarGameLogo = document.getElementById("calendarGameLogo" + i);
+		const calendarGameTime = document.getElementById("calendarGameTime" + i);
+		const today = document.getElementById("today");
+
+		calendarDate.innerHTML = "";
+
+		removeClass(calendarDay, "homeGame");
+		removeClass(calendarDay, "awayGame");
+
+		calendarGameTime.innerHTML = "";
+
+		hide(calendarGameLogo);
+
+		if (today && calendarDay.children.length == 3) {
+			calendarDay.removeChild(today);
+		}
 	}
 }
 
@@ -873,35 +1023,35 @@ function getPlayersDataPromises(teamPromise) {
 
 function setStandingsSection() {
 	const divisionStandings = document.getElementById("divisionStandings");
-	// const wildCardStandings = document.getElementById("wildCardStandings");
+	const wildCardStandings = document.getElementById("wildCardStandings");
 	// const conferenceStandings = document.getElementById("conferenceStandings");
 	const leagueStandings = document.getElementById("leagueStandings");
 
 	const divisionStandingsButton = document.getElementById("divisionStandingsButton");
-	// const wildCardStandingsButton = document.getElementById("wildCardStandingsButton");
+	const wildCardStandingsButton = document.getElementById("wildCardStandingsButton");
 	// const conferenceStandingsButton = document.getElementById("conferenceStandingsButton");
 	const leagueStandingsButton = document.getElementById("leagueStandingsButton");
 	divisionStandingsButton.addEventListener('click', function () {
-		// (wildCardStandings);
+		hide(wildCardStandings);
 		// hide(conferenceStandings);
 		hide(leagueStandings);
-		// removeClass(wildCardStandingsButton, "selected");
+		removeClass(wildCardStandingsButton, "selected");
 		// removeClass(conferenceStandingsButton, "selected");
 		removeClass(leagueStandingsButton, "selected");
 		show(divisionStandings);
 		addClass(divisionStandingsButton, "selected");
 	}, false);
-	/*wildCardStandingsButton.addEventListener('click', function () {
+	wildCardStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
-		hide(conferenceStandings);
+		// hide(conferenceStandings);
 		hide(leagueStandings);
 		removeClass(divisionStandingsButton, "selected");
-		removeClass(conferenceStandingsButton, "selected");
+		// removeClass(conferenceStandingsButton, "selected");
 		removeClass(leagueStandingsButton, "selected");
 		show(wildCardStandings);
 		addClass(wildCardStandingsButton, "selected");
 	}, false);
-	conferenceStandingsButton.addEventListener('click', function () {
+	/*conferenceStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
 		hide(wildCardStandings);
 		hide(leagueStandings);
@@ -913,10 +1063,10 @@ function setStandingsSection() {
 	}, false);*/
 	leagueStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
-		// hide(wildCardStandings);
+		hide(wildCardStandings);
 		// hide(conferenceStandings);
 		removeClass(divisionStandingsButton, "selected");
-		// removeClass(wildCardStandingsButton, "selected");
+		removeClass(wildCardStandingsButton, "selected");
 		// removeClass(conferenceStandingsButton, "selected");
 		show(leagueStandings);
 		addClass(leagueStandingsButton, "selected");
@@ -1196,12 +1346,12 @@ function setDivisionData(divisionElement) {
 				if (divisions[i].division.id == commonUtilities.getTeamDivisionId()) {
 					addDivisionLines(divisions[i], divisionElement);
 				}
-				/*if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
+				if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
 					wildCardDivisions.push(divisions[i]);
 					if (wildCardDivisions.length == 2) {
 						addWildCardLines(wildCardDivisions[0], wildCardDivisions[1]);
 					}
-				}*/
+				}
 			}
 		},
 		function(error) {
@@ -1478,6 +1628,12 @@ function setActiveTab(elementToShow, gameStatusToCheck) {
 }
 
 function hideShowElements(elementToShow) {
+	if (calendar === elementToShow) {
+		show(calendar);
+	} else {
+		hide(calendar);
+	}
+
 	if (rink === elementToShow) {
 		show(rink);
 		addClass(liveTab, 'tabSelected');

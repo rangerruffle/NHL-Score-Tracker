@@ -5,6 +5,7 @@ const CommonUtilities = {
 	_teamDivisionIds: { "Avalanche": 16, "Blackhawks": 16, "Blue Jackets": 18, "Blues": 16, "Bruins": 17, "Canadiens": 17, "Canucks": 15, "Capitals": 18, "Coyotes": 16, "Devils": 18, "Ducks": 15, "Flames": 15, "Flyers": 18, "Golden Knights": 15, "Hurricanes": 18, "Islanders": 18, "Jets": 16, "Kings": 15, "Kraken": 15, "Lightning": 17, "Maple Leafs": 17, "Oilers": 15, "Panthers": 17, "Penguins": 18, "Predators": 16, "Rangers": 18, "Red Wings": 17, "Sabres": 17, "Senators": 17, "Sharks": 15, "Stars": 16, "Wild": 16 },
 	_teamConferenceIds: { "Avalanche": 5, "Blackhawks": 5, "Blue Jackets": 6, "Blues": 5, "Bruins": 6, "Canadiens": 6, "Canucks": 5, "Capitals": 6, "Coyotes": 5, "Devils": 6, "Ducks": 5, "Flames": 5, "Flyers": 6, "Golden Knights": 5, "Hurricanes": 6, "Islanders": 6, "Jets": 5, "Kings": 5, "Kraken": 5, "Lightning": 6, "Maple Leafs": 6, "Oilers": 5, "Panthers": 6, "Penguins": 6, "Predators": 5, "Rangers": 6, "Red Wings": 6, "Sabres": 6, "Senators": 6, "Sharks": 5, "Stars": 5, "Wild": 5 },
 	_teamColorClasses: { "Avalanche": "avalanche", "Blackhawks": "blackhawks", "Blue Jackets": "blueJackets", "Blues": "blues", "Bruins": "bruins", "Canadiens": "canadiens", "Canucks": "canucks", "Capitals": "capitals", "Coyotes": "coyotes", "Devils": "devils", "Ducks": "ducks", "Flames": "flames", "Flyers": "flyers", "Golden Knights": "goldenKnights", "Hurricanes": "hurricanes", "Islanders": "islanders", "Jets": "jets", "Kings": "kings", "Kraken": "kraken", "Lightning": "lightning", "Maple Leafs": "mapleLeafs", "Oilers": "oilers", "Panthers": "panthers", "Penguins": "penguins", "Predators": "predators", "Rangers": "rangers", "Red Wings": "redWings", "Sabres": "sabres", "Senators": "senators", "Sharks": "sharks", "Stars": "stars", "Wild": "wild" },
+	_monthNames: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
 
 	_teamIcon: "logos/nhl.png",
 	_teamId: 0,
@@ -16,6 +17,8 @@ const CommonUtilities = {
 	_todayYear: "",
 	_todayMonth: "",
 	_todayDay: "",
+	_currentMonthStartDate: null,
+	_currentMonthEndDate: null,
 
 	init() {
 		var context = this;
@@ -164,5 +167,87 @@ const CommonUtilities = {
 
 	setTimeZone(timeZone) {
 		this._timeZone = timeZone;
+	},
+
+	getCurrentMonthName() {
+		return this._monthNames[this._currentMonthStartDate.getMonth()];
+	},
+
+	getCurrentMonthStartDay() {
+		return this._currentMonthStartDate.getDay();
+	},
+
+	getCurrentMonthStartDate() {
+		return this._currentMonthStartDate;
+	},
+
+	getCurrentMonthEndDate() {
+		return this._currentMonthEndDate;
+	},
+
+	getCurrentMonthStartDateText() {
+		if (this._currentMonthStartDate == null) {
+			const currentDate = new Date();
+			this._currentMonthStartDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+		}
+
+		let currentMonth = this._currentMonthStartDate.getMonth() + 1;
+		let currentDay = this._currentMonthStartDate.getDate();
+		if (currentMonth < 10) {
+			currentMonth = '0' + currentMonth;
+		}
+		if (currentDay < 10) {
+			currentDay = '0' + currentDay;
+		}
+
+		return this._currentMonthStartDate.getFullYear() + '-' + currentMonth + '-' + currentDay;
+	},
+
+	getCurrentMonthEndDateText() {
+		if (this._currentMonthEndDate == null) {
+			const currentDate = new Date();
+			this._currentMonthEndDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+		}
+
+		let currentMonth = this._currentMonthEndDate.getMonth() + 1;
+		let currentDay = this._currentMonthEndDate.getDate();
+		if (currentMonth < 10) {
+			currentMonth = '0' + currentMonth;
+		}
+		if (currentDay < 10) {
+			currentDay = '0' + currentDay;
+		}
+
+		return this._currentMonthEndDate.getFullYear() + '-' + currentMonth + '-' + currentDay;
+	},
+
+	setNextCurrentMonth() {
+		const currentMonth = this._currentMonthStartDate.getMonth();
+		if (currentMonth === 11) {
+			this._currentMonthStartDate.setYear(this._currentMonthStartDate.getFullYear() + 1);
+			this._currentMonthEndDate.setYear(this._currentMonthEndDate.getFullYear() + 1);
+			this._currentMonthStartDate.setMonth(0, 1);
+			this._currentMonthEndDate.setMonth(1, 0);
+		} else {
+			this._currentMonthStartDate.setMonth(currentMonth + 1, 1);
+			this._currentMonthEndDate.setMonth(currentMonth + 2, 0);
+		}
+		console.log(this._currentMonthStartDate);
+		console.log(this._currentMonthEndDate);
+	},
+
+	setPreviousCurrentMonth() {
+		const currentMonth = this._currentMonthEndDate.getMonth();
+		if (currentMonth === 0) {
+			this._currentMonthStartDate.setYear(this._currentMonthStartDate.getFullYear() - 1);
+			this._currentMonthEndDate.setYear(this._currentMonthEndDate.getFullYear() - 1);
+			this._currentMonthStartDate.setMonth(11, 1);
+			this._currentMonthEndDate.setMonth(12, 0);
+		} else {
+			this._currentMonthStartDate.setMonth(currentMonth - 1, 1);
+			this._currentMonthEndDate.setMonth(currentMonth, 0);
+		}
+		console.log(this._currentMonthStartDate);
+		console.log(this._currentMonthEndDate);
 	},
 };
