@@ -1,18 +1,23 @@
+import CommonUtilities from "./CommonUtilities.js";
+
 var awayTeamInitial = "";
 var currentlyPreGame = true;
 var currentGameId = false;
 var gameCompleteIconSet = "20000101";
 var gameTimeDataRefreshTimer = false;
 var homeTeamInitial = "";
-var iconCanvas = document.createElement('canvas');
+var iconCanvas = new OffscreenCanvas(128, 128)
 var lossIcon = "logos/loss.png";
 var teamId = 0;
 var teamIsHome = false;
 var teamMenuItems = [];
 var teamName = "";
 var winIcon = "logos/win.png";
+var localGameTime = false;
+var gameLiveLink = "";
 
 const commonUtilities = CommonUtilities.init();
+const teams = CommonUtilities.getTeams();
 chrome.alarms.create(
 	"NHLScoreTrackerIcon",
 	{
@@ -28,31 +33,44 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 	}
 });
 
-const teams = CommonUtilities.getTeams();
-addTeamSelectorMenuOptions();
-addTimeZoneMenuOptions();
-addBugReportingOption();
+chrome.runtime.onInstalled.addListener(() => {
+	addTeamSelectorMenuOptions();
+	addTimeZoneMenuOptions();
+	addBugReportingOption();
+});
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+	if (info.menuItemId === "timeZoneSelectorCentral") {
+		commonUtilities.saveTimeZone("US/Central");
+	} else if (info.menuItemId === "timeZoneSelectorEastern") {
+		commonUtilities.saveTimeZone("US/Eastern");
+	} else if (info.menuItemId === "timeZoneSelectorMountain") {
+		commonUtilities.saveTimeZone("US/Mountain");
+	} else if (info.menuItemId === "timeZoneSelectorPacific") {
+		commonUtilities.saveTimeZone("US/Pacific");
+	} else {
+		CommonUtilities.saveSelectedTeam(teamMenuItems[info.menuItemId]);
+	}
+	
+	updateGameData();
+});
 
 function addTeamSelectorMenuOptions() {
 	var teamMenuItem = chrome.contextMenus.create({
-		"documentUrlPatterns": [window.location.protocol + "//" + window.location.hostname + "/*"],
 		"title": "Select Team...",
-		"contexts": ["browser_action"],
+		"contexts": ["action"],
+		"id": "teamSelector"
 	});
 	
 	for (var i = 0, len = teams.length; i < len; i++) {
 		var team = teams[i];
 		var menuIndex = chrome.contextMenus.create({
-			"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
 			"type": "radio",
 			"checked": commonUtilities.getTeamName() == team,
 			"title": team,
 			"parentId": teamMenuItem,
-			"contexts": ["browser_action"],
-			"onclick": function(info, tab) {
-				CommonUtilities.saveSelectedTeam(teamMenuItems[info.menuItemId]);
-				updateGameData();
-			}
+			"contexts": ["action"],
+			"id": "teamSelectorRadioButton" + team
 		}, function() {
 			if (chrome.runtime.lastError) {
 				console.log("error creating menu item:" + chrome.runtime.lastError);
@@ -67,74 +85,59 @@ function addTimeZoneMenuOptions() {
 	const timeZone = commonUtilities.getTimeZone();
 
 	chrome.contextMenus.create({
-		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
 		"type": "separator",
+		"id": "timeZoneSeparator"
 	});
 	
-	chrome.contextMenus.create({
-		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
+	const central = chrome.contextMenus.create({
 		"type":"radio",
 		"checked": timeZone == "US/Central",
 		"title":"Central Time",
-		"contexts":["browser_action"],
-		"onclick":function(info, tab) {
-			commonUtilities.saveTimeZone("US/Central");
-			updateGameData();
-		}
+		"contexts":["action"],
+		"id": "timeZoneSelectorCentral"
 	});
 	
-	chrome.contextMenus.create({
-		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
+	const eastern = chrome.contextMenus.create({
 		"type":"radio",
 		"checked": timeZone == "US/Eastern",
 		"title":"Eastern Time",
-		"contexts":["browser_action"],
-		"onclick":function(info, tab) {
-			commonUtilities.saveTimeZone("US/Eastern");
-			updateGameData();
-		}
+		"contexts":["action"],
+		"id": "timeZoneSelectorEastern"
 	});
 	
-	chrome.contextMenus.create({
-		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
+	const mountain = chrome.contextMenus.create({
 		"type":"radio",
 		"checked": timeZone == "US/Mountain",
 		"title":"Mountain Time",
-		"contexts":["browser_action"],
-		"onclick":function(info, tab) {
-			commonUtilities.saveTimeZone("US/Mountain");
-			updateGameData();
-		}
+		"contexts":["action"],
+		"id": "timeZoneSelectorMountain"
 	});
 	
-	chrome.contextMenus.create({
-		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
+	const pacific = chrome.contextMenus.create({
 		"type":"radio",
 		"checked": timeZone == "US/Pacific",
 		"title":"Pacific Time",
-		"contexts":["browser_action"],
-		"onclick":function(info, tab) {
-			commonUtilities.saveTimeZone("US/Pacific");
-			updateGameData();
-		}
+		"contexts":["action"],
+		"id": "timeZoneSelectorPacific"
 	});
 }
 
 function addBugReportingOption() {
-	chrome.contextMenus.create({
-		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
-		"type": "separator",
-	});
+	//chrome.contextMenus.create({
+		//"type": "separator",
+		//"id": "bugReportSeparator"
+	//});
 
-	chrome.contextMenus.create({
-		"documentUrlPatterns": [ window.location.protocol + "//" + window.location.hostname + "/*" ],
-		"type": "normal",
-		"title": "Report a Bug",
-		"contexts": ["browser_action"],
-		"onclick": function() {
-			reportBug();
-		}
-	});
+	//const bugReport = chrome.contextMenus.create({
+		//"type": "normal",
+		//"title": "Report a Bug",
+		//"contexts": ["action"],
+		//"id": "bugReport"
+	//});
+	
+	//bugReport.onClicked.addListener(function() {
+		//reportBug();
+	//});
 }
 
 function reportBug() {
@@ -144,37 +147,18 @@ function reportBug() {
 function updateGameData() {
 	teamId = commonUtilities.getTeamId();
 	teamName = commonUtilities.getTeamName();
-	var gameLiveLink = "";
-	var localGameTime = false;
 	const todayYear = commonUtilities.getTodayYear();
 	const todayMonth = commonUtilities.getTodayMonth();
 	const todayDay = commonUtilities.getTodayDay();
-
-	const schedulePromise = new Promise(function(resolve, reject) {
-	    const scheduleXmlHttp = new XMLHttpRequest();
-		scheduleXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId);
-
-		scheduleXmlHttp.onload = function() {
-			if (scheduleXmlHttp.status == 200) {
-				resolve(JSON.parse(scheduleXmlHttp.responseText));
-			} else {
-				reject(Error(scheduleXmlHttp.statusText));
-			}
-		};
-
-		scheduleXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		scheduleXmlHttp.send();
-	});
-
-	schedulePromise.then(
-		setScheduleData,
-		function(error) {
+	
+	fetch("https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId)
+		.catch(error => {
 			setNoGame(teamName);
-		},
-	);
+		})
+		.then(response => response.json())
+		.then(scheduleInfo => {
+			setScheduleData(scheduleInfo);
+		});
 }
 
 function setScheduleData(scheduleInfo) {
@@ -184,32 +168,15 @@ function setScheduleData(scheduleInfo) {
 			var dateTime = new Date(scheduleInfo.dates[0].games[0].gameDate);
 			localGameTime = getTimeZoneAdjustedTime(dateTime);
 			gameLiveLink = scheduleInfo.dates[0].games[0].link;
-
-			const gamePromise = new Promise(function(resolve, reject) {
-				const gameXmlHttp = new XMLHttpRequest();
-				gameXmlHttp.open("GET", "https://statsapi.web.nhl.com/" + gameLiveLink);
-
-				gameXmlHttp.onload = function() {
-					if (gameXmlHttp.status == 200) {
-						resolve(JSON.parse(gameXmlHttp.responseText));
-					} else {
-						reject(Error(scheduleXmlHttp.statusText));
-					}
-				};
-
-				gameXmlHttp.onerror = function() {
-					reject(Error("Network Error"));
-				};
-
-				gameXmlHttp.send();
-			});
-
-			gamePromise.then(
-				setGameData,
-				function(error) {
+			
+			fetch("https://statsapi.web.nhl.com/" + gameLiveLink)
+				.catch(error => {
 					setNoGame(teamName);
-				},
-			);
+				})
+				.then(response => response.json())
+				.then(gameInfo => {
+					setGameData(gameInfo);
+				});
 		} else {
 			setNoGame(teamName);
 		}
@@ -258,7 +225,7 @@ function setGameData(gameInfo) {
 			badgeText = awayScore + "-" + homeScore;
 			
 			if (gameTimeDataRefreshTimer) {
-				window.clearInterval(gameTimeDataRefreshTimer);
+				clearInterval(gameTimeDataRefreshTimer);
 				gameTimeDataRefreshTimer = false;
 			}
 			currentlyPreGame = false;
@@ -323,21 +290,20 @@ function setGameData(gameInfo) {
 	}
 	
 	if (tagText) {
-		chrome.browserAction.setTitle({title: tagText});
+		chrome.action.setTitle({title: tagText});
 	}
 	if (badgeText !== false) {
-		chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
-		chrome.browserAction.setBadgeText({text: badgeText});
+		chrome.action.setBadgeBackgroundColor({ color: [0, 0, 0, 255] });
+		chrome.action.setBadgeText({text: badgeText});
 	}
-	console.log(badgeText);
-	console.log(icon);
+
 	drawLogo(icon, gameToday);
 }
 
 function setNoGame(teamName) {
 	currentGameId = false;
-	chrome.browserAction.setTitle({title: "No " + teamName + " game today."});
-	chrome.browserAction.setBadgeText({text: ""});
+	chrome.action.setTitle({title: "No " + teamName + " game today."});
+	chrome.action.setBadgeText({text: ""});
 	drawLogo(commonUtilities.getTeamIcon(), false);
 }
 
@@ -354,10 +320,9 @@ function updateData() {
 
 function getTimeZoneAdjustedTime(dateTime) {
 	const timeZone = commonUtilities.getTimeZone();
-	var format = "HH:mm";
-	var timeInGivenZone = moment(dateTime, format).tz(timeZone).format(format);
-	var hours = parseInt(timeInGivenZone.split(':')[0]);
-	var minutes = parseInt(timeInGivenZone.split(':')[1]);
+	var timeInGivenZone = new Date(dateTime.toLocaleString('en-US', {timeZone: timeZone}));
+	var hours = parseInt(timeInGivenZone.getHours());
+	var minutes = parseInt(timeInGivenZone.getMinutes());
 	var pmAm = "AM";
 	if (hours >= 12) {
 		if (hours > 12) {
@@ -373,40 +338,40 @@ function getTimeZoneAdjustedTime(dateTime) {
 	if (localTime[0] == '0') {
 		localTime = localTime.substring(1);
 	}
-	
 	return localTime;
 }
 
 function drawLogo(logoSource, useColorImage) {
 	var context = iconCanvas.getContext('2d');
-
-	var bgImage = new Image();
-	bgImage.onload = function() {
-	    context.clearRect(0, 0, bgImage.height, bgImage.width);
-		context.drawImage(bgImage, 0, 0);
-		var imageData = context.getImageData(0, 0, 128, 128);
-			
-		if(!useColorImage) {
-			for(var y = 0; y < imageData.height; y++){
-				for(var x = 0; x < imageData.width; x++){
-					var i = (y * 4) * imageData.width + x * 4;
-					var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
-					imageData.data[i] = avg;
-					imageData.data[i + 1] = avg;
-					imageData.data[i + 2] = avg;
-					if(avg > 0) {
-					imageData.data[i + 3] = 100;
+	
+	const imageBlob = fetch(logoSource)
+		.then(response => response.blob())
+		.then(blob => {
+			const imageBitmap = createImageBitmap(blob).then(imageBitmap => {
+				context.clearRect(0, 0, imageBitmap.height, imageBitmap.width);
+				context.drawImage(imageBitmap, 0, 0);
+				var imageData = context.getImageData(0, 0, 128, 128);
+					
+				if(!useColorImage) {
+					for(var y = 0; y < imageData.height; y++){
+						for(var x = 0; x < imageData.width; x++){
+							var i = (y * 4) * imageData.width + x * 4;
+							var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
+							imageData.data[i] = avg;
+							imageData.data[i + 1] = avg;
+							imageData.data[i + 2] = avg;
+							if(avg > 0) {
+							imageData.data[i + 3] = 100;
+							}
+						}
 					}
 				}
-			}
-	    }
-	    
-	    chrome.browserAction.setIcon({
-		  imageData: imageData
+				
+				chrome.action.setIcon({
+				  imageData: imageData
+				});
+			});
 		});
-	};
-
-	bgImage.src = logoSource;
 }
 
 function getPeriodSuffix(period) {
@@ -423,5 +388,3 @@ function getPeriodSuffix(period) {
 
     return period + "th";
 }
-
-exports = {addTeamSelectorMenuOptions, addTimeZoneMenuOptions, addBugReportingOption};

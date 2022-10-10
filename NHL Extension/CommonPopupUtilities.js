@@ -1,4 +1,4 @@
-const CommonUtilities = {
+const CommonPopupUtilities = {
 	_teams: [ "Avalanche", "Blackhawks", "Blue Jackets", "Blues", "Bruins", "Canadiens", "Canucks", "Capitals", "Coyotes", "Devils", "Ducks", "Flames", "Flyers", "Golden Knights", "Hurricanes", "Islanders", "Jets", "Kings", "Kraken", "Lightning", "Maple Leafs", "Oilers", "Panthers", "Penguins", "Predators", "Rangers", "Red Wings", "Sabres", "Senators", "Sharks", "Stars", "Wild" ],
 	_teamIds: { "Avalanche": 21, "Blackhawks": 16, "Blue Jackets": 29, "Blues": 19, "Bruins": 6, "Canadiens": 8, "Canucks": 23, "Capitals": 15, "Coyotes": 53, "Devils": 1, "Ducks": 24, "Flames": 20, "Flyers": 4, "Golden Knights": 54, "Hurricanes": 12, "Islanders": 2, "Jets": 52, "Kings": 26, "Kraken": 55, "Lightning": 14, "Maple Leafs": 10, "Oilers": 22, "Panthers": 13, "Penguins": 5, "Predators": 18, "Rangers": 3, "Red Wings": 17, "Sabres": 7, "Senators": 9, "Sharks": 28, "Stars": 25, "Wild": 30 },
 	_teamNamesById: { 21: "Avalanche", 16: "Blackhawks", 29: "Blue Jackets", 19: "Blues", 6: "Bruins", 8: "Canadiens", 23: "Canucks", 15: "Capitals", 53: "Coyotes", 1: "Devils", 24: "Ducks", 20: "Flames", 4: "Flyers", 54: "Golden Knights", 12: "Hurricanes", 2: "Islanders", 52: "Jets", 26: "Kings", 55: "Kraken", 14: "Lightning", 10: "Maple Leafs", 22: "Oilers", 13: "Panthers", 5: "Penguins", 18: "Predators", 3: "Rangers", 17: "Red Wings", 7: "Sabres", 9: "Senators", 28: "Sharks", 25: "Stars", 30: "Wild" },
@@ -251,5 +251,3 @@ const CommonUtilities = {
 		console.log(this._currentMonthEndDate);
 	},
 };
-
-export default CommonUtilities;

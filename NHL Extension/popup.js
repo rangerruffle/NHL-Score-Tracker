@@ -53,13 +53,13 @@ var playerStats;
 var noGamePlayerStats;
 var standings;
 
-const commonUtilities = CommonUtilities.init();
+const commonUtilities = CommonPopupUtilities.init();
 chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result) {
 	teamName = result.trackedTeamName;
-	teamId = CommonUtilities.getTeamIdMapping()[teamName];
+	teamId = CommonPopupUtilities.getTeamIdMapping()[teamName];
 	teamIcon = "logos/" + teamName + ".png";
 });
-const teams = CommonUtilities.getTeams();
+const teams = CommonPopupUtilities.getTeams();
 chrome.alarms.create(
 	"NHLScoreTrackerPopup",
 	{
@@ -108,7 +108,7 @@ function updateGameData() {
 	const schedulePromise = new Promise(function(resolve, reject) {
 		chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result) {
 			teamName = result.trackedTeamName;
-			teamId = CommonUtilities.getTeamIdMapping()[teamName];
+			teamId = CommonPopupUtilities.getTeamIdMapping()[teamName];
 
 			const scheduleXmlHttp = new XMLHttpRequest();
 			scheduleXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId);
@@ -198,7 +198,7 @@ function setGameData(gameInfo) {
 			awayTeamIcon = "logos/" + otherTeamName + ".png";
 			homeTeamIcon = teamIcon;
 
-			awayTeamId = CommonUtilities.getTeamIdMapping()[otherTeamName];
+			awayTeamId = CommonPopupUtilities.getTeamIdMapping()[otherTeamName];
 			homeTeamId = teamId;
 
 			awayTeamName = otherTeamName;
@@ -211,7 +211,7 @@ function setGameData(gameInfo) {
 			homeTeamIcon = "logos/" + otherTeamName + ".png";
 
 			awayTeamId = teamId;
-			homeTeamId = CommonUtilities.getTeamIdMapping()[otherTeamName];
+			homeTeamId = CommonPopupUtilities.getTeamIdMapping()[otherTeamName];
 
 			awayTeamName = teamName;
 			homeTeamName = otherTeamName;
@@ -367,7 +367,7 @@ function setFinal(gameInfo) {
 	show(standingsTab);
 
 	if (gameTimeDataRefreshTimer) {
-		window.clearInterval(gameTimeDataRefreshTimer);
+		document.clearInterval(gameTimeDataRefreshTimer);
 		gameTimeDataRefreshTimer = false;
 	}
 	
@@ -584,27 +584,27 @@ function setRinkSection(gameInfo) {
 					if (awayTeamOffense.length < 3) {
 						awayTeamOffense.push(awayOnIce[i]);
 						if (awayTeamOffense.length === 0) {
-							awayLeftWing.innerHTML = player.jerseyNumber;
+							awayLeftWing.innerHTML = player.jerseyNumber ?? 0;
 							awayLeftWing.setAttribute('title', player.person.fullName);
 						} else if (awayTeamOffense.length === 1) {
-							awayCenter.innerHTML = player.jerseyNumber;
+							awayCenter.innerHTML = player.jerseyNumber ?? 0;
 							awayCenter.setAttribute('title', player.person.fullName);
 						} else if (awayTeamOffense.length === 2) {
-							awayRightWing.innerHTML = player.jerseyNumber;
+							awayRightWing.innerHTML = player.jerseyNumber ?? 0;
 							awayRightWing.setAttribute('title', player.person.fullName);
 						}
 					} else {
 						if (!awayOnIce.includes(awayTeamOffense[0])) {
 							awayTeamOffense = [awayOnIce[i], awayTeamOffense[1], awayTeamOffense[2]];
-							awayLeftWing.innerHTML = player.jerseyNumber;
+							awayLeftWing.innerHTML = player.jerseyNumber ?? 0;
 							awayLeftWing.setAttribute('title', player.person.fullName);
 						} else if (!awayOnIce.includes(awayTeamOffense[1])) {
 							awayTeamOffense = [awayTeamOffense[0], awayOnIce[i], awayTeamOffense[2]];
-							awayCenter.innerHTML = player.jerseyNumber;
+							awayCenter.innerHTML = player.jerseyNumber ?? 0;
 							awayCenter.setAttribute('title', player.person.fullName);
 						} else if (!awayOnIce.includes(awayTeamOffense[2])) {
 							awayTeamOffense = [awayTeamOffense[0], awayTeamOffense[1], awayOnIce[i]];
-							awayRightWing.innerHTML = player.jerseyNumber;
+							awayRightWing.innerHTML = player.jerseyNumber ?? 0;
 							awayRightWing.setAttribute('title', player.person.fullName);
 						}
 					}
@@ -612,27 +612,27 @@ function setRinkSection(gameInfo) {
 				case "D":
 					if(awayTeamDefense.length === 0) {
 						awayTeamDefense.push(awayOnIce[i]);
-						awayLeftDefense.innerHTML = player.jerseyNumber;
+						awayLeftDefense.innerHTML = player.jerseyNumber ?? 0;
 						awayLeftDefense.setAttribute('title', player.person.fullName);
 					} else if (awayTeamDefense.length === 1) {
 						awayTeamDefense.push(awayOnIce[i]);
-						awayRightDefense.innerHTML = player.jerseyNumber;
+						awayRightDefense.innerHTML = player.jerseyNumber ?? 0;
 						awayRightDefense.setAttribute('title', player.person.fullName);
 					} else {
 						if (!awayOnIce.includes(awayTeamDefense[0])) {
 							awayTeamDefense = [awayOnIce[i], awayTeamDefense[1]];
-							awayLeftDefense.innerHTML = player.jerseyNumber;
+							awayLeftDefense.innerHTML = player.jerseyNumber ?? 0;
 							awayLeftDefense.setAttribute('title', player.person.fullName);
 						} else if (!awayOnIce.includes(awayTeamDefense[1])) {
 							awayTeamDefense = [awayTeamDefense[0], awayOnIce[i]];
-							awayRightDefense.innerHTML = player.jerseyNumber;
+							awayRightDefense.innerHTML = player.jerseyNumber ?? 0;
 							awayRightDefense.setAttribute('title', player.person.fullName);
 						}
 					}
 					break;
 				case "G":
-					if (awayGoalie.innerHTML !== player.jerseyNumber) {
-						awayGoalie.innerHTML = player.jerseyNumber;
+					if (awayGoalie.innerHTML !== player.jerseyNumber ?? 0) {
+						awayGoalie.innerHTML = player.jerseyNumber ?? 0;
 						awayGoalie.setAttribute('title', player.person.fullName);
 					}
 					break;
@@ -654,27 +654,27 @@ function setRinkSection(gameInfo) {
 					if (homeTeamOffense.length < 3) {
 						homeTeamOffense.push(homeOnIce[i]);
 						if (homeTeamOffense.length === 0) {
-							homeLeftWing.innerHTML = player.jerseyNumber;
+							homeLeftWing.innerHTML = player.jerseyNumber ?? 0;
 							homeLeftWing.setAttribute('title', player.person.fullName);
 						} else if (homeTeamOffense.length === 1) {
-							homeCenter.innerHTML = player.jerseyNumber;
+							homeCenter.innerHTML = player.jerseyNumber ?? 0;
 							homeCenter.setAttribute('title', player.person.fullName);
 						} else if (homeTeamOffense.length === 2) {
-							homeRightWing.innerHTML = player.jerseyNumber;
+							homeRightWing.innerHTML = player.jerseyNumber ?? 0;
 							homeRightWing.setAttribute('title', player.person.fullName);
 						}
 					} else {
 						if (!homeOnIce.includes(homeTeamOffense[0])) {
 							homeTeamOffense = [homeOnIce[i], homeTeamOffense[1], homeTeamOffense[2]];
-							homeLeftWing.innerHTML = player.jerseyNumber;
+							homeLeftWing.innerHTML = player.jerseyNumber ?? 0;
 							homeLeftWing.setAttribute('title', player.person.fullName);
 						} else if (!homeOnIce.includes(homeTeamOffense[1])) {
 							homeTeamOffense = [homeTeamOffense[0], homeOnIce[i], homeTeamOffense[2]];
-							homeCenter.innerHTML = player.jerseyNumber;
+							homeCenter.innerHTML = player.jerseyNumber ?? 0;
 							homeCenter.setAttribute('title', player.person.fullName);
 						} else if (!homeOnIce.includes(homeTeamOffense[2])) {
 							homeTeamOffense = [homeTeamOffense[0], homeTeamOffense[1], homeOnIce[i]];
-							homeRightWing.innerHTML = player.jerseyNumber;
+							homeRightWing.innerHTML = player.jerseyNumber ?? 0;
 							homeRightWing.setAttribute('title', player.person.fullName);
 						}
 					}
@@ -682,27 +682,27 @@ function setRinkSection(gameInfo) {
 				case "D":
 					if(homeTeamDefense.length === 0) {
 						homeTeamDefense.push(homeOnIce[i]);
-						homeLeftDefense.innerHTML = player.jerseyNumber;
+						homeLeftDefense.innerHTML = player.jerseyNumber ?? 0;
 						homeLeftDefense.setAttribute('title', player.person.fullName);
 					} else if (homeTeamDefense.length === 1) {
 						homeTeamDefense.push(homeOnIce[i]);
-						homeRightDefense.innerHTML = player.jerseyNumber;
+						homeRightDefense.innerHTML = player.jerseyNumber ?? 0;
 						homeRightDefense.setAttribute('title', player.person.fullName);
 					} else {
 						if (!homeOnIce.includes(homeTeamDefense[0])) {
 							homeTeamDefense = [homeOnIce[i], homeTeamDefense[1]];
-							homeLeftDefense.innerHTML = player.jerseyNumber;
+							homeLeftDefense.innerHTML = player.jerseyNumber ?? 0;
 							homeLeftDefense.setAttribute('title', player.person.fullName);
 						} else if (!homeOnIce.includes(homeTeamDefense[1])) {
 							homeTeamDefense = [homeTeamDefense[0], homeOnIce[i]];
-							homeRightDefense.innerHTML = player.jerseyNumber;
+							homeRightDefense.innerHTML = player.jerseyNumber ?? 0;
 							homeRightDefense.setAttribute('title', player.person.fullName);
 						}
 					}
 					break;
 				case "G":
-					if (homeGoalie.innerHTML !== player.jerseyNumber) {
-						homeGoalie.innerHTML = player.jerseyNumber;
+					if (homeGoalie.innerHTML !== player.jerseyNumber ?? 0) {
+						homeGoalie.innerHTML = player.jerseyNumber ?? 0;
 						homeGoalie.setAttribute('title', player.person.fullName);
 					}
 					break;
@@ -1111,7 +1111,7 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
 	addClass(number, "number");
-	number.innerHTML = player.jerseyNumber;
+	number.innerHTML = player.jerseyNumber ?? 0;
 	const name = document.createElement("div");
 	addClass(name, "name");
 	name.innerHTML = playerName[playerName.length - 1];
@@ -1215,7 +1215,7 @@ function addPlayerStat(player, element, isGoalie = false) {
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
 	addClass(number, "number");
-	number.innerHTML = person.primaryNumber;
+	number.innerHTML = person.primaryNumber ?? 0;
 	const name = document.createElement("div");
 	addClass(name, "name");
 	name.innerHTML = playerName;
@@ -1527,7 +1527,7 @@ function addStandingsLine(team, element) {
 	const statLine = document.createElement("div");
 	addClass(statLine, "standingsTeamLine");
 
-	var shortName = CommonUtilities.getTeamNameIdMapping()[team.team.id];
+	var shortName = CommonPopupUtilities.getTeamNameIdMapping()[team.team.id];
 
 	const standingsTeam = document.createElement("div");
 	addClass(standingsTeam, "standingsTeam");
@@ -1584,16 +1584,15 @@ function addStandingsLine(team, element) {
 
 function getTimeZoneAdjustedTime(dateTime) {
 	const timeZone = commonUtilities.getTimeZone();
-	var format = "HH:mm";
-	var timeInGivenZone = moment(dateTime, format).tz(timeZone).format(format);
-	var hours = parseInt(timeInGivenZone.split(':')[0]);
-	var minutes = parseInt(timeInGivenZone.split(':')[1]);
-	var pmAm = " AM";
+	var timeInGivenZone = new Date(dateTime.toLocaleString('en-US', {timeZone: timeZone}));
+	var hours = parseInt(timeInGivenZone.getHours());
+	var minutes = parseInt(timeInGivenZone.getMinutes());
+	var pmAm = "AM";
 	if (hours >= 12) {
 		if (hours > 12) {
 			hours -= 12;
 		}
-		pmAm = " PM";
+		pmAm = "PM";
 	}
 	if (minutes < 10) {
 		minutes = "0" + minutes;
@@ -1603,7 +1602,6 @@ function getTimeZoneAdjustedTime(dateTime) {
 	if (localTime[0] == '0') {
 		localTime = localTime.substring(1);
 	}
-	
 	return localTime;
 }
 
