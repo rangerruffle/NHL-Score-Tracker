@@ -7,7 +7,7 @@
 
   "offline_enabled": false,
   "short_name": "NhlScoreTracker",
-  "version": "1.83.0",
+  "version": "1.84.0",
 
   "background": {
     "service_worker": "background.js",
@@ -28,18 +28,5 @@
   
   "host_permissions": [
     "https://statsapi.web.nhl.com/"
-  ],
-
-  "optional_host_permissions": [
-    "*://*/*"
-  ],
-
-  "web_accessible_resources": [{
-    "resources": ["logos/*"],
-    "matches": ["<all_urls>"]
-  },
-  {
-    "resources": ["*"],
-    "matches": ["<all_urls>"]
-  }]
+  ]
 }
