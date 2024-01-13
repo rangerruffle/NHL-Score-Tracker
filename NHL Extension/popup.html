@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>NHL Score Tracker</title>
@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="teamStyles.css" />
 	<script src="ElementUtilities.js"></script>
 	<script src="CommonPopupUtilities.js"></script>
+	<script src="APIPopupDataUtility.js"></script>
+	<script src="APIPopupCallsUtility.js"></script>
+	<script src="APIPopupGameStates.js"></script>
   </head>
 
   <body>
@@ -415,7 +418,7 @@
 				<div class="teamStat" id="awayTeamPIM">0</div>
 				<div class="teamStat" id="awayTeamHITS">0</div>
 				<div class="teamStat" id="awayTeamBLKS">0</div>
-				<div class="teamStat" id="awayTeamGVA">0</div>
+				<!--<div class="teamStat" id="awayTeamGVA">0</div>-->
 			</div>
 			<div class="teamStatsTeamDivider">
 				<div class="teamStat">Team</div>
@@ -425,7 +428,7 @@
 				<div class="teamStat" title="Penalties in Minutes">PIM</div>
 				<div class="teamStat" title="Hits">HITS</div>
 				<div class="teamStat" title="Blocks">BLKS</div>
-				<div class="teamStat" title="Giveaways">GVA</div>
+				<!--<div class="teamStat" title="Giveaways">GVA</div> Not in new version of API-->
 			</div>
 			<div class="teamStats">
 				<div class="teamStat">
@@ -440,7 +443,7 @@
 				<div class="teamStat" id="homeTeamPIM">0</div>
 				<div class="teamStat" id="homeTeamHITS">0</div>
 				<div class="teamStat" id="homeTeamBLKS">0</div>
-				<div class="teamStat" id="homeTeamGVA">0</div>
+				<!--<div class="teamStat" id="homeTeamGVA">0</div>-->
 			</div>
 		</div>
 		
@@ -747,7 +750,7 @@
 			<div class="standingsTabButtons">
 				<div class="standingsTabButton wildCardStandingsButton selected" id="wildCardStandingsButton">Wild Card</div>
 				<div class="standingsTabButton divisionStandingsButton" id="divisionStandingsButton">Division</div>
-				<!--<div class="standingsTabButton conferenceStandingsButton" id="conferenceStandingsButton">Conference</div>-->
+				<div class="standingsTabButton conferenceStandingsButton" id="conferenceStandingsButton">Conference</div>
 				<div class="standingsTabButton leagueStandingsButton" id="leagueStandingsButton">League</div>
 			</div>
 
@@ -824,7 +827,7 @@
 			</div>
 			
 			<!--Conference-->
-			<!--<div class="standings hidden" id="conferenceStandings">
+			<div class="standings hidden" id="conferenceStandings">
 				<div class="standingsHeaderLine">
 					<div class="standingsTeam">
 						<div class="standingsTeamName" id="conference">Conference</div>
@@ -840,7 +843,7 @@
 					</div>
 				</div>
 				<div class="standingsTeamLines" id="conferenceTeamStandings"></div>
-			</div>-->
+			</div>
 			
 			<!--League-->
 			<div class="standings hidden" id="leagueStandings">

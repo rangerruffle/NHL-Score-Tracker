@@ -7,7 +7,7 @@
 
   "offline_enabled": false,
   "short_name": "NhlScoreTracker",
-  "version": "1.84.0",
+  "version": "1.90.0",
 
   "background": {
     "service_worker": "background.js",
@@ -15,7 +15,7 @@
   },
 
   "action": {
-    "default_popup": "popup.html",
+	"default_popup": "popup.html",
     "default_icon": "logos/nhl.png",
     "default_title": "If you have not selected your team yet, right click on this icon to do so. Otherwise, please wait 5 seconds for the system to update."
   },
@@ -27,6 +27,6 @@
   "permissions": ["alarms", "contextMenus", "storage"],
   
   "host_permissions": [
-    "https://statsapi.web.nhl.com/"
+    "https://api-web.nhle.com/"
   ]
 }

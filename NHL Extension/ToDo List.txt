@@ -1,16 +1,13 @@
 To-Do List:
 - High Pri:
-	- GAA and SV% numbers are running into each other for Goalie stats
-	- Fix bug with logo and time not showing on calendar for current day
-	- Decide how to deal with not enough players on ice.
-	- Add calendar tab.
+	- Fix calendar Next/Prev during games
+		- debounce or something similar?
+	- Add calendar tab
 		- Ability to preview future games?
 		- Ability to view final stats from old games?
 
 - Low Pri:
-	- Make the UI reflect the selected team's color.
-	- Better implementation for bug reporting
-	- Add SH or PP to badge text for short-handed or power play and something for UI.
+	- Add SH or PP to badge text for short-handed or power play and something for UI
 	- Make forwards correspond to their actual, current position on the ice?
 
 - Next Season:
@@ -19,7 +16,6 @@ To-Do List:
 - Wishlist:
 	- Clean up code!
 		- Add more functions for more readability
-		- Make the game states an enum and make the if-else statements a switch?
 		- Clean up CSS?
 		- Clean up HTML?
 	- Add React

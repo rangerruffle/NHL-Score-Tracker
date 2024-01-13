@@ -1,123 +1,2881 @@
-.avalanche.headingRoot {
-	background-color: red;
+.avalanche .headingRoot {
+	background-color: #6F263D;
 }
 
-.blackhawks.headingRoot {
-	background-color: red;
+.avalanche .tabSelected {
+	background-color: #6F263D;
 }
 
-.blueJackets.headingRoot {
-	background-color: red;
+.avalanche .calendarHeader {
+	background-color: #6F263D;
 }
 
-.blues.headingRoot {
-	background-color: red;
+.avalanche .calendarDay.homeGame {
+	background-color: #6F263D;
 }
 
-.bruins.headingRoot {
-	background-color: red;
+.avalanche .legendHomeGameIcon {
+	background-color: #6F263D;
+	border-color: #6F263D;
 }
 
-.canadiens.headingRoot {
-	background-color: red;
+.avalanche .statButton {
+	border-color: #6F263D;
+	color: #6F263D;
 }
 
-.canucks.headingRoot {
-	background-color: red;
+.avalanche .selected.statButton {
+	background-color: #6F263D;
+        color: #FFFFFF;
 }
 
-.capitals.headingRoot {
-	background-color: red;
+.avalanche .playersStats {
+	border-color: #6F263D;
 }
 
-.coyotes.headingRoot {
-	background-color: red;
+.avalanche .playerStatsHeaderLine {
+	background-color: #6F263D;
 }
 
-.devils.headingRoot {
-	background-color: red;
+.avalanche .playerStatsLine {
+	border-bottom-color: #6F263D;
 }
 
-.ducks.headingRoot {
-	background-color: red;
+.avalanche .playerStatsLine .nameNumber {
+	border-right-color: #6F263D;
 }
 
-.flames.headingRoot {
-	background-color: red;
+.avalanche .standingsTabButton {
+	border-color: #6F263D;
+	color: #6F263D;
 }
 
-.flyers.headingRoot {
-	background-color: red;
+.avalanche .selected.standingsTabButton {
+	background-color: #6F263D;
+        color: #FFFFFF;
 }
 
-.goldenKnights.headingRoot {
-	background-color: red;
+.avalanche .divisionStandingsButton {
+	border-left-color: #6F263D;
+	border-right-color: #6F263D;
 }
 
-.hurricanes.headingRoot {
-	background-color: red;
+.avalanche .conferenceStandingsButton {
+	border-right-color: #6F263D;
 }
 
-.islanders.headingRoot {
-	background-color: red;
+.avalanche .standingsSpacerLine {
+	border-left-color: #6F263D;
+	border-right-color: #6F263D;
 }
 
-.jets.headingRoot {
-	background-color: red;
+.avalanche .standingsHeaderLine {
+	background-color: #6F263D;
 }
 
-.kings.headingRoot {
-	background-color: red;
+.avalanche .standingsTeamLines {
+	border-color: #6F263D;
 }
 
-.lightning.headingRoot {
-	background-color: red;
+.avalanche .standingsTeamLine {
+	border-bottom-color: #6F263D;
 }
 
-.mapleLeafs.headingRoot {
-	background-color: red;
+.avalanche .standingsTeamLine .standingsTeam {
+	border-right-color: #6F263D;
 }
 
-.oilers.headingRoot {
-	background-color: red;
+.avalanche .nhlLinkContainer {
+        background-color: #6F263D;
+        color: #FFFFFF;
+}.blackhawks .headingRoot {
+	background-color: #000000;
 }
 
-.panthers.headingRoot {
-	background-color: red;
+.blackhawks .tabSelected {
+	background-color: #000000;
 }
 
-.penguins.headingRoot {
-	background-color: red;
+.blackhawks .calendarHeader {
+	background-color: #000000;
 }
 
-.predators.headingRoot {
-	background-color: red;
+.blackhawks .calendarDay.homeGame {
+	background-color: #000000;
 }
 
-.rangers.headingRoot {
-	background-color: red;
+.blackhawks .legendHomeGameIcon {
+	background-color: #000000;
+	border-color: #000000;
 }
 
-.redWings.headingRoot {
-	background-color: red;
+.blackhawks .statButton {
+	border-color: #000000;
+	color: #000000;
 }
 
-.sabres.headingRoot {
-	background-color: red;
+.blackhawks .selected.statButton {
+	background-color: #000000;
+        color: #FFFFFF;
 }
 
-.senators.headingRoot {
-	background-color: red;
+.blackhawks .playersStats {
+	border-color: #000000;
 }
 
-.sharks.headingRoot {
-	background-color: red;
+.blackhawks .playerStatsHeaderLine {
+	background-color: #000000;
 }
 
-.stars.headingRoot {
-	background-color: red;
+.blackhawks .playerStatsLine {
+	border-bottom-color: #000000;
 }
 
-.wild.headingRoot {
-	background-color: red;
+.blackhawks .playerStatsLine .nameNumber {
+	border-right-color: #000000;
+}
+
+.blackhawks .standingsTabButton {
+	border-color: #000000;
+	color: #000000;
+}
+
+.blackhawks .selected.standingsTabButton {
+	background-color: #000000;
+        color: #FFFFFF;
+}
+
+.blackhawks .divisionStandingsButton {
+	border-left-color: #000000;
+	border-right-color: #000000;
+}
+
+.blackhawks .conferenceStandingsButton {
+	border-right-color: #000000;
+}
+
+.blackhawks .standingsSpacerLine {
+	border-left-color: #000000;
+	border-right-color: #000000;
+}
+
+.blackhawks .standingsHeaderLine {
+	background-color: #000000;
+}
+
+.blackhawks .standingsTeamLines {
+	border-color: #000000;
+}
+
+.blackhawks .standingsTeamLine {
+	border-bottom-color: #000000;
+}
+
+.blackhawks .standingsTeamLine .standingsTeam {
+	border-right-color: #000000;
+}
+
+.blackhawks .nhlLinkContainer {
+        background-color: #000000;
+        color: #FFFFFF;
+}.blueJackets .headingRoot {
+	background-color: #002654;
+}
+
+.blueJackets .tabSelected {
+	background-color: #002654;
+}
+
+.blueJackets .calendarHeader {
+	background-color: #002654;
+}
+
+.blueJackets .calendarDay.homeGame {
+	background-color: #002654;
+}
+
+.blueJackets .legendHomeGameIcon {
+	background-color: #002654;
+	border-color: #002654;
+}
+
+.blueJackets .statButton {
+	border-color: #002654;
+	color: #002654;
+}
+
+.blueJackets .selected.statButton {
+	background-color: #002654;
+        color: #FFFFFF;
+}
+
+.blueJackets .playersStats {
+	border-color: #002654;
+}
+
+.blueJackets .playerStatsHeaderLine {
+	background-color: #002654;
+}
+
+.blueJackets .playerStatsLine {
+	border-bottom-color: #002654;
+}
+
+.blueJackets .playerStatsLine .nameNumber {
+	border-right-color: #002654;
+}
+
+.blueJackets .standingsTabButton {
+	border-color: #002654;
+	color: #002654;
+}
+
+.blueJackets .selected.standingsTabButton {
+	background-color: #002654;
+        color: #FFFFFF;
+}
+
+.blueJackets .divisionStandingsButton {
+	border-left-color: #002654;
+	border-right-color: #002654;
+}
+
+.blueJackets .conferenceStandingsButton {
+	border-right-color: #002654;
+}
+
+.blueJackets .standingsSpacerLine {
+	border-left-color: #002654;
+	border-right-color: #002654;
+}
+
+.blueJackets .standingsHeaderLine {
+	background-color: #002654;
+}
+
+.blueJackets .standingsTeamLines {
+	border-color: #002654;
+}
+
+.blueJackets .standingsTeamLine {
+	border-bottom-color: #002654;
+}
+
+.blueJackets .standingsTeamLine .standingsTeam {
+	border-right-color: #002654;
+}
+
+.blueJackets .nhlLinkContainer {
+        background-color: #002654;
+        color: #FFFFFF;
+}.blues .headingRoot {
+	background-color: #002F87;
+}
+
+.blues .tabSelected {
+	background-color: #002F87;
+}
+
+.blues .calendarHeader {
+	background-color: #002F87;
+}
+
+.blues .calendarDay.homeGame {
+	background-color: #002F87;
+}
+
+.blues .legendHomeGameIcon {
+	background-color: #002F87;
+	border-color: #002F87;
+}
+
+.blues .statButton {
+	border-color: #002F87;
+	color: #002F87;
+}
+
+.blues .selected.statButton {
+	background-color: #002F87;
+        color: #FFFFFF;
+}
+
+.blues .playersStats {
+	border-color: #002F87;
+}
+
+.blues .playerStatsHeaderLine {
+	background-color: #002F87;
+}
+
+.blues .playerStatsLine {
+	border-bottom-color: #002F87;
+}
+
+.blues .playerStatsLine .nameNumber {
+	border-right-color: #002F87;
+}
+
+.blues .standingsTabButton {
+	border-color: #002F87;
+	color: #002F87;
+}
+
+.blues .selected.standingsTabButton {
+	background-color: #002F87;
+        color: #FFFFFF;
+}
+
+.blues .divisionStandingsButton {
+	border-left-color: #002F87;
+	border-right-color: #002F87;
+}
+
+.blues .conferenceStandingsButton {
+	border-right-color: #002F87;
+}
+
+.blues .standingsSpacerLine {
+	border-left-color: #002F87;
+	border-right-color: #002F87;
+}
+
+.blues .standingsHeaderLine {
+	background-color: #002F87;
+}
+
+.blues .standingsTeamLines {
+	border-color: #002F87;
+}
+
+.blues .standingsTeamLine {
+	border-bottom-color: #002F87;
+}
+
+.blues .standingsTeamLine .standingsTeam {
+	border-right-color: #002F87;
+}
+
+.blues .nhlLinkContainer {
+        background-color: #002F87;
+        color: #FFFFFF;
+}.bruins .headingRoot {
+	background-color: #000000;
+}
+
+.bruins .tabSelected {
+	background-color: #000000;
+}
+
+.bruins .calendarHeader {
+	background-color: #000000;
+}
+
+.bruins .calendarDay.homeGame {
+	background-color: #000000;
+}
+
+.bruins .legendHomeGameIcon {
+	background-color: #000000;
+	border-color: #000000;
+}
+
+.bruins .statButton {
+	border-color: #000000;
+	color: #000000;
+}
+
+.bruins .selected.statButton {
+	background-color: #000000;
+        color: #FFFFFF;
+}
+
+.bruins .playersStats {
+	border-color: #000000;
+}
+
+.bruins .playerStatsHeaderLine {
+	background-color: #000000;
+}
+
+.bruins .playerStatsLine {
+	border-bottom-color: #000000;
+}
+
+.bruins .playerStatsLine .nameNumber {
+	border-right-color: #000000;
+}
+
+.bruins .standingsTabButton {
+	border-color: #000000;
+	color: #000000;
+}
+
+.bruins .selected.standingsTabButton {
+	background-color: #000000;
+        color: #FFFFFF;
+}
+
+.bruins .divisionStandingsButton {
+	border-left-color: #000000;
+	border-right-color: #000000;
+}
+
+.bruins .conferenceStandingsButton {
+	border-right-color: #000000;
+}
+
+.bruins .standingsSpacerLine {
+	border-left-color: #000000;
+	border-right-color: #000000;
+}
+
+.bruins .standingsHeaderLine {
+	background-color: #000000;
+}
+
+.bruins .standingsTeamLines {
+	border-color: #000000;
+}
+
+.bruins .standingsTeamLine {
+	border-bottom-color: #000000;
+}
+
+.bruins .standingsTeamLine .standingsTeam {
+	border-right-color: #000000;
+}
+
+.bruins .nhlLinkContainer {
+        background-color: #000000;
+        color: #FFFFFF;
+}.canadiens .headingRoot {
+	background-color: #AF1E2D;
+}
+
+.canadiens .tabSelected {
+	background-color: #AF1E2D;
+}
+
+.canadiens .calendarHeader {
+	background-color: #AF1E2D;
+}
+
+.canadiens .calendarDay.homeGame {
+	background-color: #AF1E2D;
+}
+
+.canadiens .legendHomeGameIcon {
+	background-color: #AF1E2D;
+	border-color: #AF1E2D;
+}
+
+.canadiens .statButton {
+	border-color: #AF1E2D;
+	color: #AF1E2D;
+}
+
+.canadiens .selected.statButton {
+	background-color: #AF1E2D;
+        color: #FFFFFF;
+}
+
+.canadiens .playersStats {
+	border-color: #AF1E2D;
+}
+
+.canadiens .playerStatsHeaderLine {
+	background-color: #AF1E2D;
+}
+
+.canadiens .playerStatsLine {
+	border-bottom-color: #AF1E2D;
+}
+
+.canadiens .playerStatsLine .nameNumber {
+	border-right-color: #AF1E2D;
+}
+
+.canadiens .standingsTabButton {
+	border-color: #AF1E2D;
+	color: #AF1E2D;
+}
+
+.canadiens .selected.standingsTabButton {
+	background-color: #AF1E2D;
+        color: #FFFFFF;
+}
+
+.canadiens .divisionStandingsButton {
+	border-left-color: #AF1E2D;
+	border-right-color: #AF1E2D;
+}
+
+.canadiens .conferenceStandingsButton {
+	border-right-color: #AF1E2D;
+}
+
+.canadiens .standingsSpacerLine {
+	border-left-color: #AF1E2D;
+	border-right-color: #AF1E2D;
+}
+
+.canadiens .standingsHeaderLine {
+	background-color: #AF1E2D;
+}
+
+.canadiens .standingsTeamLines {
+	border-color: #AF1E2D;
+}
+
+.canadiens .standingsTeamLine {
+	border-bottom-color: #AF1E2D;
+}
+
+.canadiens .standingsTeamLine .standingsTeam {
+	border-right-color: #AF1E2D;
+}
+
+.canadiens .nhlLinkContainer {
+        background-color: #AF1E2D;
+        color: #FFFFFF;
+}.canucks .headingRoot {
+	background-color: #00205B;
+}
+
+.canucks .tabSelected {
+	background-color: #00205B;
+}
+
+.canucks .calendarHeader {
+	background-color: #00205B;
+}
+
+.canucks .calendarDay.homeGame {
+	background-color: #00205B;
+}
+
+.canucks .legendHomeGameIcon {
+	background-color: #00205B;
+	border-color: #00205B;
+}
+
+.canucks .statButton {
+	border-color: #00205B;
+	color: #00205B;
+}
+
+.canucks .selected.statButton {
+	background-color: #00205B;
+        color: #FFFFFF;
+}
+
+.canucks .playersStats {
+	border-color: #00205B;
+}
+
+.canucks .playerStatsHeaderLine {
+	background-color: #00205B;
+}
+
+.canucks .playerStatsLine {
+	border-bottom-color: #00205B;
+}
+
+.canucks .playerStatsLine .nameNumber {
+	border-right-color: #00205B;
+}
+
+.canucks .standingsTabButton {
+	border-color: #00205B;
+	color: #00205B;
+}
+
+.canucks .selected.standingsTabButton {
+	background-color: #00205B;
+        color: #FFFFFF;
+}
+
+.canucks .divisionStandingsButton {
+	border-left-color: #00205B;
+	border-right-color: #00205B;
+}
+
+.canucks .conferenceStandingsButton {
+	border-right-color: #00205B;
+}
+
+.canucks .standingsSpacerLine {
+	border-left-color: #00205B;
+	border-right-color: #00205B;
+}
+
+.canucks .standingsHeaderLine {
+	background-color: #00205B;
+}
+
+.canucks .standingsTeamLines {
+	border-color: #00205B;
+}
+
+.canucks .standingsTeamLine {
+	border-bottom-color: #00205B;
+}
+
+.canucks .standingsTeamLine .standingsTeam {
+	border-right-color: #00205B;
+}
+
+.canucks .nhlLinkContainer {
+        background-color: #00205B;
+        color: #FFFFFF;
+}.capitals .headingRoot {
+	background-color: #041E42;
+}
+
+.capitals .tabSelected {
+	background-color: #041E42;
+}
+
+.capitals .calendarHeader {
+	background-color: #041E42;
+}
+
+.capitals .calendarDay.homeGame {
+	background-color: #041E42;
+}
+
+.capitals .legendHomeGameIcon {
+	background-color: #041E42;
+	border-color: #041E42;
+}
+
+.capitals .statButton {
+	border-color: #041E42;
+	color: #041E42;
+}
+
+.capitals .selected.statButton {
+	background-color: #041E42;
+        color: #FFFFFF;
+}
+
+.capitals .playersStats {
+	border-color: #041E42;
+}
+
+.capitals .playerStatsHeaderLine {
+	background-color: #041E42;
+}
+
+.capitals .playerStatsLine {
+	border-bottom-color: #041E42;
+}
+
+.capitals .playerStatsLine .nameNumber {
+	border-right-color: #041E42;
+}
+
+.capitals .standingsTabButton {
+	border-color: #041E42;
+	color: #041E42;
+}
+
+.capitals .selected.standingsTabButton {
+	background-color: #041E42;
+        color: #FFFFFF;
+}
+
+.capitals .divisionStandingsButton {
+	border-left-color: #041E42;
+	border-right-color: #041E42;
+}
+
+.capitals .conferenceStandingsButton {
+	border-right-color: #041E42;
+}
+
+.capitals .standingsSpacerLine {
+	border-left-color: #041E42;
+	border-right-color: #041E42;
+}
+
+.capitals .standingsHeaderLine {
+	background-color: #041E42;
+}
+
+.capitals .standingsTeamLines {
+	border-color: #041E42;
+}
+
+.capitals .standingsTeamLine {
+	border-bottom-color: #041E42;
+}
+
+.capitals .standingsTeamLine .standingsTeam {
+	border-right-color: #041E42;
+}
+
+.capitals .nhlLinkContainer {
+        background-color: #041E42;
+        color: #FFFFFF;
+}.coyotes .headingRoot {
+	background-color: #8C2633;
+}
+
+.coyotes .tabSelected {
+	background-color: #8C2633;
+}
+
+.coyotes .calendarHeader {
+	background-color: #8C2633;
+}
+
+.coyotes .calendarDay.homeGame {
+	background-color: #8C2633;
+}
+
+.coyotes .legendHomeGameIcon {
+	background-color: #8C2633;
+	border-color: #8C2633;
+}
+
+.coyotes .statButton {
+	border-color: #8C2633;
+	color: #8C2633;
+}
+
+.coyotes .selected.statButton {
+	background-color: #8C2633;
+        color: #FFFFFF;
+}
+
+.coyotes .playersStats {
+	border-color: #8C2633;
+}
+
+.coyotes .playerStatsHeaderLine {
+	background-color: #8C2633;
+}
+
+.coyotes .playerStatsLine {
+	border-bottom-color: #8C2633;
+}
+
+.coyotes .playerStatsLine .nameNumber {
+	border-right-color: #8C2633;
+}
+
+.coyotes .standingsTabButton {
+	border-color: #8C2633;
+	color: #8C2633;
+}
+
+.coyotes .selected.standingsTabButton {
+	background-color: #8C2633;
+        color: #FFFFFF;
+}
+
+.coyotes .divisionStandingsButton {
+	border-left-color: #8C2633;
+	border-right-color: #8C2633;
+}
+
+.coyotes .conferenceStandingsButton {
+	border-right-color: #8C2633;
+}
+
+.coyotes .standingsSpacerLine {
+	border-left-color: #8C2633;
+	border-right-color: #8C2633;
+}
+
+.coyotes .standingsHeaderLine {
+	background-color: #8C2633;
+}
+
+.coyotes .standingsTeamLines {
+	border-color: #8C2633;
+}
+
+.coyotes .standingsTeamLine {
+	border-bottom-color: #8C2633;
+}
+
+.coyotes .standingsTeamLine .standingsTeam {
+	border-right-color: #8C2633;
+}
+
+.coyotes .nhlLinkContainer {
+        background-color: #8C2633;
+        color: #FFFFFF;
+}.devils .headingRoot {
+	background-color: #CE1126;
+}
+
+.devils .tabSelected {
+	background-color: #CE1126;
+}
+
+.devils .calendarHeader {
+	background-color: #CE1126;
+}
+
+.devils .calendarDay.homeGame {
+	background-color: #CE1126;
+}
+
+.devils .legendHomeGameIcon {
+	background-color: #CE1126;
+	border-color: #CE1126;
+}
+
+.devils .statButton {
+	border-color: #CE1126;
+	color: #CE1126;
+}
+
+.devils .selected.statButton {
+	background-color: #CE1126;
+        color: #FFFFFF;
+}
+
+.devils .playersStats {
+	border-color: #CE1126;
+}
+
+.devils .playerStatsHeaderLine {
+	background-color: #CE1126;
+}
+
+.devils .playerStatsLine {
+	border-bottom-color: #CE1126;
+}
+
+.devils .playerStatsLine .nameNumber {
+	border-right-color: #CE1126;
+}
+
+.devils .standingsTabButton {
+	border-color: #CE1126;
+	color: #CE1126;
+}
+
+.devils .selected.standingsTabButton {
+	background-color: #CE1126;
+        color: #FFFFFF;
+}
+
+.devils .divisionStandingsButton {
+	border-left-color: #CE1126;
+	border-right-color: #CE1126;
+}
+
+.devils .conferenceStandingsButton {
+	border-right-color: #CE1126;
+}
+
+.devils .standingsSpacerLine {
+	border-left-color: #CE1126;
+	border-right-color: #CE1126;
+}
+
+.devils .standingsHeaderLine {
+	background-color: #CE1126;
+}
+
+.devils .standingsTeamLines {
+	border-color: #CE1126;
+}
+
+.devils .standingsTeamLine {
+	border-bottom-color: #CE1126;
+}
+
+.devils .standingsTeamLine .standingsTeam {
+	border-right-color: #CE1126;
+}
+
+.devils .nhlLinkContainer {
+        background-color: #CE1126;
+        color: #FFFFFF;
+}.ducks .headingRoot {
+	background-color: #F47A38;
+}
+
+.ducks .tabSelected {
+	background-color: #F47A38;
+}
+
+.ducks .calendarHeader {
+	background-color: #F47A38;
+}
+
+.ducks .calendarDay.homeGame {
+	background-color: #F47A38;
+}
+
+.ducks .legendHomeGameIcon {
+	background-color: #F47A38;
+	border-color: #F47A38;
+}
+
+.ducks .statButton {
+	border-color: #F47A38;
+	color: #F47A38;
+}
+
+.ducks .selected.statButton {
+	background-color: #F47A38;
+        color: #FFFFFF;
+}
+
+.ducks .playersStats {
+	border-color: #F47A38;
+}
+
+.ducks .playerStatsHeaderLine {
+	background-color: #F47A38;
+}
+
+.ducks .playerStatsLine {
+	border-bottom-color: #F47A38;
+}
+
+.ducks .playerStatsLine .nameNumber {
+	border-right-color: #F47A38;
+}
+
+.ducks .standingsTabButton {
+	border-color: #F47A38;
+	color: #F47A38;
+}
+
+.ducks .selected.standingsTabButton {
+	background-color: #F47A38;
+        color: #FFFFFF;
+}
+
+.ducks .divisionStandingsButton {
+	border-left-color: #F47A38;
+	border-right-color: #F47A38;
+}
+
+.ducks .conferenceStandingsButton {
+	border-right-color: #F47A38;
+}
+
+.ducks .standingsSpacerLine {
+	border-left-color: #F47A38;
+	border-right-color: #F47A38;
+}
+
+.ducks .standingsHeaderLine {
+	background-color: #F47A38;
+}
+
+.ducks .standingsTeamLines {
+	border-color: #F47A38;
+}
+
+.ducks .standingsTeamLine {
+	border-bottom-color: #F47A38;
+}
+
+.ducks .standingsTeamLine .standingsTeam {
+	border-right-color: #F47A38;
+}
+
+.ducks .nhlLinkContainer {
+        background-color: #F47A38;
+        color: #FFFFFF;
+}.flames .headingRoot {
+	background-color: #D2001C;
+}
+
+.flames .tabSelected {
+	background-color: #D2001C;
+}
+
+.flames .calendarHeader {
+	background-color: #D2001C;
+}
+
+.flames .calendarDay.homeGame {
+	background-color: #D2001C;
+}
+
+.flames .legendHomeGameIcon {
+	background-color: #D2001C;
+	border-color: #D2001C;
+}
+
+.flames .statButton {
+	border-color: #D2001C;
+	color: #D2001C;
+}
+
+.flames .selected.statButton {
+	background-color: #D2001C;
+        color: #FFFFFF;
+}
+
+.flames .playersStats {
+	border-color: #D2001C;
+}
+
+.flames .playerStatsHeaderLine {
+	background-color: #D2001C;
+}
+
+.flames .playerStatsLine {
+	border-bottom-color: #D2001C;
+}
+
+.flames .playerStatsLine .nameNumber {
+	border-right-color: #D2001C;
+}
+
+.flames .standingsTabButton {
+	border-color: #D2001C;
+	color: #D2001C;
+}
+
+.flames .selected.standingsTabButton {
+	background-color: #D2001C;
+        color: #FFFFFF;
+}
+
+.flames .divisionStandingsButton {
+	border-left-color: #D2001C;
+	border-right-color: #D2001C;
+}
+
+.flames .conferenceStandingsButton {
+	border-right-color: #D2001C;
+}
+
+.flames .standingsSpacerLine {
+	border-left-color: #D2001C;
+	border-right-color: #D2001C;
+}
+
+.flames .standingsHeaderLine {
+	background-color: #D2001C;
+}
+
+.flames .standingsTeamLines {
+	border-color: #D2001C;
+}
+
+.flames .standingsTeamLine {
+	border-bottom-color: #D2001C;
+}
+
+.flames .standingsTeamLine .standingsTeam {
+	border-right-color: #D2001C;
+}
+
+.flames .nhlLinkContainer {
+        background-color: #D2001C;
+        color: #FFFFFF;
+}.flyers .headingRoot {
+	background-color: #F74902;
+}
+
+.flyers .tabSelected {
+	background-color: #F74902;
+}
+
+.flyers .calendarHeader {
+	background-color: #F74902;
+}
+
+.flyers .calendarDay.homeGame {
+	background-color: #F74902;
+}
+
+.flyers .legendHomeGameIcon {
+	background-color: #F74902;
+	border-color: #F74902;
+}
+
+.flyers .statButton {
+	border-color: #F74902;
+	color: #F74902;
+}
+
+.flyers .selected.statButton {
+	background-color: #F74902;
+        color: #FFFFFF;
+}
+
+.flyers .playersStats {
+	border-color: #F74902;
+}
+
+.flyers .playerStatsHeaderLine {
+	background-color: #F74902;
+}
+
+.flyers .playerStatsLine {
+	border-bottom-color: #F74902;
+}
+
+.flyers .playerStatsLine .nameNumber {
+	border-right-color: #F74902;
+}
+
+.flyers .standingsTabButton {
+	border-color: #F74902;
+	color: #F74902;
+}
+
+.flyers .selected.standingsTabButton {
+	background-color: #F74902;
+        color: #FFFFFF;
+}
+
+.flyers .divisionStandingsButton {
+	border-left-color: #F74902;
+	border-right-color: #F74902;
+}
+
+.flyers .conferenceStandingsButton {
+	border-right-color: #F74902;
+}
+
+.flyers .standingsSpacerLine {
+	border-left-color: #F74902;
+	border-right-color: #F74902;
+}
+
+.flyers .standingsHeaderLine {
+	background-color: #F74902;
+}
+
+.flyers .standingsTeamLines {
+	border-color: #F74902;
+}
+
+.flyers .standingsTeamLine {
+	border-bottom-color: #F74902;
+}
+
+.flyers .standingsTeamLine .standingsTeam {
+	border-right-color: #F74902;
+}
+
+.flyers .nhlLinkContainer {
+        background-color: #F74902;
+        color: #FFFFFF;
+}.goldenKnights .headingRoot {
+	background-color: #B4975A;
+}
+
+.goldenKnights .tabSelected {
+	background-color: #B4975A;
+}
+
+.goldenKnights .calendarHeader {
+	background-color: #B4975A;
+}
+
+.goldenKnights .calendarDay.homeGame {
+	background-color: #B4975A;
+}
+
+.goldenKnights .legendHomeGameIcon {
+	background-color: #B4975A;
+	border-color: #B4975A;
+}
+
+.goldenKnights .statButton {
+	border-color: #B4975A;
+	color: #B4975A;
+}
+
+.goldenKnights .selected.statButton {
+	background-color: #B4975A;
+        color: #FFFFFF;
+}
+
+.goldenKnights .playersStats {
+	border-color: #B4975A;
+}
+
+.goldenKnights .playerStatsHeaderLine {
+	background-color: #B4975A;
+}
+
+.goldenKnights .playerStatsLine {
+	border-bottom-color: #B4975A;
+}
+
+.goldenKnights .playerStatsLine .nameNumber {
+	border-right-color: #B4975A;
+}
+
+.goldenKnights .standingsTabButton {
+	border-color: #B4975A;
+	color: #B4975A;
+}
+
+.goldenKnights .selected.standingsTabButton {
+	background-color: #B4975A;
+        color: #FFFFFF;
+}
+
+.goldenKnights .divisionStandingsButton {
+	border-left-color: #B4975A;
+	border-right-color: #B4975A;
+}
+
+.goldenKnights .conferenceStandingsButton {
+	border-right-color: #B4975A;
+}
+
+.goldenKnights .standingsSpacerLine {
+	border-left-color: #B4975A;
+	border-right-color: #B4975A;
+}
+
+.goldenKnights .standingsHeaderLine {
+	background-color: #B4975A;
+}
+
+.goldenKnights .standingsTeamLines {
+	border-color: #B4975A;
+}
+
+.goldenKnights .standingsTeamLine {
+	border-bottom-color: #B4975A;
+}
+
+.goldenKnights .standingsTeamLine .standingsTeam {
+	border-right-color: #B4975A;
+}
+
+.goldenKnights .nhlLinkContainer {
+        background-color: #B4975A;
+        color: #FFFFFF;
+}.hurricanes .headingRoot {
+	background-color: #CE1126;
+}
+
+.hurricanes .tabSelected {
+	background-color: #CE1126;
+}
+
+.hurricanes .calendarHeader {
+	background-color: #CE1126;
+}
+
+.hurricanes .calendarDay.homeGame {
+	background-color: #CE1126;
+}
+
+.hurricanes .legendHomeGameIcon {
+	background-color: #CE1126;
+	border-color: #CE1126;
+}
+
+.hurricanes .statButton {
+	border-color: #CE1126;
+	color: #CE1126;
+}
+
+.hurricanes .selected.statButton {
+	background-color: #CE1126;
+        color: #FFFFFF;
+}
+
+.hurricanes .playersStats {
+	border-color: #CE1126;
+}
+
+.hurricanes .playerStatsHeaderLine {
+	background-color: #CE1126;
+}
+
+.hurricanes .playerStatsLine {
+	border-bottom-color: #CE1126;
+}
+
+.hurricanes .playerStatsLine .nameNumber {
+	border-right-color: #CE1126;
+}
+
+.hurricanes .standingsTabButton {
+	border-color: #CE1126;
+	color: #CE1126;
+}
+
+.hurricanes .selected.standingsTabButton {
+	background-color: #CE1126;
+        color: #FFFFFF;
+}
+
+.hurricanes .divisionStandingsButton {
+	border-left-color: #CE1126;
+	border-right-color: #CE1126;
+}
+
+.hurricanes .conferenceStandingsButton {
+	border-right-color: #CE1126;
+}
+
+.hurricanes .standingsSpacerLine {
+	border-left-color: #CE1126;
+	border-right-color: #CE1126;
+}
+
+.hurricanes .standingsHeaderLine {
+	background-color: #CE1126;
+}
+
+.hurricanes .standingsTeamLines {
+	border-color: #CE1126;
+}
+
+.hurricanes .standingsTeamLine {
+	border-bottom-color: #CE1126;
+}
+
+.hurricanes .standingsTeamLine .standingsTeam {
+	border-right-color: #CE1126;
+}
+
+.hurricanes .nhlLinkContainer {
+        background-color: #CE1126;
+        color: #FFFFFF;
+}.islanders .headingRoot {
+	background-color: #00539B;
+}
+
+.islanders .tabSelected {
+	background-color: #00539B;
+}
+
+.islanders .calendarHeader {
+	background-color: #00539B;
+}
+
+.islanders .calendarDay.homeGame {
+	background-color: #00539B;
+}
+
+.islanders .legendHomeGameIcon {
+	background-color: #00539B;
+	border-color: #00539B;
+}
+
+.islanders .statButton {
+	border-color: #00539B;
+	color: #00539B;
+}
+
+.islanders .selected.statButton {
+	background-color: #00539B;
+        color: #FFFFFF;
+}
+
+.islanders .playersStats {
+	border-color: #00539B;
+}
+
+.islanders .playerStatsHeaderLine {
+	background-color: #00539B;
+}
+
+.islanders .playerStatsLine {
+	border-bottom-color: #00539B;
+}
+
+.islanders .playerStatsLine .nameNumber {
+	border-right-color: #00539B;
+}
+
+.islanders .standingsTabButton {
+	border-color: #00539B;
+	color: #00539B;
+}
+
+.islanders .selected.standingsTabButton {
+	background-color: #00539B;
+        color: #FFFFFF;
+}
+
+.islanders .divisionStandingsButton {
+	border-left-color: #00539B;
+	border-right-color: #00539B;
+}
+
+.islanders .conferenceStandingsButton {
+	border-right-color: #00539B;
+}
+
+.islanders .standingsSpacerLine {
+	border-left-color: #00539B;
+	border-right-color: #00539B;
+}
+
+.islanders .standingsHeaderLine {
+	background-color: #00539B;
+}
+
+.islanders .standingsTeamLines {
+	border-color: #00539B;
+}
+
+.islanders .standingsTeamLine {
+	border-bottom-color: #00539B;
+}
+
+.islanders .standingsTeamLine .standingsTeam {
+	border-right-color: #00539B;
+}
+
+.islanders .nhlLinkContainer {
+        background-color: #00539B;
+        color: #FFFFFF;
+}.jets .headingRoot {
+	background-color: #041E42;
+}
+
+.jets .tabSelected {
+	background-color: #041E42;
+}
+
+.jets .calendarHeader {
+	background-color: #041E42;
+}
+
+.jets .calendarDay.homeGame {
+	background-color: #041E42;
+}
+
+.jets .legendHomeGameIcon {
+	background-color: #041E42;
+	border-color: #041E42;
+}
+
+.jets .statButton {
+	border-color: #041E42;
+	color: #041E42;
+}
+
+.jets .selected.statButton {
+	background-color: #041E42;
+        color: #FFFFFF;
+}
+
+.jets .playersStats {
+	border-color: #041E42;
+}
+
+.jets .playerStatsHeaderLine {
+	background-color: #041E42;
+}
+
+.jets .playerStatsLine {
+	border-bottom-color: #041E42;
+}
+
+.jets .playerStatsLine .nameNumber {
+	border-right-color: #041E42;
+}
+
+.jets .standingsTabButton {
+	border-color: #041E42;
+	color: #041E42;
+}
+
+.jets .selected.standingsTabButton {
+	background-color: #041E42;
+        color: #FFFFFF;
+}
+
+.jets .divisionStandingsButton {
+	border-left-color: #041E42;
+	border-right-color: #041E42;
+}
+
+.jets .conferenceStandingsButton {
+	border-right-color: #041E42;
+}
+
+.jets .standingsSpacerLine {
+	border-left-color: #041E42;
+	border-right-color: #041E42;
+}
+
+.jets .standingsHeaderLine {
+	background-color: #041E42;
+}
+
+.jets .standingsTeamLines {
+	border-color: #041E42;
+}
+
+.jets .standingsTeamLine {
+	border-bottom-color: #041E42;
+}
+
+.jets .standingsTeamLine .standingsTeam {
+	border-right-color: #041E42;
+}
+
+.jets .nhlLinkContainer {
+        background-color: #041E42;
+        color: #FFFFFF;
+}.kings .headingRoot {
+	background-color: #111111;
+}
+
+.kings .tabSelected {
+	background-color: #111111;
+}
+
+.kings .calendarHeader {
+	background-color: #111111;
+}
+
+.kings .calendarDay.homeGame {
+	background-color: #111111;
+}
+
+.kings .legendHomeGameIcon {
+	background-color: #111111;
+	border-color: #111111;
+}
+
+.kings .statButton {
+	border-color: #111111;
+	color: #111111;
+}
+
+.kings .selected.statButton {
+	background-color: #111111;
+        color: #FFFFFF;
+}
+
+.kings .playersStats {
+	border-color: #111111;
+}
+
+.kings .playerStatsHeaderLine {
+	background-color: #111111;
+}
+
+.kings .playerStatsLine {
+	border-bottom-color: #111111;
+}
+
+.kings .playerStatsLine .nameNumber {
+	border-right-color: #111111;
+}
+
+.kings .standingsTabButton {
+	border-color: #111111;
+	color: #111111;
+}
+
+.kings .selected.standingsTabButton {
+	background-color: #111111;
+        color: #FFFFFF;
+}
+
+.kings .divisionStandingsButton {
+	border-left-color: #111111;
+	border-right-color: #111111;
+}
+
+.kings .conferenceStandingsButton {
+	border-right-color: #111111;
+}
+
+.kings .standingsSpacerLine {
+	border-left-color: #111111;
+	border-right-color: #111111;
+}
+
+.kings .standingsHeaderLine {
+	background-color: #111111;
+}
+
+.kings .standingsTeamLines {
+	border-color: #111111;
+}
+
+.kings .standingsTeamLine {
+	border-bottom-color: #111111;
+}
+
+.kings .standingsTeamLine .standingsTeam {
+	border-right-color: #111111;
+}
+
+.kings .nhlLinkContainer {
+        background-color: #111111;
+        color: #FFFFFF;
+}.kraken .headingRoot {
+	background-color: #355464;
+}
+
+.kraken .tabSelected {
+	background-color: #355464;
+}
+
+.kraken .calendarHeader {
+	background-color: #355464;
+}
+
+.kraken .calendarDay.homeGame {
+	background-color: #355464;
+}
+
+.kraken .legendHomeGameIcon {
+	background-color: #355464;
+	border-color: #355464;
+}
+
+.kraken .statButton {
+	border-color: #355464;
+	color: #355464;
+}
+
+.kraken .selected.statButton {
+	background-color: #355464;
+        color: #FFFFFF;
+}
+
+.kraken .playersStats {
+	border-color: #355464;
+}
+
+.kraken .playerStatsHeaderLine {
+	background-color: #355464;
+}
+
+.kraken .playerStatsLine {
+	border-bottom-color: #355464;
+}
+
+.kraken .playerStatsLine .nameNumber {
+	border-right-color: #355464;
+}
+
+.kraken .standingsTabButton {
+	border-color: #355464;
+	color: #355464;
+}
+
+.kraken .selected.standingsTabButton {
+	background-color: #355464;
+        color: #FFFFFF;
+}
+
+.kraken .divisionStandingsButton {
+	border-left-color: #355464;
+	border-right-color: #355464;
+}
+
+.kraken .conferenceStandingsButton {
+	border-right-color: #355464;
+}
+
+.kraken .standingsSpacerLine {
+	border-left-color: #355464;
+	border-right-color: #355464;
+}
+
+.kraken .standingsHeaderLine {
+	background-color: #355464;
+}
+
+.kraken .standingsTeamLines {
+	border-color: #355464;
+}
+
+.kraken .standingsTeamLine {
+	border-bottom-color: #355464;
+}
+
+.kraken .standingsTeamLine .standingsTeam {
+	border-right-color: #355464;
+}
+
+.kraken .nhlLinkContainer {
+        background-color: #355464;
+        color: #FFFFFF;
+}.lightning .headingRoot {
+	background-color: #002868;
+}
+
+.lightning .tabSelected {
+	background-color: #002868;
+}
+
+.lightning .calendarHeader {
+	background-color: #002868;
+}
+
+.lightning .calendarDay.homeGame {
+	background-color: #002868;
+}
+
+.lightning .legendHomeGameIcon {
+	background-color: #002868;
+	border-color: #002868;
+}
+
+.lightning .statButton {
+	border-color: #002868;
+	color: #002868;
+}
+
+.lightning .selected.statButton {
+	background-color: #002868;
+        color: #FFFFFF;
+}
+
+.lightning .playersStats {
+	border-color: #002868;
+}
+
+.lightning .playerStatsHeaderLine {
+	background-color: #002868;
+}
+
+.lightning .playerStatsLine {
+	border-bottom-color: #002868;
+}
+
+.lightning .playerStatsLine .nameNumber {
+	border-right-color: #002868;
+}
+
+.lightning .standingsTabButton {
+	border-color: #002868;
+	color: #002868;
+}
+
+.lightning .selected.standingsTabButton {
+	background-color: #002868;
+        color: #FFFFFF;
+}
+
+.lightning .divisionStandingsButton {
+	border-left-color: #002868;
+	border-right-color: #002868;
+}
+
+.lightning .conferenceStandingsButton {
+	border-right-color: #002868;
+}
+
+.lightning .standingsSpacerLine {
+	border-left-color: #002868;
+	border-right-color: #002868;
+}
+
+.lightning .standingsHeaderLine {
+	background-color: #002868;
+}
+
+.lightning .standingsTeamLines {
+	border-color: #002868;
+}
+
+.lightning .standingsTeamLine {
+	border-bottom-color: #002868;
+}
+
+.lightning .standingsTeamLine .standingsTeam {
+	border-right-color: #002868;
+}
+
+.lightning .nhlLinkContainer {
+        background-color: #002868;
+        color: #FFFFFF;
+}.mapleLeafs .headingRoot {
+	background-color: #00205B;
+}
+
+.mapleLeafs .tabSelected {
+	background-color: #00205B;
+}
+
+.mapleLeafs .calendarHeader {
+	background-color: #00205B;
+}
+
+.mapleLeafs .calendarDay.homeGame {
+	background-color: #00205B;
+}
+
+.mapleLeafs .legendHomeGameIcon {
+	background-color: #00205B;
+	border-color: #00205B;
+}
+
+.mapleLeafs .statButton {
+	border-color: #00205B;
+	color: #00205B;
+}
+
+.mapleLeafs .selected.statButton {
+	background-color: #00205B;
+        color: #FFFFFF;
+}
+
+.mapleLeafs .playersStats {
+	border-color: #00205B;
+}
+
+.mapleLeafs .playerStatsHeaderLine {
+	background-color: #00205B;
+}
+
+.mapleLeafs .playerStatsLine {
+	border-bottom-color: #00205B;
+}
+
+.mapleLeafs .playerStatsLine .nameNumber {
+	border-right-color: #00205B;
+}
+
+.mapleLeafs .standingsTabButton {
+	border-color: #00205B;
+	color: #00205B;
+}
+
+.mapleLeafs .selected.standingsTabButton {
+	background-color: #00205B;
+        color: #FFFFFF;
+}
+
+.mapleLeafs .divisionStandingsButton {
+	border-left-color: #00205B;
+	border-right-color: #00205B;
+}
+
+.mapleLeafs .conferenceStandingsButton {
+	border-right-color: #00205B;
+}
+
+.mapleLeafs .standingsSpacerLine {
+	border-left-color: #00205B;
+	border-right-color: #00205B;
+}
+
+.mapleLeafs .standingsHeaderLine {
+	background-color: #00205B;
+}
+
+.mapleLeafs .standingsTeamLines {
+	border-color: #00205B;
+}
+
+.mapleLeafs .standingsTeamLine {
+	border-bottom-color: #00205B;
+}
+
+.mapleLeafs .standingsTeamLine .standingsTeam {
+	border-right-color: #00205B;
+}
+
+.mapleLeafs .nhlLinkContainer {
+        background-color: #00205B;
+        color: #FFFFFF;
+}.oilers .headingRoot {
+	background-color: #041E42;
+}
+
+.oilers .tabSelected {
+	background-color: #041E42;
+}
+
+.oilers .calendarHeader {
+	background-color: #041E42;
+}
+
+.oilers .calendarDay.homeGame {
+	background-color: #041E42;
+}
+
+.oilers .legendHomeGameIcon {
+	background-color: #041E42;
+	border-color: #041E42;
+}
+
+.oilers .statButton {
+	border-color: #041E42;
+	color: #041E42;
+}
+
+.oilers .selected.statButton {
+	background-color: #041E42;
+        color: #FFFFFF;
+}
+
+.oilers .playersStats {
+	border-color: #041E42;
+}
+
+.oilers .playerStatsHeaderLine {
+	background-color: #041E42;
+}
+
+.oilers .playerStatsLine {
+	border-bottom-color: #041E42;
+}
+
+.oilers .playerStatsLine .nameNumber {
+	border-right-color: #041E42;
+}
+
+.oilers .standingsTabButton {
+	border-color: #041E42;
+	color: #041E42;
+}
+
+.oilers .selected.standingsTabButton {
+	background-color: #041E42;
+        color: #FFFFFF;
+}
+
+.oilers .divisionStandingsButton {
+	border-left-color: #041E42;
+	border-right-color: #041E42;
+}
+
+.oilers .conferenceStandingsButton {
+	border-right-color: #041E42;
+}
+
+.oilers .standingsSpacerLine {
+	border-left-color: #041E42;
+	border-right-color: #041E42;
+}
+
+.oilers .standingsHeaderLine {
+	background-color: #041E42;
+}
+
+.oilers .standingsTeamLines {
+	border-color: #041E42;
+}
+
+.oilers .standingsTeamLine {
+	border-bottom-color: #041E42;
+}
+
+.oilers .standingsTeamLine .standingsTeam {
+	border-right-color: #041E42;
+}
+
+.oilers .nhlLinkContainer {
+        background-color: #041E42;
+        color: #FFFFFF;
+}.panthers .headingRoot {
+	background-color: #C8102E;
+}
+
+.panthers .tabSelected {
+	background-color: #C8102E;
+}
+
+.panthers .calendarHeader {
+	background-color: #C8102E;
+}
+
+.panthers .calendarDay.homeGame {
+	background-color: #C8102E;
+}
+
+.panthers .legendHomeGameIcon {
+	background-color: #C8102E;
+	border-color: #C8102E;
+}
+
+.panthers .statButton {
+	border-color: #C8102E;
+	color: #C8102E;
+}
+
+.panthers .selected.statButton {
+	background-color: #C8102E;
+        color: #FFFFFF;
+}
+
+.panthers .playersStats {
+	border-color: #C8102E;
+}
+
+.panthers .playerStatsHeaderLine {
+	background-color: #C8102E;
+}
+
+.panthers .playerStatsLine {
+	border-bottom-color: #C8102E;
+}
+
+.panthers .playerStatsLine .nameNumber {
+	border-right-color: #C8102E;
+}
+
+.panthers .standingsTabButton {
+	border-color: #C8102E;
+	color: #C8102E;
+}
+
+.panthers .selected.standingsTabButton {
+	background-color: #C8102E;
+        color: #FFFFFF;
+}
+
+.panthers .divisionStandingsButton {
+	border-left-color: #C8102E;
+	border-right-color: #C8102E;
+}
+
+.panthers .conferenceStandingsButton {
+	border-right-color: #C8102E;
+}
+
+.panthers .standingsSpacerLine {
+	border-left-color: #C8102E;
+	border-right-color: #C8102E;
+}
+
+.panthers .standingsHeaderLine {
+	background-color: #C8102E;
+}
+
+.panthers .standingsTeamLines {
+	border-color: #C8102E;
+}
+
+.panthers .standingsTeamLine {
+	border-bottom-color: #C8102E;
+}
+
+.panthers .standingsTeamLine .standingsTeam {
+	border-right-color: #C8102E;
+}
+
+.panthers .nhlLinkContainer {
+        background-color: #C8102E;
+        color: #FFFFFF;
+}.penguins .headingRoot {
+	background-color: #FCB514;
+}
+
+.penguins .tabSelected {
+	background-color: #FCB514;
+}
+
+.penguins .calendarHeader {
+	background-color: #FCB514;
+}
+
+.penguins .calendarDay.homeGame {
+	background-color: #FCB514;
+}
+
+.penguins .legendHomeGameIcon {
+	background-color: #FCB514;
+	border-color: #FCB514;
+}
+
+.penguins .statButton {
+	border-color: #FCB514;
+	color: #FCB514;
+}
+
+.penguins .selected.statButton {
+	background-color: #FCB514;
+        color: #FFFFFF;
+}
+
+.penguins .playersStats {
+	border-color: #FCB514;
+}
+
+.penguins .playerStatsHeaderLine {
+	background-color: #FCB514;
+}
+
+.penguins .playerStatsLine {
+	border-bottom-color: #FCB514;
+}
+
+.penguins .playerStatsLine .nameNumber {
+	border-right-color: #FCB514;
+}
+
+.penguins .standingsTabButton {
+	border-color: #FCB514;
+	color: #FCB514;
+}
+
+.penguins .selected.standingsTabButton {
+	background-color: #FCB514;
+        color: #FFFFFF;
+}
+
+.penguins .divisionStandingsButton {
+	border-left-color: #FCB514;
+	border-right-color: #FCB514;
+}
+
+.penguins .conferenceStandingsButton {
+	border-right-color: #FCB514;
+}
+
+.penguins .standingsSpacerLine {
+	border-left-color: #FCB514;
+	border-right-color: #FCB514;
+}
+
+.penguins .standingsHeaderLine {
+	background-color: #FCB514;
+}
+
+.penguins .standingsTeamLines {
+	border-color: #FCB514;
+}
+
+.penguins .standingsTeamLine {
+	border-bottom-color: #FCB514;
+}
+
+.penguins .standingsTeamLine .standingsTeam {
+	border-right-color: #FCB514;
+}
+
+.penguins .nhlLinkContainer {
+        background-color: #FCB514;
+        color: #FFFFFF;
+}.predators .headingRoot {
+	background-color: #FFB81C;
+}
+
+.predators .tabSelected {
+	background-color: #FFB81C;
+}
+
+.predators .calendarHeader {
+	background-color: #FFB81C;
+}
+
+.predators .calendarDay.homeGame {
+	background-color: #FFB81C;
+}
+
+.predators .legendHomeGameIcon {
+	background-color: #FFB81C;
+	border-color: #FFB81C;
+}
+
+.predators .statButton {
+	border-color: #FFB81C;
+	color: #FFB81C;
+}
+
+.predators .selected.statButton {
+	background-color: #FFB81C;
+        color: #FFFFFF;
+}
+
+.predators .playersStats {
+	border-color: #FFB81C;
+}
+
+.predators .playerStatsHeaderLine {
+	background-color: #FFB81C;
+}
+
+.predators .playerStatsLine {
+	border-bottom-color: #FFB81C;
+}
+
+.predators .playerStatsLine .nameNumber {
+	border-right-color: #FFB81C;
+}
+
+.predators .standingsTabButton {
+	border-color: #FFB81C;
+	color: #FFB81C;
+}
+
+.predators .selected.standingsTabButton {
+	background-color: #FFB81C;
+        color: #FFFFFF;
+}
+
+.predators .divisionStandingsButton {
+	border-left-color: #FFB81C;
+	border-right-color: #FFB81C;
+}
+
+.predators .conferenceStandingsButton {
+	border-right-color: #FFB81C;
+}
+
+.predators .standingsSpacerLine {
+	border-left-color: #FFB81C;
+	border-right-color: #FFB81C;
+}
+
+.predators .standingsHeaderLine {
+	background-color: #FFB81C;
+}
+
+.predators .standingsTeamLines {
+	border-color: #FFB81C;
+}
+
+.predators .standingsTeamLine {
+	border-bottom-color: #FFB81C;
+}
+
+.predators .standingsTeamLine .standingsTeam {
+	border-right-color: #FFB81C;
+}
+
+.predators .nhlLinkContainer {
+        background-color: #FFB81C;
+        color: #FFFFFF;
+}.rangers .headingRoot {
+	background-color: #0038A8;
+}
+
+.rangers .tabSelected {
+	background-color: #0038A8;
+}
+
+.rangers .calendarHeader {
+	background-color: #0038A8;
+}
+
+.rangers .calendarDay.homeGame {
+	background-color: #0038A8;
+}
+
+.rangers .legendHomeGameIcon {
+	background-color: #0038A8;
+	border-color: #0038A8;
+}
+
+.rangers .statButton {
+	border-color: #0038A8;
+	color: #0038A8;
+}
+
+.rangers .selected.statButton {
+	background-color: #0038A8;
+        color: #FFFFFF;
+}
+
+.rangers .playersStats {
+	border-color: #0038A8;
+}
+
+.rangers .playerStatsHeaderLine {
+	background-color: #0038A8;
+}
+
+.rangers .playerStatsLine {
+	border-bottom-color: #0038A8;
+}
+
+.rangers .playerStatsLine .nameNumber {
+	border-right-color: #0038A8;
+}
+
+.rangers .standingsTabButton {
+	border-color: #0038A8;
+	color: #0038A8;
+}
+
+.rangers .selected.standingsTabButton {
+	background-color: #0038A8;
+        color: #FFFFFF;
+}
+
+.rangers .divisionStandingsButton {
+	border-left-color: #0038A8;
+	border-right-color: #0038A8;
+}
+
+.rangers .conferenceStandingsButton {
+	border-right-color: #0038A8;
+}
+
+.rangers .standingsSpacerLine {
+	border-left-color: #0038A8;
+	border-right-color: #0038A8;
+}
+
+.rangers .standingsHeaderLine {
+	background-color: #0038A8;
+}
+
+.rangers .standingsTeamLines {
+	border-color: #0038A8;
+}
+
+.rangers .standingsTeamLine {
+	border-bottom-color: #0038A8;
+}
+
+.rangers .standingsTeamLine .standingsTeam {
+	border-right-color: #0038A8;
+}
+
+.rangers .nhlLinkContainer {
+        background-color: #0038A8;
+        color: #FFFFFF;
+}.redWings .headingRoot {
+	background-color: #CE1126;
+}
+
+.redWings .tabSelected {
+	background-color: #CE1126;
+}
+
+.redWings .calendarHeader {
+	background-color: #CE1126;
+}
+
+.redWings .calendarDay.homeGame {
+	background-color: #CE1126;
+}
+
+.redWings .legendHomeGameIcon {
+	background-color: #CE1126;
+	border-color: #CE1126;
+}
+
+.redWings .statButton {
+	border-color: #CE1126;
+	color: #CE1126;
+}
+
+.redWings .selected.statButton {
+	background-color: #CE1126;
+        color: #FFFFFF;
+}
+
+.redWings .playersStats {
+	border-color: #CE1126;
+}
+
+.redWings .playerStatsHeaderLine {
+	background-color: #CE1126;
+}
+
+.redWings .playerStatsLine {
+	border-bottom-color: #CE1126;
+}
+
+.redWings .playerStatsLine .nameNumber {
+	border-right-color: #CE1126;
+}
+
+.redWings .standingsTabButton {
+	border-color: #CE1126;
+	color: #CE1126;
+}
+
+.redWings .selected.standingsTabButton {
+	background-color: #CE1126;
+        color: #FFFFFF;
+}
+
+.redWings .divisionStandingsButton {
+	border-left-color: #CE1126;
+	border-right-color: #CE1126;
+}
+
+.redWings .conferenceStandingsButton {
+	border-right-color: #CE1126;
+}
+
+.redWings .standingsSpacerLine {
+	border-left-color: #CE1126;
+	border-right-color: #CE1126;
+}
+
+.redWings .standingsHeaderLine {
+	background-color: #CE1126;
+}
+
+.redWings .standingsTeamLines {
+	border-color: #CE1126;
+}
+
+.redWings .standingsTeamLine {
+	border-bottom-color: #CE1126;
+}
+
+.redWings .standingsTeamLine .standingsTeam {
+	border-right-color: #CE1126;
+}
+
+.redWings .nhlLinkContainer {
+        background-color: #CE1126;
+        color: #FFFFFF;
+}.sabres .headingRoot {
+	background-color: #003087;
+}
+
+.sabres .tabSelected {
+	background-color: #003087;
+}
+
+.sabres .calendarHeader {
+	background-color: #003087;
+}
+
+.sabres .calendarDay.homeGame {
+	background-color: #003087;
+}
+
+.sabres .legendHomeGameIcon {
+	background-color: #003087;
+	border-color: #003087;
+}
+
+.sabres .statButton {
+	border-color: #003087;
+	color: #003087;
+}
+
+.sabres .selected.statButton {
+	background-color: #003087;
+        color: #FFFFFF;
+}
+
+.sabres .playersStats {
+	border-color: #003087;
+}
+
+.sabres .playerStatsHeaderLine {
+	background-color: #003087;
+}
+
+.sabres .playerStatsLine {
+	border-bottom-color: #003087;
+}
+
+.sabres .playerStatsLine .nameNumber {
+	border-right-color: #003087;
+}
+
+.sabres .standingsTabButton {
+	border-color: #003087;
+	color: #003087;
+}
+
+.sabres .selected.standingsTabButton {
+	background-color: #003087;
+        color: #FFFFFF;
+}
+
+.sabres .divisionStandingsButton {
+	border-left-color: #003087;
+	border-right-color: #003087;
+}
+
+.sabres .conferenceStandingsButton {
+	border-right-color: #003087;
+}
+
+.sabres .standingsSpacerLine {
+	border-left-color: #003087;
+	border-right-color: #003087;
+}
+
+.sabres .standingsHeaderLine {
+	background-color: #003087;
+}
+
+.sabres .standingsTeamLines {
+	border-color: #003087;
+}
+
+.sabres .standingsTeamLine {
+	border-bottom-color: #003087;
+}
+
+.sabres .standingsTeamLine .standingsTeam {
+	border-right-color: #003087;
+}
+
+.sabres .nhlLinkContainer {
+        background-color: #003087;
+        color: #FFFFFF;
+}.senators .headingRoot {
+	background-color: #DA1A32;
+}
+
+.senators .tabSelected {
+	background-color: #DA1A32;
+}
+
+.senators .calendarHeader {
+	background-color: #DA1A32;
+}
+
+.senators .calendarDay.homeGame {
+	background-color: #DA1A32;
+}
+
+.senators .legendHomeGameIcon {
+	background-color: #DA1A32;
+	border-color: #DA1A32;
+}
+
+.senators .statButton {
+	border-color: #DA1A32;
+	color: #DA1A32;
+}
+
+.senators .selected.statButton {
+	background-color: #DA1A32;
+        color: #FFFFFF;
+}
+
+.senators .playersStats {
+	border-color: #DA1A32;
+}
+
+.senators .playerStatsHeaderLine {
+	background-color: #DA1A32;
+}
+
+.senators .playerStatsLine {
+	border-bottom-color: #DA1A32;
+}
+
+.senators .playerStatsLine .nameNumber {
+	border-right-color: #DA1A32;
+}
+
+.senators .standingsTabButton {
+	border-color: #DA1A32;
+	color: #DA1A32;
+}
+
+.senators .selected.standingsTabButton {
+	background-color: #DA1A32;
+        color: #FFFFFF;
+}
+
+.senators .divisionStandingsButton {
+	border-left-color: #DA1A32;
+	border-right-color: #DA1A32;
+}
+
+.senators .conferenceStandingsButton {
+	border-right-color: #DA1A32;
+}
+
+.senators .standingsSpacerLine {
+	border-left-color: #DA1A32;
+	border-right-color: #DA1A32;
+}
+
+.senators .standingsHeaderLine {
+	background-color: #DA1A32;
+}
+
+.senators .standingsTeamLines {
+	border-color: #DA1A32;
+}
+
+.senators .standingsTeamLine {
+	border-bottom-color: #DA1A32;
+}
+
+.senators .standingsTeamLine .standingsTeam {
+	border-right-color: #DA1A32;
+}
+
+.senators .nhlLinkContainer {
+        background-color: #DA1A32;
+        color: #FFFFFF;
+}.sharks .headingRoot {
+	background-color: #006D75;
+}
+
+.sharks .tabSelected {
+	background-color: #006D75;
+}
+
+.sharks .calendarHeader {
+	background-color: #006D75;
+}
+
+.sharks .calendarDay.homeGame {
+	background-color: #006D75;
+}
+
+.sharks .legendHomeGameIcon {
+	background-color: #006D75;
+	border-color: #006D75;
+}
+
+.sharks .statButton {
+	border-color: #006D75;
+	color: #006D75;
+}
+
+.sharks .selected.statButton {
+	background-color: #006D75;
+        color: #FFFFFF;
+}
+
+.sharks .playersStats {
+	border-color: #006D75;
+}
+
+.sharks .playerStatsHeaderLine {
+	background-color: #006D75;
+}
+
+.sharks .playerStatsLine {
+	border-bottom-color: #006D75;
+}
+
+.sharks .playerStatsLine .nameNumber {
+	border-right-color: #006D75;
+}
+
+.sharks .standingsTabButton {
+	border-color: #006D75;
+	color: #006D75;
+}
+
+.sharks .selected.standingsTabButton {
+	background-color: #006D75;
+        color: #FFFFFF;
+}
+
+.sharks .divisionStandingsButton {
+	border-left-color: #006D75;
+	border-right-color: #006D75;
+}
+
+.sharks .conferenceStandingsButton {
+	border-right-color: #006D75;
+}
+
+.sharks .standingsSpacerLine {
+	border-left-color: #006D75;
+	border-right-color: #006D75;
+}
+
+.sharks .standingsHeaderLine {
+	background-color: #006D75;
+}
+
+.sharks .standingsTeamLines {
+	border-color: #006D75;
+}
+
+.sharks .standingsTeamLine {
+	border-bottom-color: #006D75;
+}
+
+.sharks .standingsTeamLine .standingsTeam {
+	border-right-color: #006D75;
+}
+
+.sharks .nhlLinkContainer {
+        background-color: #006D75;
+        color: #FFFFFF;
+}.stars .headingRoot {
+	background-color: #006847;
+}
+
+.stars .tabSelected {
+	background-color: #006847;
+}
+
+.stars .calendarHeader {
+	background-color: #006847;
+}
+
+.stars .calendarDay.homeGame {
+	background-color: #006847;
+}
+
+.stars .legendHomeGameIcon {
+	background-color: #006847;
+	border-color: #006847;
+}
+
+.stars .statButton {
+	border-color: #006847;
+	color: #006847;
+}
+
+.stars .selected.statButton {
+	background-color: #006847;
+        color: #FFFFFF;
+}
+
+.stars .playersStats {
+	border-color: #006847;
+}
+
+.stars .playerStatsHeaderLine {
+	background-color: #006847;
+}
+
+.stars .playerStatsLine {
+	border-bottom-color: #006847;
+}
+
+.stars .playerStatsLine .nameNumber {
+	border-right-color: #006847;
+}
+
+.stars .standingsTabButton {
+	border-color: #006847;
+	color: #006847;
+}
+
+.stars .selected.standingsTabButton {
+	background-color: #006847;
+        color: #FFFFFF;
+}
+
+.stars .divisionStandingsButton {
+	border-left-color: #006847;
+	border-right-color: #006847;
+}
+
+.stars .conferenceStandingsButton {
+	border-right-color: #006847;
+}
+
+.stars .standingsSpacerLine {
+	border-left-color: #006847;
+	border-right-color: #006847;
+}
+
+.stars .standingsHeaderLine {
+	background-color: #006847;
+}
+
+.stars .standingsTeamLines {
+	border-color: #006847;
+}
+
+.stars .standingsTeamLine {
+	border-bottom-color: #006847;
+}
+
+.stars .standingsTeamLine .standingsTeam {
+	border-right-color: #006847;
+}
+
+.stars .nhlLinkContainer {
+        background-color: #006847;
+        color: #FFFFFF;
+}.wild .headingRoot {
+	background-color: #154734;
+}
+
+.wild .tabSelected {
+	background-color: #154734;
+}
+
+.wild .calendarHeader {
+	background-color: #154734;
+}
+
+.wild .calendarDay.homeGame {
+	background-color: #154734;
+}
+
+.wild .legendHomeGameIcon {
+	background-color: #154734;
+	border-color: #154734;
+}
+
+.wild .statButton {
+	border-color: #154734;
+	color: #154734;
+}
+
+.wild .selected.statButton {
+	background-color: #154734;
+        color: #FFFFFF;
+}
+
+.wild .playersStats {
+	border-color: #154734;
+}
+
+.wild .playerStatsHeaderLine {
+	background-color: #154734;
+}
+
+.wild .playerStatsLine {
+	border-bottom-color: #154734;
+}
+
+.wild .playerStatsLine .nameNumber {
+	border-right-color: #154734;
+}
+
+.wild .standingsTabButton {
+	border-color: #154734;
+	color: #154734;
+}
+
+.wild .selected.standingsTabButton {
+	background-color: #154734;
+        color: #FFFFFF;
+}
+
+.wild .divisionStandingsButton {
+	border-left-color: #154734;
+	border-right-color: #154734;
+}
+
+.wild .conferenceStandingsButton {
+	border-right-color: #154734;
+}
+
+.wild .standingsSpacerLine {
+	border-left-color: #154734;
+	border-right-color: #154734;
+}
+
+.wild .standingsHeaderLine {
+	background-color: #154734;
+}
+
+.wild .standingsTeamLines {
+	border-color: #154734;
+}
+
+.wild .standingsTeamLine {
+	border-bottom-color: #154734;
+}
+
+.wild .standingsTeamLine .standingsTeam {
+	border-right-color: #154734;
+}
+
+.wild .nhlLinkContainer {
+        background-color: #154734;
+        color: #FFFFFF;
 }

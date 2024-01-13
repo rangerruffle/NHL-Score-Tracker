@@ -23,6 +23,7 @@ var otherTeamName = "";
 var teamData = null;
 var teamIcon = "";
 var teamId = "";
+var teamAbbv = "";
 var teamName = "";
 var today = new Date();
 var todayMonth = today.getMonth() + 1;
@@ -53,13 +54,24 @@ var playerStats;
 var noGamePlayerStats;
 var standings;
 
-const commonUtilities = CommonPopupUtilities.init();
-chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result) {
-	teamName = result.trackedTeamName;
-	teamId = CommonPopupUtilities.getTeamIdMapping()[teamName];
+let commonUtilities = CommonPopupUtilities.init();
+chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone','shouldShowTeamColor' ], function(result) {
+	if (!commonUtilities.getTeamAbbv()) {
+		commonUtilities = CommonPopupUtilities.init();
+	}
+	
+	teamName = commonUtilities.getTeamName();
+	teamAbbv = commonUtilities.getTeamAbbv();
+	teamId = commonUtilities.getTeamId();
 	teamIcon = "logos/" + teamName + ".png";
+	
+	if (result.shouldShowTeamColor) {
+		addClass(document.body, commonUtilities.getTeamColorClass());
+	} else {
+		removeClass(document.body, commonUtilities.getTeamColorClass());
+	}
 });
-const teams = CommonPopupUtilities.getTeams();
+
 chrome.alarms.create(
 	"NHLScoreTrackerPopup",
 	{
@@ -70,14 +82,11 @@ chrome.alarms.create(
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
 	if (alarm.name = "NHLScoreTrackerPopup") {
+		if (!commonUtilities.getTeamAbbv()) {
+			commonUtilities = CommonPopupUtilities.init();
+		}
+		
 		commonUtilities.updateData();
-
-		// const headingRoot = document.getElementById("headingRoot");
-		// const tabsRoot = document.getElementById("tabsRoot");
-		// const mainSection = document.getElementById("mainSection");
-		// addClass(headingRoot, commonUtilities.getTeamColorClass());
-		// addClass(tabsRoot, commonUtilities.getTeamColorClass());
-		// addClass(mainSection, commonUtilities.getTeamColorClass());
 
 		updateGameData();
 	}
@@ -104,76 +113,27 @@ function updateGameData() {
 	setTabListeners();
 	setCalendarButtonListeners();
 	setCalendar();
-
-	const schedulePromise = new Promise(function(resolve, reject) {
-		chrome.storage.sync.get([ 'trackedTeamName','trackedTimeZone' ], function(result) {
-			teamName = result.trackedTeamName;
-			teamId = CommonPopupUtilities.getTeamIdMapping()[teamName];
-
-			const scheduleXmlHttp = new XMLHttpRequest();
-			scheduleXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId);
-
-			scheduleXmlHttp.onload = function() {
-				if (scheduleXmlHttp.status == 200) {
-					resolve(JSON.parse(scheduleXmlHttp.responseText));
-				} else {
-					reject(Error(scheduleXmlHttp.statusText));
-				}
-			};
-
-			scheduleXmlHttp.onerror = function() {
-				reject(Error("Network Error"));
-			};
-
-			scheduleXmlHttp.send();
-		});
-	});
-
-	schedulePromise.then(
-		setScheduleData,
-		function(error) {
-			setNoGame();
-		},
-	);
+	
+	teamName = commonUtilities.getTeamName();
+	teamAbbv = commonUtilities.getTeamAbbv();
+	APIPopupCallsUtility.fetchTeamSeasonSchedule(teamAbbv, teamName, setScheduleData, setNoGame);
 }
 
 function setScheduleData(scheduleInfo) {
-	if (scheduleInfo.dates[0]) {
-		if (scheduleInfo.dates[0].games[0]) {
-			currentGameId = scheduleInfo.dates[0].games[0].gamePk;
-			var gameLiveLink = scheduleInfo.dates[0].games[0].link;
-
-			const gamePromise = new Promise(function(resolve, reject) {
-				const gameXmlHttp = new XMLHttpRequest();
-				gameXmlHttp.open("GET", "https://statsapi.web.nhl.com/" + gameLiveLink);
-
-				gameXmlHttp.onload = function() {
-					if (gameXmlHttp.status == 200) {
-						resolve(JSON.parse(gameXmlHttp.responseText));
-					} else {
-						reject(Error(scheduleXmlHttp.statusText));
-					}
-				};
-
-				gameXmlHttp.onerror = function() {
-					reject(Error("Network Error"));
-				};
-
-				gameXmlHttp.send();
-			});
-
-			gamePromise.then(
-				setGameData,
-				function(error) {
-					setNoGame();
-				},
-			);
-		} else {
-			gameStatus = "None";
-			currentGameId = false;
-			setFooterLinkHref("none", "", "", "");
-			setNoGame();
-		}
+	const todayYear = commonUtilities.getTodayYear();
+	const todayMonth = commonUtilities.getTodayMonth();
+	const todayDay = commonUtilities.getTodayDay();
+	const gameIndex = APIPopupDataUtility.findScheduleGameIndex(scheduleInfo, todayYear, todayMonth, todayDay);
+	
+	if (gameIndex && gameIndex >= 0) {
+		const todayGame = APIPopupDataUtility.getTodaysGame(scheduleInfo, gameIndex);
+		
+		currentGameId = APIPopupDataUtility.getTodaysGameId(todayGame);
+		var dateTime = new Date(APIPopupDataUtility.getTodaysGameDateTime(todayGame));
+		localGameTime = getTimeZoneAdjustedTime(dateTime);
+		teamName = commonUtilities.getTeamName();
+		
+		APIPopupCallsUtility.fetchCurrentGameData(currentGameId, teamName, setGameData, setNoGame);
 	} else {
 		gameStatus = "None";
 		currentGameId = false;
@@ -182,23 +142,22 @@ function setScheduleData(scheduleInfo) {
 	}
 }
 
-function setGameData(gameInfo) {
-	const game = gameInfo.gameData;
-	const teamIsHome = game.teams.home.id === teamId;
+function setGameData(gameData) {
+	const teamIsHome = APIPopupDataUtility.getHomeTeamId(gameData) === teamId;
 	const gameToday = currentGameId != false;
 	
 	if (gameToday) {
-		awayScore = gameInfo.liveData.linescore.teams.away.goals;
-		homeScore = gameInfo.liveData.linescore.teams.home.goals;
-		otherTeamName = teamIsHome ? game.teams.away.teamName : game.teams.home.teamName;
-		const awayTeamInitial = game.teams.away.abbreviation.toLowerCase();
-		const homeTeamInitial = game.teams.home.abbreviation.toLowerCase();
+		awayScore = APIPopupDataUtility.getAwayTeamScore(gameData);
+		homeScore = APIPopupDataUtility.getHomeTeamScore(gameData);
+		otherTeamName = teamIsHome ? APIPopupDataUtility.getAwayTeamName(gameData) : APIPopupDataUtility.getHomeTeamName(gameData);
+		const awayTeamInitial = APIPopupDataUtility.getAwayTeamAbbrevLowerCase(gameData);
+		const homeTeamInitial = APIPopupDataUtility.getHomeTeamAbbrevLowerCase(gameData);
 		
 		if (teamIsHome) {
 			awayTeamIcon = "logos/" + otherTeamName + ".png";
 			homeTeamIcon = teamIcon;
 
-			awayTeamId = CommonPopupUtilities.getTeamIdMapping()[otherTeamName];
+			awayTeamId = commonUtilities.getTeamIdMapping()[otherTeamName];
 			homeTeamId = teamId;
 
 			awayTeamName = otherTeamName;
@@ -211,7 +170,7 @@ function setGameData(gameInfo) {
 			homeTeamIcon = "logos/" + otherTeamName + ".png";
 
 			awayTeamId = teamId;
-			homeTeamId = CommonPopupUtilities.getTeamIdMapping()[otherTeamName];
+			homeTeamId = commonUtilities.getTeamIdMapping()[otherTeamName];
 
 			awayTeamName = teamName;
 			homeTeamName = otherTeamName;
@@ -220,20 +179,21 @@ function setGameData(gameInfo) {
 			drawHomeLogo("logos/" + otherTeamName + ".png");
 		}
 		
-		if (game.status.abstractGameState == "Preview") {
+		const gameState = APIPopupDataUtility.getGameState(gameData);
+		if (gameState === APIPopupGameStates.FUTURE || gameState === APIPopupGameStates.PREGAME) {
 			gameStatus = "Preview";
 			setFooterLinkHref("preview", currentGameId, awayTeamInitial, homeTeamInitial);
-			setPreview(gameInfo);
+			setPreview(gameData);
 			currentlyPreGame = true;
-		} else if (game.status.abstractGameState == "Final") {
+		} else if (gameState === APIPopupGameStates.FINAL || gameState === APIPopupGameStates.OFF) {
 			gameStatus = "Final";
 			setFooterLinkHref("final", currentGameId, awayTeamInitial, homeTeamInitial);
-			setFinal(gameInfo);
+			setFinal(gameData);
 			currentlyPreGame = false;
-		} else if (game.status.abstractGameState == "Live") {
+		} else if (gameState === APIPopupGameStates.LIVE || gameState === APIPopupGameStates.CRITICAL) {
 			gameStatus = "Live";
 			setFooterLinkHref("live", currentGameId, awayTeamInitial, homeTeamInitial);
-			setLive(gameInfo);
+			setLive(gameData);
 			currentlyPreGame = false;
 		}
 	}
@@ -246,6 +206,10 @@ function startInGameDataUpdateTimerIfNeeded() {
 }
 
 function updateData() {
+	if (!commonUtilities.getTeamAbbv()) {
+		commonUtilities = CommonPopupUtilities.init();
+	}
+	
 	commonUtilities.updateData();
 	updateGameData(todayYear, todayMonth, todayDay);
 }
@@ -276,7 +240,7 @@ function setCalendarButtonListeners() {
 	previousMonth.addEventListener(
 		'click',
 		function() {
-			commonUtilities.setPreviousCurrentMonth();
+			commonUtilities.setPreviousCurrentCalendarMonth();
 			setCalendar();
 		},
 		false
@@ -284,7 +248,7 @@ function setCalendarButtonListeners() {
 	nextMonth.addEventListener(
 		'click',
 		function() {
-			commonUtilities.setNextCurrentMonth();
+			commonUtilities.setNextCurrentCalendarMonth();
 			setCalendar();
 		},
 		false
@@ -292,37 +256,14 @@ function setCalendarButtonListeners() {
 }
 
 function setCalendar() {
-	const calendarPromise = new Promise(function(resolve, reject) {
-		var calendarXmlHttp = new XMLHttpRequest();
-		const startDate = commonUtilities.getCurrentMonthStartDateText();
-		const endDate = commonUtilities.getCurrentMonthEndDateText();
-		const currentTeamId = commonUtilities.getTeamId();
-		calendarXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + startDate + "&endDate=" + endDate + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + currentTeamId);
-
-		calendarXmlHttp.onload = function() {
-			if (calendarXmlHttp.status == 200) {
-				resolve(JSON.parse(calendarXmlHttp.responseText));
-			} else {
-				reject(Error(calendarXmlHttp.statusText));
-			}
-		};
-
-		calendarXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		calendarXmlHttp.send();
-	});
-
-	calendarPromise.then(
-		function(calendarInfo) {
-			setCalendarHeader();
-			setCalendarDates(calendarInfo.dates);
-		},
-		function(error) {
-			return null;
-		},
-	);
+	let calendarMonth = commonUtilities.getCurrentCalendarMonth() + 1;
+	if (calendarMonth < 10) {
+		calendarMonth = "0" + calendarMonth;
+	}
+	const calendarYear = commonUtilities.getCurrentCalendarYear();
+	teamAbbv = commonUtilities.getTeamAbbv();
+	
+	APIPopupCallsUtility.fetchCalendarData(teamAbbv, calendarYear, calendarMonth, setCalendarHeader, setCalendarDates);
 }
 
 function setPreview(gameInfo) {
@@ -342,10 +283,12 @@ function setPreview(gameInfo) {
 }
 
 function setLive(gameInfo) {
-	setRinkSection(gameInfo);
+	const gameId = APIPopupDataUtility.getTodaysGameId(gameInfo);
+	APIPopupCallsUtility.fetchPlayByPlayData(gameId, setRinkSection);
+	
 	hide(previewTab);
 	show(liveTab);
-	show(teamStatsTab);
+	hide(teamStatsTab); // Not coming through in the new API data
 	show(playerStatsTab);
 	show(standingsTab);
 	
@@ -397,7 +340,7 @@ function setNoGame() {
 	setActiveTab(calendar, "None");
 }
 
-function setHeadingSection(gameInfo, gameStatus) {
+function setHeadingSection(gameData, gameStatus) {
 	const headingAwayScore = document.getElementById("awayScore");
 	const timeLeft = document.getElementById("time");
 	const headingHomeScore = document.getElementById("homeScore");
@@ -406,7 +349,7 @@ function setHeadingSection(gameInfo, gameStatus) {
 		case "preview":
 			drawAwayLogo(awayTeamIcon);
 			drawHomeLogo(homeTeamIcon);
-			var dateTime = new Date(gameInfo.gameData.datetime.dateTime);
+			var dateTime = new Date(APIPopupDataUtility.getTodaysGameDateTime(gameData));
 			timeLeft.innerHTML = "Puck Drop: " + getTimeZoneAdjustedTime(dateTime);
 			headingAwayScore.innerHTML = "";
 			headingHomeScore.innerHTML = "";
@@ -414,8 +357,8 @@ function setHeadingSection(gameInfo, gameStatus) {
 		case "live":
 			drawAwayLogo(awayTeamIcon);
 			drawHomeLogo(homeTeamIcon);
-			var period = gameInfo.liveData.linescore.currentPeriod;
-			var isShootout = period === 5;
+			var period = APIPopupDataUtility.getCurrentPeriod(gameData);
+			var isShootout = APIPopupDataUtility.getCurrentPeriodType(gameData) === APIPopupGameStates.SHOOTOUT;
 			switch (period) {
 				case 1:
 					period = "1st";
@@ -426,27 +369,24 @@ function setHeadingSection(gameInfo, gameStatus) {
 				case 3:
 					period = "3rd";
 					break;
-				case 4:
+				default:
 					period = "OT";
-					break;
-				case 5:
-					period = "SO";
 					break;
 			}
 			
-			if (gameInfo.liveData.linescore.currentPeriodTimeRemaining === "END") {
+			if (APIPopupDataUtility.getIsInIntermission(gameData)) {
 				headingAwayScore.innerHTML = awayScore;
 				headingHomeScore.innerHTML = homeScore;
-				timeLeft.innerHTML = "END / " + period;
+				timeLeft.innerHTML = APIPopupDataUtility.getGameTimeRemaining(gameData) + " / INT";
 			} else {
 				if (isShootout) {
-					headingAwayScore.innerHTML = gameInfo.liveData.linescore.shootoutInfo.away.scores;
-					headingHomeScore.innerHTML = gameInfo.liveData.linescore.shootoutInfo.home.scores;
-					timeLeft.innerHTML = "SO";
+					headingAwayScore.innerHTML = APIPopupDataUtility.getAwayTeamShootoutGoals(gameData);
+					headingHomeScore.innerHTML = APIPopupDataUtility.getHomeTeamShootoutGoals(gameData);
+					timeLeft.innerHTML = APIPopupGameStates.SHOOTOUT;
 				} else {
 					headingAwayScore.innerHTML = awayScore;
 					headingHomeScore.innerHTML = homeScore;
-					timeLeft.innerHTML = gameInfo.liveData.linescore.currentPeriodTimeRemaining + " / " + period;
+					timeLeft.innerHTML = APIPopupDataUtility.getGameTimeRemaining(gameData) + " / " + period;
 				}
 			}
 			startInGameDataUpdateTimerIfNeeded();
@@ -470,14 +410,17 @@ function setHeadingSection(gameInfo, gameStatus) {
 
 function setCalendarHeader() {
 	const monthName = document.getElementById("monthName");
-	monthName.innerHTML = commonUtilities.getCurrentMonthName() + " " + commonUtilities.getCurrentMonthStartDate().getFullYear();
+	monthName.innerHTML = commonUtilities.getCurrentCalendarMonthName() + " " + commonUtilities.getCurrentCalendarYear();
 }
 
-function setCalendarDates(dates) {
+function setCalendarDates(calendarData) {
 	clearCalendar();
-	const firstDay = commonUtilities.getCurrentMonthStartDay();
-	const lastDay = commonUtilities.getCurrentMonthEndDate().getDate();
+	const currentYear = commonUtilities.getCurrentCalendarYear();
+	const currentMonth = commonUtilities.getCurrentCalendarMonth();
+	const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+	const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
 	const todayDate = new Date(commonUtilities.getTodayYear(), commonUtilities.getTodayMonth() - 1, commonUtilities.getTodayDay());
+	const games = APIPopupDataUtility.getCalendarGames(calendarData);
 
 	for (let i = 1; i <= lastDay; i++) {
 		const currentDate = firstDay + i;
@@ -488,46 +431,44 @@ function setCalendarDates(dates) {
 
 		calendarDate.innerHTML = i;
 
-		const startDate = commonUtilities.getCurrentMonthStartDate();
-		if (startDate.getFullYear() === todayDate.getFullYear() && startDate.getMonth() === todayDate.getMonth() && todayDate.getDate() === i) {
-			calendarDay.innerHTML += "<div class='today' id='today'></div>";
-		}
-
-		for (let j = 0; j < dates.length; j++) {
-			const gameDate = new Date(dates[j].games[0].gameDate);
+		for (let j = 0; j < games.length; j++) {
+			const gameDate = new Date(APIPopupDataUtility.getTodaysGameDateTime(games[j]));
 
 			if (gameDate.getDate() === i) {
-				const gameInfo = dates[j].games[0];
-				let awayScore = gameInfo.teams.away.score;
-				let homeScore = gameInfo.teams.home.score;
+				const gameData = games[j];
+				let awayScore = APIPopupDataUtility.getAwayTeamScore(gameData);
+				let homeScore = APIPopupDataUtility.getHomeTeamScore(gameData);
 				let isHomeTeam = false;
 
-				if (gameInfo.teams.away.team.id === teamId) {
+				if (APIPopupDataUtility.getAwayTeamId(gameData) === teamId) {
 					isHomeTeam = false;
-					calendarGameLogo.src = "logos/" + gameInfo.teams.home.team.teamName + ".png";
+					calendarGameLogo.src = "logos/" + commonUtilities.getTeamNameAbbvMapping()[APIPopupDataUtility.getHomeTeamAbbrev(gameData)] + ".png";
 					addClass(calendarDay, "awayGame");
 				} else {
 					isHomeTeam = true;
-					calendarGameLogo.src = "logos/" + gameInfo.teams.away.team.teamName + ".png";
+					calendarGameLogo.src = "logos/" + commonUtilities.getTeamNameAbbvMapping()[APIPopupDataUtility.getAwayTeamAbbrev(gameData)] + ".png";
 					addClass(calendarDay, "homeGame");
 				}
 
-				if (gameInfo.status.abstractGameState === "Final") {
+				const gameState = APIPopupDataUtility.getGameState(gameData);
+				if (gameState === APIPopupGameStates.FINAL || gameState === APIPopupGameStates.OFF) {
 					const winOrLoss = isHomeTeam ? homeScore > awayScore ? "W" : "L" : awayScore > homeScore ? "W" : "L";
 					calendarGameTime.innerHTML = awayScore + " - " + homeScore + " " + winOrLoss;
-				} else if (gameInfo.status.abstractGameState === "Preview") {
-					if (gameInfo.status.detailedState === "Postponed") {
-						calendarGameTime.innerHTML = "PPD";
-					} else {
-						const dateTime = new Date(gameInfo.gameDate);
-						calendarGameTime.innerHTML = getTimeZoneAdjustedTime(dateTime);
-					}
+				} else if (gameState === APIPopupGameStates.FUTURE || gameState === APIPopupGameStates.PREGAME) {
+					const dateTime = new Date(APIPopupDataUtility.getTodaysGameDateTime(gameData));
+					calendarGameTime.innerHTML = getTimeZoneAdjustedTime(dateTime);
+				} else if (gameState === APIPopupGameStates.Postponed) {
+					calendarGameTime.innerHTML = APIPopupGameStates.POSTPONED;
 				} else {
 					calendarGameTime.innerHTML = awayScore + " - " + homeScore;
 				}
 				
 				show(calendarGameLogo);
 			}
+		}
+		
+		if (currentYear === todayDate.getFullYear() && currentMonth === todayDate.getMonth() && todayDate.getDate() === i) {
+			calendarDay.innerHTML += "<div class='today' id='today'></div>";
 		}
 	}
 }
@@ -555,7 +496,7 @@ function clearCalendar() {
 	}
 }
 
-function setRinkSection(gameInfo) {
+function setRinkSection(gameData) {
 	const awayLeftWing = document.getElementById("awayLeftWing");
 	const awayCenter = document.getElementById("awayCenter");
 	const awayRightWing = document.getElementById("awayRightWing");
@@ -570,70 +511,71 @@ function setRinkSection(gameInfo) {
 	const homeGoalie = document.getElementById("homeGoalie");
 
 	// Live rink stats
-	const awayOnIce = gameInfo.liveData.boxscore.teams.away.onIce;
-	const homeOnIce = gameInfo.liveData.boxscore.teams.home.onIce;
+	const awayOnIce = APIPopupDataUtility.getAwayTeamOnIce(gameData);
+	const homeOnIce = APIPopupDataUtility.getHomeTeamOnIce(gameData);
+	const rosterSpots = APIPopupDataUtility.getRosterSpots(gameData);
 
 	if(awayTeamOnIce !== awayOnIce) {
-		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
 		for(var i = 0; i < awayOnIce.length; i++) {
-			const player = awayTeamPlayers['ID' + awayOnIce[i]];
-			switch(player.position.abbreviation) {
-				case "RW":
-				case "C":
-				case "LW":
-					if (awayTeamOffense.length < 3) {
-						awayTeamOffense.push(awayOnIce[i]);
-						if (awayTeamOffense.length === 0) {
-							awayLeftWing.innerHTML = player.jerseyNumber ?? 0;
-							awayLeftWing.setAttribute('title', player.person.fullName);
-						} else if (awayTeamOffense.length === 1) {
-							awayCenter.innerHTML = player.jerseyNumber ?? 0;
-							awayCenter.setAttribute('title', player.person.fullName);
-						} else if (awayTeamOffense.length === 2) {
-							awayRightWing.innerHTML = player.jerseyNumber ?? 0;
-							awayRightWing.setAttribute('title', player.person.fullName);
-						}
-					} else {
-						if (!awayOnIce.includes(awayTeamOffense[0])) {
-							awayTeamOffense = [awayOnIce[i], awayTeamOffense[1], awayTeamOffense[2]];
-							awayLeftWing.innerHTML = player.jerseyNumber ?? 0;
-							awayLeftWing.setAttribute('title', player.person.fullName);
-						} else if (!awayOnIce.includes(awayTeamOffense[1])) {
-							awayTeamOffense = [awayTeamOffense[0], awayOnIce[i], awayTeamOffense[2]];
-							awayCenter.innerHTML = player.jerseyNumber ?? 0;
-							awayCenter.setAttribute('title', player.person.fullName);
-						} else if (!awayOnIce.includes(awayTeamOffense[2])) {
-							awayTeamOffense = [awayTeamOffense[0], awayTeamOffense[1], awayOnIce[i]];
-							awayRightWing.innerHTML = player.jerseyNumber ?? 0;
-							awayRightWing.setAttribute('title', player.person.fullName);
-						}
-					}
-					break;
+			const player = APIPopupDataUtility.getOnIcePlayer(rosterSpots, awayOnIce[i]);
+			const fullName = APIPopupDataUtility.getPlayerFullName(player);
+			const sweaterNumber = APIPopupDataUtility.getPlayerSweaterNumber(player);
+			
+			switch(APIPopupDataUtility.getPlayerPositionCode(player)) {
 				case "D":
 					if(awayTeamDefense.length === 0) {
 						awayTeamDefense.push(awayOnIce[i]);
-						awayLeftDefense.innerHTML = player.jerseyNumber ?? 0;
-						awayLeftDefense.setAttribute('title', player.person.fullName);
+						awayLeftDefense.innerHTML = sweaterNumber ?? 0;
+						awayLeftDefense.setAttribute('title', fullName);
 					} else if (awayTeamDefense.length === 1) {
 						awayTeamDefense.push(awayOnIce[i]);
-						awayRightDefense.innerHTML = player.jerseyNumber ?? 0;
-						awayRightDefense.setAttribute('title', player.person.fullName);
+						awayRightDefense.innerHTML = sweaterNumber ?? 0;
+						awayRightDefense.setAttribute('title', fullName);
 					} else {
 						if (!awayOnIce.includes(awayTeamDefense[0])) {
 							awayTeamDefense = [awayOnIce[i], awayTeamDefense[1]];
-							awayLeftDefense.innerHTML = player.jerseyNumber ?? 0;
-							awayLeftDefense.setAttribute('title', player.person.fullName);
+							awayLeftDefense.innerHTML = sweaterNumber ?? 0;
+							awayLeftDefense.setAttribute('title', fullName);
 						} else if (!awayOnIce.includes(awayTeamDefense[1])) {
 							awayTeamDefense = [awayTeamDefense[0], awayOnIce[i]];
-							awayRightDefense.innerHTML = player.jerseyNumber ?? 0;
-							awayRightDefense.setAttribute('title', player.person.fullName);
+							awayRightDefense.innerHTML = sweaterNumber ?? 0;
+							awayRightDefense.setAttribute('title', fullName);
 						}
 					}
 					break;
 				case "G":
-					if (awayGoalie.innerHTML !== player.jerseyNumber ?? 0) {
-						awayGoalie.innerHTML = player.jerseyNumber ?? 0;
-						awayGoalie.setAttribute('title', player.person.fullName);
+					if (awayGoalie.innerHTML !== sweaterNumber ?? 0) {
+						awayGoalie.innerHTML = sweaterNumber ?? 0;
+						awayGoalie.setAttribute('title', fullName);
+					}
+					break;
+				default:
+					if (awayTeamOffense.length < 3) {
+						awayTeamOffense.push(awayOnIce[i]);
+						if (awayTeamOffense.length === 0) {
+							awayLeftWing.innerHTML = sweaterNumber ?? 0;
+							awayLeftWing.setAttribute('title', fullName);
+						} else if (awayTeamOffense.length === 1) {
+							awayCenter.innerHTML = sweaterNumber ?? 0;
+							awayCenter.setAttribute('title', fullName);
+						} else if (awayTeamOffense.length === 2) {
+							awayRightWing.innerHTML = sweaterNumber ?? 0;
+							awayRightWing.setAttribute('title', fullName);
+						}
+					} else {
+						if (!awayOnIce.includes(awayTeamOffense[0])) {
+							awayTeamOffense = [awayOnIce[i], awayTeamOffense[1], awayTeamOffense[2]];
+							awayLeftWing.innerHTML = sweaterNumber ?? 0;
+							awayLeftWing.setAttribute('title', fullName);
+						} else if (!awayOnIce.includes(awayTeamOffense[1])) {
+							awayTeamOffense = [awayTeamOffense[0], awayOnIce[i], awayTeamOffense[2]];
+							awayCenter.innerHTML = sweaterNumber ?? 0;
+							awayCenter.setAttribute('title', fullName);
+						} else if (!awayOnIce.includes(awayTeamOffense[2])) {
+							awayTeamOffense = [awayTeamOffense[0], awayTeamOffense[1], awayOnIce[i]];
+							awayRightWing.innerHTML = sweaterNumber ?? 0;
+							awayRightWing.setAttribute('title', fullName);
+						}
 					}
 					break;
 			}
@@ -643,67 +585,66 @@ function setRinkSection(gameInfo) {
 	}
 	
 	if(homeTeamOnIce !== homeOnIce) {
-		const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
 		for(var i = 0; i < homeOnIce.length; i++) {
-			const player = homeTeamPlayers['ID' + homeOnIce[i]];
+			const player = APIPopupDataUtility.getOnIcePlayer(rosterSpots, homeOnIce[i]);
+			const fullName = APIPopupDataUtility.getPlayerFullName(player);
+			const sweaterNumber = APIPopupDataUtility.getPlayerSweaterNumber(player);
 			
-			switch(player.position.abbreviation) {
-				case "RW":
-				case "C":
-				case "LW":
-					if (homeTeamOffense.length < 3) {
-						homeTeamOffense.push(homeOnIce[i]);
-						if (homeTeamOffense.length === 0) {
-							homeLeftWing.innerHTML = player.jerseyNumber ?? 0;
-							homeLeftWing.setAttribute('title', player.person.fullName);
-						} else if (homeTeamOffense.length === 1) {
-							homeCenter.innerHTML = player.jerseyNumber ?? 0;
-							homeCenter.setAttribute('title', player.person.fullName);
-						} else if (homeTeamOffense.length === 2) {
-							homeRightWing.innerHTML = player.jerseyNumber ?? 0;
-							homeRightWing.setAttribute('title', player.person.fullName);
-						}
-					} else {
-						if (!homeOnIce.includes(homeTeamOffense[0])) {
-							homeTeamOffense = [homeOnIce[i], homeTeamOffense[1], homeTeamOffense[2]];
-							homeLeftWing.innerHTML = player.jerseyNumber ?? 0;
-							homeLeftWing.setAttribute('title', player.person.fullName);
-						} else if (!homeOnIce.includes(homeTeamOffense[1])) {
-							homeTeamOffense = [homeTeamOffense[0], homeOnIce[i], homeTeamOffense[2]];
-							homeCenter.innerHTML = player.jerseyNumber ?? 0;
-							homeCenter.setAttribute('title', player.person.fullName);
-						} else if (!homeOnIce.includes(homeTeamOffense[2])) {
-							homeTeamOffense = [homeTeamOffense[0], homeTeamOffense[1], homeOnIce[i]];
-							homeRightWing.innerHTML = player.jerseyNumber ?? 0;
-							homeRightWing.setAttribute('title', player.person.fullName);
-						}
-					}
-					break;
+			switch(APIPopupDataUtility.getPlayerPositionCode(player)) {
 				case "D":
 					if(homeTeamDefense.length === 0) {
 						homeTeamDefense.push(homeOnIce[i]);
-						homeLeftDefense.innerHTML = player.jerseyNumber ?? 0;
-						homeLeftDefense.setAttribute('title', player.person.fullName);
+						homeLeftDefense.innerHTML = sweaterNumber ?? 0;
+						homeLeftDefense.setAttribute('title', fullName);
 					} else if (homeTeamDefense.length === 1) {
 						homeTeamDefense.push(homeOnIce[i]);
-						homeRightDefense.innerHTML = player.jerseyNumber ?? 0;
-						homeRightDefense.setAttribute('title', player.person.fullName);
+						homeRightDefense.innerHTML = sweaterNumber ?? 0;
+						homeRightDefense.setAttribute('title', fullName);
 					} else {
 						if (!homeOnIce.includes(homeTeamDefense[0])) {
 							homeTeamDefense = [homeOnIce[i], homeTeamDefense[1]];
-							homeLeftDefense.innerHTML = player.jerseyNumber ?? 0;
-							homeLeftDefense.setAttribute('title', player.person.fullName);
+							homeLeftDefense.innerHTML = sweaterNumber ?? 0;
+							homeLeftDefense.setAttribute('title', fullName);
 						} else if (!homeOnIce.includes(homeTeamDefense[1])) {
 							homeTeamDefense = [homeTeamDefense[0], homeOnIce[i]];
-							homeRightDefense.innerHTML = player.jerseyNumber ?? 0;
-							homeRightDefense.setAttribute('title', player.person.fullName);
+							homeRightDefense.innerHTML = sweaterNumber ?? 0;
+							homeRightDefense.setAttribute('title', fullName);
 						}
 					}
 					break;
 				case "G":
-					if (homeGoalie.innerHTML !== player.jerseyNumber ?? 0) {
-						homeGoalie.innerHTML = player.jerseyNumber ?? 0;
-						homeGoalie.setAttribute('title', player.person.fullName);
+					if (homeGoalie.innerHTML !== sweaterNumber ?? 0) {
+						homeGoalie.innerHTML = sweaterNumber ?? 0;
+						homeGoalie.setAttribute('title', fullName);
+					}
+					break;
+				default:
+					if (homeTeamOffense.length < 3) {
+						homeTeamOffense.push(homeOnIce[i]);
+						if (homeTeamOffense.length === 0) {
+							homeLeftWing.innerHTML = sweaterNumber ?? 0;
+							homeLeftWing.setAttribute('title', fullName);
+						} else if (homeTeamOffense.length === 1) {
+							homeCenter.innerHTML = sweaterNumber ?? 0;
+							homeCenter.setAttribute('title', fullName);
+						} else if (homeTeamOffense.length === 2) {
+							homeRightWing.innerHTML = sweaterNumber ?? 0;
+							homeRightWing.setAttribute('title', fullName);
+						}
+					} else {
+						if (!homeOnIce.includes(homeTeamOffense[0])) {
+							homeTeamOffense = [homeOnIce[i], homeTeamOffense[1], homeTeamOffense[2]];
+							homeLeftWing.innerHTML = sweaterNumber ?? 0;
+							homeLeftWing.setAttribute('title', fullName);
+						} else if (!homeOnIce.includes(homeTeamOffense[1])) {
+							homeTeamOffense = [homeTeamOffense[0], homeOnIce[i], homeTeamOffense[2]];
+							homeCenter.innerHTML = sweaterNumber ?? 0;
+							homeCenter.setAttribute('title', fullName);
+						} else if (!homeOnIce.includes(homeTeamOffense[2])) {
+							homeTeamOffense = [homeTeamOffense[0], homeTeamOffense[1], homeOnIce[i]];
+							homeRightWing.innerHTML = sweaterNumber ?? 0;
+							homeRightWing.setAttribute('title', fullName);
+						}
 					}
 					break;
 			}
@@ -713,7 +654,7 @@ function setRinkSection(gameInfo) {
 	}
 }
 
-function setTeamStatsSection(gameInfo) {
+function setTeamStatsSection(gameData) {
 	// Teams
 	const teamStatsAwayImage = document.getElementById("teamStatsAwayImage");
 	const teamStatsAwayTeamName = document.getElementById("teamStatsAwayTeamName");
@@ -744,26 +685,26 @@ function setTeamStatsSection(gameInfo) {
 	teamStatsAwayTeamName.innerHTML = awayTeamName;
 	teamStatsHomeTeamName.innerHTML = homeTeamName;
 
-	const awayTeamStats = gameInfo.liveData.boxscore.teams.away.teamStats.teamSkaterStats;
-	awayTeamSOG.innerHTML = awayTeamStats.shots;
-	awayTeamFO.innerHTML = awayTeamStats.faceOffWinPercentage;
-	awayTeamPPG.innerHTML = awayTeamStats.powerPlayGoals;
-	awayTeamPIM.innerHTML = awayTeamStats.pim;
-	awayTeamHITS.innerHTML = awayTeamStats.hits;
-	awayTeamBLKS.innerHTML = awayTeamStats.blocked;
-	awayTeamGVA.innerHTML = awayTeamStats.giveaways;
+	const awayTeamStats = APIPopupDataUtility.getAwayTeam(gameData);
+	awayTeamSOG.innerHTML = awayTeamStats.sog ?? 0;
+	awayTeamFO.innerHTML = awayTeamStats.faceoffWinningPctg ?? 0;
+	awayTeamPPG.innerHTML = awayTeamStats.powerPlayConversion ?? '0/0';
+	awayTeamPIM.innerHTML = awayTeamStats.pim ?? 0;
+	awayTeamHITS.innerHTML = awayTeamStats.hits ?? 0;
+	awayTeamBLKS.innerHTML = awayTeamStats.blocks ?? 0;
+	// awayTeamGVA.innerHTML = awayTeamStats.giveaways ?? 0; Not in new version of API
 	
-	const homeTeamStats = gameInfo.liveData.boxscore.teams.home.teamStats.teamSkaterStats;
-	homeTeamSOG.innerHTML = homeTeamStats.shots;
-	homeTeamFO.innerHTML = homeTeamStats.faceOffWinPercentage;
-	homeTeamPPG.innerHTML = homeTeamStats.powerPlayGoals;
-	homeTeamPIM.innerHTML = homeTeamStats.pim;
-	homeTeamHITS.innerHTML = homeTeamStats.hits;
-	homeTeamBLKS.innerHTML = homeTeamStats.blocked;
-	homeTeamGVA.innerHTML = homeTeamStats.giveaways;
+	const homeTeamStats = APIPopupDataUtility.getHomeTeam(gameData);
+	homeTeamSOG.innerHTML = homeTeamStats.sog ?? 0;
+	homeTeamFO.innerHTML = homeTeamStats.faceoffWinningPctg ?? 0;
+	homeTeamPPG.innerHTML = homeTeamStats.powerPlayConversion ?? '0/0';
+	homeTeamPIM.innerHTML = homeTeamStats.pim ?? 0;
+	homeTeamHITS.innerHTML = homeTeamStats.hits ?? 0;
+	homeTeamBLKS.innerHTML = homeTeamStats.blocks ?? 0;
+	// homeTeamGVA.innerHTML = homeTeamStats.giveaways ?? 0; Not in new version of API
 }
 
-function setPlayerStatsSection(gameInfo, gameStatus) {
+function setPlayerStatsSection(gameData, gameStatus) {
 	if (gameStatus === "preview") {
 		const awayPlayerStatsTeamName = document.getElementById("awayPlayerStatsTeamName");
 		const homePlayerStatsTeamName = document.getElementById("homePlayerStatsTeamName");
@@ -786,64 +727,12 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 			show(homeTeamPlayerStats);
 			addClass(homeStatsButton, "selected");
 		}, false);
-
-		const awayTeamForwards = document.getElementById("awayTeamForwards");
-		const awayTeamDefense = document.getElementById("awayTeamDefense");
-		const awayTeamGoalies = document.getElementById("awayTeamGoalies");
-		clearElement(awayTeamForwards);
-		clearElement(awayTeamDefense);
-		clearElement(awayTeamGoalies);
-
-		const homeTeamForwards = document.getElementById("homeTeamForwards");
-		const homeTeamDefense = document.getElementById("homeTeamDefense");
-		const homeTeamGoalies = document.getElementById("homeTeamGoalies");
-		clearElement(homeTeamForwards);
-		clearElement(homeTeamDefense);
-		clearElement(homeTeamGoalies);
-
-		const awayPlayersPromise = getNonLivePlayersPromises(awayTeamId);
-		awayPlayersPromise.then(function(awayPlayersPromise) {
-			Promise.all(awayPlayersPromise[0]).then(function(awayPlayerPromises) {
-				Promise.all(awayPlayerPromises).then(function(players) {
-					for (var i = 0; i < players.length; i++) {
-						const player = players[i];
-						switch(player.people[0].primaryPosition.type) {
-							case "Defenseman":
-								addPlayerStat(player, awayTeamDefense);
-								break;
-							case "Forward":
-								addPlayerStat(player, awayTeamForwards);
-								break;
-							case "Goalie":
-								addPlayerStat(player, awayTeamGoalies, true);
-								break;
-						}
-					}
-				});
-			});
-		});
-
-		const homePlayersPromise = getNonLivePlayersPromises(homeTeamId);
-		homePlayersPromise.then(function(homePlayersPromise) {
-			Promise.all(homePlayersPromise[0]).then(function(homePlayerPromises) {
-				Promise.all(homePlayerPromises).then(function(players) {
-					for (var i = 0; i < players.length; i++) {
-						const player = players[i];
-						switch(player.people[0].primaryPosition.type) {
-							case "Defenseman":
-								addPlayerStat(player, homeTeamDefense);
-								break;
-							case "Forward":
-								addPlayerStat(player, homeTeamForwards);
-								break;
-							case "Goalie":
-								addPlayerStat(player, homeTeamGoalies, true);
-								break;
-						}
-					}
-				});
-			});
-		});
+		
+		const awayTeamAbbv = commonUtilities.getTeamAbbvs()[awayTeamName];
+		APIPopupCallsUtility.fetchAwayTeamPlayerStats(awayTeamAbbv, setAwayNonLivePlayerStats);
+		
+		const homeTeamAbbv = commonUtilities.getTeamAbbvs()[homeTeamName];
+		APIPopupCallsUtility.fetchHomeTeamPlayerStats(homeTeamAbbv, setHomeNonLivePlayerStats);
 	} else if (gameStatus === "live" || gameStatus === "final") {
 		const inGamePlayerStats = document.getElementById("inGamePlayerStats");
 
@@ -885,173 +774,137 @@ function setPlayerStatsSection(gameInfo, gameStatus) {
 		clearElement(inGameHomeTeamDefense);
 		clearElement(inGameHomeTeamGoalies);
 		
-		const awayTeamPlayers = gameInfo.liveData.boxscore.teams.away.players;
-		const homeTeamPlayers = gameInfo.liveData.boxscore.teams.home.players;
-
-		for(const playerID in awayTeamPlayers) {
-			const player = awayTeamPlayers[playerID];
-			switch(player.position.type) {
-				case "Defenseman":
-					addInGamePlayerStat(player, inGameAwayTeamDefense);
-					break;
-				case "Forward":
-					addInGamePlayerStat(player, inGameAwayTeamForwards);
-					break;
-				case "Goalie":
-					addInGamePlayerStat(player, inGameAwayTeamGoalies, true);
-					break;
-			}
+		const awayTeamPlayers = APIPopupDataUtility.getAwayPlayerByGameStats(gameData);
+		const awayTeamForwards = APIPopupDataUtility.getAwayTeamForwards(awayTeamPlayers);
+		const awayTeamDefense = APIPopupDataUtility.getAwayTeamDefense(awayTeamPlayers);
+		const awayTeamGoalies = APIPopupDataUtility.getAwayTeamGoalies(awayTeamPlayers);
+		const homeTeamPlayers = APIPopupDataUtility.getHomePlayerByGameStats(gameData);
+		const homeTeamForwards = APIPopupDataUtility.getHomeTeamForwards(homeTeamPlayers);
+		const homeTeamDefense = APIPopupDataUtility.getHomeTeamDefense(homeTeamPlayers);
+		const homeTeamGoalies = APIPopupDataUtility.getHomeTeamGoalies(homeTeamPlayers);
+		
+		for(let i = 0; i < awayTeamForwards.length; i++) {
+			addInGamePlayerStat(awayTeamForwards[i], inGameAwayTeamForwards);
 		}
 		
-		for(const playerID in homeTeamPlayers) {
-			const player = homeTeamPlayers[playerID];
-			switch(player.position.type) {
-				case "Defenseman":
-					addInGamePlayerStat(player, inGameHomeTeamDefense);
-					break;
-				case "Forward":
-					addInGamePlayerStat(player, inGameHomeTeamForwards);
-					break;
-				case "Goalie":
-					addInGamePlayerStat(player, inGameHomeTeamGoalies, true);
-					break;
-			}
+		for(let i = 0; i < awayTeamDefense.length; i++) {
+			addInGamePlayerStat(awayTeamDefense[i], inGameAwayTeamDefense);
+		}
+		
+		for(let i = 0; i < awayTeamGoalies.length; i++) {
+			addInGamePlayerStat(awayTeamGoalies[i], inGameAwayTeamGoalies, true);
+		}
+		
+		for(let i = 0; i < homeTeamForwards.length; i++) {
+			addInGamePlayerStat(homeTeamForwards[i], inGameHomeTeamForwards);
+		}
+		
+		for(let i = 0; i < homeTeamDefense.length; i++) {
+			addInGamePlayerStat(homeTeamDefense[i], inGameHomeTeamDefense);
+		}
+		
+		for(let i = 0; i < homeTeamGoalies.length; i++) {
+			addInGamePlayerStat(homeTeamGoalies[i], inGameHomeTeamGoalies, true);
 		}
 	} else {
-		const noGamePlayerStatsTeamName = document.getElementById("noGamePlayerStatsTeamName");
-		noGamePlayerStatsTeamName.innerHTML = teamName;
-
-		const noGamePlayerStats = document.getElementById("noGamePlayerStats");
-		const teamForwards = document.getElementById("noGameForwards");
-		const teamDefense = document.getElementById("noGameDefense");
-		const teamGoalies = document.getElementById("noGameGoalies");
-		clearElement(teamForwards);
-		clearElement(teamDefense);
-		clearElement(teamGoalies);
-
-		const playersPromise = getNonLivePlayersPromises(teamId);
-		playersPromise.then(function(playersPromise) {
-			Promise.all(playersPromise[0]).then(function(playerPromises) {
-				Promise.all(playerPromises).then(function(players) {
-					for (var i = 0; i < players.length; i++) {
-						const player = players[i];
-						switch(player.people[0].primaryPosition.type) {
-							case "Defenseman":
-								addPlayerStat(player, teamDefense);
-								break;
-							case "Forward":
-								addPlayerStat(player, teamForwards);
-								break;
-							case "Goalie":
-								addPlayerStat(player, teamGoalies, true);
-								break;
-						}
-					}
-				});
-			});
-		});
+		teamAbbv = commonUtilities.getTeamAbbv();
+		APIPopupCallsUtility.fetchNonLivePlayerStats(teamAbbv, setNonLivePlayerStats);
 	}
 }
 
-function getNonLivePlayersPromises(team) {
-	const teamPromise = getTeamDataPromise(team);
-	return getPlayersDataPromises(teamPromise);
+function setAwayNonLivePlayerStats(playerStats, teamAbbv) {
+	const awayTeamForwards = document.getElementById("awayTeamForwards");
+	const awayTeamDefense = document.getElementById("awayTeamDefense");
+	const awayTeamGoalies = document.getElementById("awayTeamGoalies");
+	clearElement(awayTeamForwards);
+	clearElement(awayTeamDefense);
+	clearElement(awayTeamGoalies);
+	teamAbbv = commonUtilities.getTeamAbbv();
+	
+	APIPopupCallsUtility.fetchNonLiveRosterStats(teamAbbv, addPlayerStats, playerStats, awayTeamDefense, awayTeamForwards, awayTeamGoalies);
 }
 
-function getTeamDataPromise(team) {
-	return new Promise(function(resolve, reject) {
-		var teamXmlHttp = new XMLHttpRequest();
-		teamXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/teams/" + team + "/roster");
-
-		teamXmlHttp.onload = function() {
-			if (teamXmlHttp.status == 200) {
-				resolve(JSON.parse(teamXmlHttp.responseText));
-			} else {
-				reject(Error(teamXmlHttp.statusText));
-			}
-		};
-
-		teamXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		teamXmlHttp.send();
-	});
-
-	return teamPromise.then(
-		function(teamInfo) {
-			return teamInfo;
-		},
-		function(error) {
-			return null;
-		},
-	);
+function setHomeNonLivePlayerStats(playerStats, teamAbbv) {
+	const homeTeamForwards = document.getElementById("homeTeamForwards");
+	const homeTeamDefense = document.getElementById("homeTeamDefense");
+	const homeTeamGoalies = document.getElementById("homeTeamGoalies");
+	clearElement(homeTeamForwards);
+	clearElement(homeTeamDefense);
+	clearElement(homeTeamGoalies);
+	teamAbbv = commonUtilities.getTeamAbbv();
+	
+	APIPopupCallsUtility.fetchNonLiveRosterStats(teamAbbv, addPlayerStats, playerStats, homeTeamDefense, homeTeamForwards, homeTeamGoalies);
 }
 
-function getPlayersDataPromises(teamPromise) {
-	return teamPromise.then(function(teamInfo) {
-		const roster = teamInfo.roster;
+function setNonLivePlayerStats(playerStats) {
+	const noGamePlayerStatsTeamName = document.getElementById("noGamePlayerStatsTeamName");
+	noGamePlayerStatsTeamName.innerHTML = teamName;
 
-		promises = roster.map(player => {
-			return new Promise(function(resolve, reject) {
-				var playerXmlHttp = new XMLHttpRequest();
-				playerXmlHttp.open("GET", "https://statsapi.web.nhl.com" + player.person.link + "?hydrate=stats(splits=statsSingleSeason)");
+	const teamForwards = document.getElementById("noGameForwards");
+	const teamDefense = document.getElementById("noGameDefense");
+	const teamGoalies = document.getElementById("noGameGoalies");
+	clearElement(teamForwards);
+	clearElement(teamDefense);
+	clearElement(teamGoalies);
+	teamAbbv = commonUtilities.getTeamAbbv();
+	
+	APIPopupCallsUtility.fetchNonLiveRosterStats(teamAbbv, addPlayerStats, playerStats, teamDefense, teamForwards, teamGoalies);
+}
 
-				playerXmlHttp.onload = function() {
-					if (playerXmlHttp.status == 200) {
-						resolve(JSON.parse(playerXmlHttp.responseText));
-					} else {
-						reject(Error(playerXmlHttp.responseText));
-					}
-				};
-
-				playerXmlHttp.onerror = function() {
-					reject(Error(playerXmlHttp.statustext));
-				};
-
-				playerXmlHttp.send();
-			});
-		});
-
-		return Promise.all([promises]).then(function(playersInfo) {
-		  return playersInfo;
-		}, function() {
-		  return null;
-		});
-	});
+function addPlayerStats(playerStats, rosterData, defenseElement, forwardsElement, goaliesElement) {
+	const skaters = APIPopupDataUtility.getSkatersStats(playerStats);
+	for(let i = 0; i < skaters.length; i++) {
+		const player = skaters[i];
+		
+		if (APIPopupDataUtility.getPlayerPositionCode(player) === "D") {
+			const defenseman = APIPopupDataUtility.findDefensemanByFullName(rosterData, player);
+			addPlayerStat(player, defenseElement, false, APIPopupDataUtility.getPlayerSweaterNumber(defenseman));
+		} else {
+			const forward = APIPopupDataUtility.findForwardByFullName(rosterData, player);
+			addPlayerStat(player, forwardsElement, false, APIPopupDataUtility.getPlayerSweaterNumber(forward));
+		}
+	}
+	
+	const goalies = APIPopupDataUtility.getGoaliesStats(playerStats);
+	for(let i = 0; i < goalies.length; i++) {
+		const player = goalies[i];
+		const goalie = APIPopupDataUtility.findGoalieByFullName(rosterData, player);
+		
+		addPlayerStat(player, goaliesElement, true, APIPopupDataUtility.getPlayerSweaterNumber(goalie));
+	}
 }
 
 function setStandingsSection() {
 	const divisionStandings = document.getElementById("divisionStandings");
 	const wildCardStandings = document.getElementById("wildCardStandings");
-	// const conferenceStandings = document.getElementById("conferenceStandings");
+	const conferenceStandings = document.getElementById("conferenceStandings");
 	const leagueStandings = document.getElementById("leagueStandings");
 
 	const divisionStandingsButton = document.getElementById("divisionStandingsButton");
 	const wildCardStandingsButton = document.getElementById("wildCardStandingsButton");
-	// const conferenceStandingsButton = document.getElementById("conferenceStandingsButton");
+	const conferenceStandingsButton = document.getElementById("conferenceStandingsButton");
 	const leagueStandingsButton = document.getElementById("leagueStandingsButton");
 	divisionStandingsButton.addEventListener('click', function () {
 		hide(wildCardStandings);
-		// hide(conferenceStandings);
+		hide(conferenceStandings);
 		hide(leagueStandings);
 		removeClass(wildCardStandingsButton, "selected");
-		// removeClass(conferenceStandingsButton, "selected");
+		removeClass(conferenceStandingsButton, "selected");
 		removeClass(leagueStandingsButton, "selected");
 		show(divisionStandings);
 		addClass(divisionStandingsButton, "selected");
 	}, false);
 	wildCardStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
-		// hide(conferenceStandings);
+		hide(conferenceStandings);
 		hide(leagueStandings);
 		removeClass(divisionStandingsButton, "selected");
-		// removeClass(conferenceStandingsButton, "selected");
+		removeClass(conferenceStandingsButton, "selected");
 		removeClass(leagueStandingsButton, "selected");
 		show(wildCardStandings);
 		addClass(wildCardStandingsButton, "selected");
 	}, false);
-	/*conferenceStandingsButton.addEventListener('click', function () {
+	conferenceStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
 		hide(wildCardStandings);
 		hide(leagueStandings);
@@ -1060,28 +913,19 @@ function setStandingsSection() {
 		removeClass(leagueStandingsButton, "selected");
 		show(conferenceStandings);
 		addClass(conferenceStandingsButton, "selected");
-	}, false);*/
+	}, false);
 	leagueStandingsButton.addEventListener('click', function () {
 		hide(divisionStandings);
 		hide(wildCardStandings);
-		// hide(conferenceStandings);
+		hide(conferenceStandings);
 		removeClass(divisionStandingsButton, "selected");
 		removeClass(wildCardStandingsButton, "selected");
-		// removeClass(conferenceStandingsButton, "selected");
+		removeClass(conferenceStandingsButton, "selected");
 		show(leagueStandings);
 		addClass(leagueStandingsButton, "selected");
 	}, false);
-
-	const divisionTeamStandings = document.getElementById("divisionTeamStandings");
-	// const conferenceTeamStandings = document.getElementById("conferenceTeamStandings");
-	const leagueTeamStandings = document.getElementById("leagueTeamStandings");
-	clearElement(divisionTeamStandings);
-	// clearElement(conferenceTeamStandings);
-	clearElement(leagueTeamStandings);
-
-	setDivisionData(divisionTeamStandings);
-	// setConferenceData(conferenceTeamStandings);
-	setLeagueData(leagueTeamStandings);
+	
+	APIPopupCallsUtility.fetchStandings(setStandingsData);
 }
 
 function setFooterLinkHref(gameStatus, currentGameId, awayTeamInitial, homeTeamInitial) {
@@ -1103,7 +947,7 @@ function setFooterLinkHref(gameStatus, currentGameId, awayTeamInitial, homeTeamI
 }
 
 function addInGamePlayerStat(player, element, isGoalie = false) {
-	const playerName = player.person.fullName.split(" ");
+	const playerNameArray = APIPopupDataUtility.getPlayerNameArray(player);
 	const statLine = document.createElement("div");
 	addClass(statLine, "playerStatsLine");
 
@@ -1111,10 +955,10 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
 	addClass(number, "number");
-	number.innerHTML = player.jerseyNumber ?? 0;
+	number.innerHTML = APIPopupDataUtility.getPlayerSweaterNumber(player);
 	const name = document.createElement("div");
 	addClass(name, "name");
-	name.innerHTML = playerName[playerName.length - 1];
+	name.innerHTML = playerNameArray[playerNameArray.length - 1];
 	nameNumber.appendChild(number);
 	nameNumber.appendChild(name);
 	statLine.appendChild(nameNumber);
@@ -1122,92 +966,83 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 	const stats = document.createElement("div");
 	addClass(stats, "stats");
 
-	if (player.stats) {
-		if (!isGoalie) {
-			const shots = document.createElement("div");
-			addClass(shots, "stat");
-			shots.innerHTML = player.stats.skaterStats.shots;
-			stats.appendChild(shots);
-			const goals = document.createElement("div");
-			addClass(goals, "stat");
-			goals.innerHTML = player.stats.skaterStats.goals;
-			stats.appendChild(goals);
-			const assists = document.createElement("div");
-			addClass(assists, "stat");
-			assists.innerHTML = player.stats.skaterStats.assists;
-			stats.appendChild(assists);
-			const points = document.createElement("div");
-			addClass(points, "stat");
-			points.innerHTML = player.stats.skaterStats.assists + player.stats.skaterStats.goals;
-			stats.appendChild(points);
-			const plusMinus = document.createElement("div");
-			addClass(plusMinus, "stat");
-			plusMinus.innerHTML = player.stats.skaterStats.plusMinus;
-			stats.appendChild(plusMinus);
-			const penaltyMinutes = document.createElement("div");
-			addClass(penaltyMinutes, "stat");
-			const penaltyMinutesStat = player.stats.skaterStats.penaltyMinutes;
-			penaltyMinutes.innerHTML =  penaltyMinutesStat ? penaltyMinutesStat : 0;
-			stats.appendChild(penaltyMinutes);
-			const powerPlay = document.createElement("div");
-			addClass(powerPlay, "stat");
-			powerPlay.innerHTML = player.stats.skaterStats.powerPlayGoals;
-			stats.appendChild(powerPlay);
-			const shortHanded = document.createElement("div");
-			addClass(shortHanded, "stat");
-			shortHanded.innerHTML = player.stats.skaterStats.shortHandedGoals;
-			stats.appendChild(shortHanded);
-		} else {
-			const evenShotsAgainst = document.createElement("div");
-			addClass(evenShotsAgainst, "stat");
-			evenShotsAgainst.innerHTML = player.stats.goalieStats.evenShotsAgainst;
-			stats.appendChild(evenShotsAgainst);
-			const powerPlayShotsAgainst = document.createElement("div");
-			addClass(powerPlayShotsAgainst, "stat");
-			powerPlayShotsAgainst.innerHTML = player.stats.goalieStats.powerPlayShotsAgainst;
-			stats.appendChild(powerPlayShotsAgainst);
-			const shortHandedShotsAgainst = document.createElement("div");
-			addClass(shortHandedShotsAgainst, "stat");
-			shortHandedShotsAgainst.innerHTML = player.stats.goalieStats.shortHandedShotsAgainst;
-			stats.appendChild(shortHandedShotsAgainst);
-			const savesShotsAgainst = document.createElement("div");
-			addClass(savesShotsAgainst, "stat");
-			addClass(savesShotsAgainst, "savesShots");
-			savesShotsAgainst.innerHTML = player.stats.goalieStats.saves + "-" + player.stats.goalieStats.shots;
-			stats.appendChild(savesShotsAgainst);
-			const savePercent = document.createElement("div");
-			addClass(savePercent, "stat");
-			let savePercentText = Number(player.stats.goalieStats.savePercentage);
-			savePercentText = savePercentText ? savePercentText : 0;
-			savePercent.innerHTML = savePercentText.toFixed(2) + "%";
-			stats.appendChild(savePercent);
-			const penaltyMinutes = document.createElement("div");
-			addClass(penaltyMinutes, "stat");
-			const penaltyMinutesStat = player.stats.goalieStats.pim;
-			penaltyMinutes.innerHTML = penaltyMinutesStat ? penaltyMinutesStat : 0;
-			stats.appendChild(penaltyMinutes);
-			const timeOnIce = document.createElement("div");
-			addClass(timeOnIce, "stat");
-			timeOnIce.innerHTML = player.stats.goalieStats.timeOnIce;
-			stats.appendChild(timeOnIce);
-		}
+	if (!isGoalie) {
+		const shots = document.createElement("div");
+		addClass(shots, "stat");
+		shots.innerHTML = APIPopupDataUtility.getPlayerShots(player);
+		stats.appendChild(shots);
+		const goals = document.createElement("div");
+		addClass(goals, "stat");
+		goals.innerHTML = APIPopupDataUtility.getPlayerGoals(player);
+		stats.appendChild(goals);
+		const assists = document.createElement("div");
+		addClass(assists, "stat");
+		assists.innerHTML = APIPopupDataUtility.getPlayerAssists(player);
+		stats.appendChild(assists);
+		const points = document.createElement("div");
+		addClass(points, "stat");
+		points.innerHTML = APIPopupDataUtility.getPlayerPoints(player);
+		stats.appendChild(points);
+		const plusMinus = document.createElement("div");
+		addClass(plusMinus, "stat");
+		plusMinus.innerHTML = APIPopupDataUtility.getPlayerPlusMinus(player);
+		stats.appendChild(plusMinus);
+		const penaltyMinutes = document.createElement("div");
+		addClass(penaltyMinutes, "stat");
+		penaltyMinutes.innerHTML = APIPopupDataUtility.getPlayerPIMs(player);
+		stats.appendChild(penaltyMinutes);
+		const powerPlay = document.createElement("div");
+		addClass(powerPlay, "stat");
+		powerPlay.innerHTML = APIPopupDataUtility.getPlayerPowerPlayGoals(player);
+		stats.appendChild(powerPlay);
+		const shortHanded = document.createElement("div");
+		addClass(shortHanded, "stat");
+		shortHanded.innerHTML = APIPopupDataUtility.getPlayerShorthandedGoals(player);
+		stats.appendChild(shortHanded);
+	} else {
+		const evenShotsAgainst = document.createElement("div");
+		addClass(evenShotsAgainst, "stat");
+		evenShotsAgainst.innerHTML = APIPopupDataUtility.getGoalieEvenStrengthShotsAgainst(player);
+		stats.appendChild(evenShotsAgainst);
+		const powerPlayShotsAgainst = document.createElement("div");
+		addClass(powerPlayShotsAgainst, "stat");
+		powerPlayShotsAgainst.innerHTML = APIPopupDataUtility.getGoaliePowerPlayShotsAgainst(player);
+		stats.appendChild(powerPlayShotsAgainst);
+		const shortHandedShotsAgainst = document.createElement("div");
+		addClass(shortHandedShotsAgainst, "stat");
+		shortHandedShotsAgainst.innerHTML = APIPopupDataUtility.getGoalieShorthandedShotsAgainst(player);
+		stats.appendChild(shortHandedShotsAgainst);
+		const savesShotsAgainst = document.createElement("div");
+		addClass(savesShotsAgainst, "stat");
+		addClass(savesShotsAgainst, "savesShots");
+		savesShotsAgainst.innerHTML = APIPopupDataUtility.getGoalieSaveShotsAgainst(player);
+		stats.appendChild(savesShotsAgainst);
+		const savePercent = document.createElement("div");
+		addClass(savePercent, "stat");
+		savePercent.innerHTML = APIPopupDataUtility.getGoalieSavePercentage(player);
+		stats.appendChild(savePercent);
+		const penaltyMinutes = document.createElement("div");
+		addClass(penaltyMinutes, "stat");
+		penaltyMinutes.innerHTML = APIPopupDataUtility.getGoaliePIMs(player) ?? 0;
+		stats.appendChild(penaltyMinutes);
+		const timeOnIce = document.createElement("div");
+		addClass(timeOnIce, "stat");
+		timeOnIce.innerHTML = APIPopupDataUtility.getGoalieTimeOnIce(player);
+		stats.appendChild(timeOnIce);
 	}
 
 	statLine.appendChild(stats);
 	element.appendChild(statLine);
 }
 
-function addPlayerStat(player, element, isGoalie = false) {
-	const person = player.people[0];
-	const position = person.primaryPosition;
-	var stats = person.stats[0].splits;
-	if (stats.length > 0) {
-		stats = stats[0].stat;
+function addPlayerStat(player, element, isGoalie = false, sweaterNumber = 0) {
+	let playerName = "";
+	if (player.lastName) {
+		playerName = APIPopupDataUtility.getPlayerLastName(player);
 	} else {
-		stats = JSON.parse('{"games": 0, "goals": 0, "assists": 0, "plusMinus": 0, "penaltyMinutes": 0, "powerPlayGoals": 0, "gameWinningGoals": 0, "wins": 0, "losses": 0, "shotsAgainst": 0, "goalsAgainst": 0, "goalAgainstAverage": 0, "savePercentage": 0, "shutouts": 0}');
+		playerName = APIPopupDataUtility.getPlayerName(player);
 	}
-
-	const playerName = person.lastName;
+	
 	const statLine = document.createElement("div");
 	addClass(statLine, "playerStatsLine");
 
@@ -1215,7 +1050,7 @@ function addPlayerStat(player, element, isGoalie = false) {
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
 	addClass(number, "number");
-	number.innerHTML = person.primaryNumber ?? 0;
+	number.innerHTML = sweaterNumber;
 	const name = document.createElement("div");
 	addClass(name, "name");
 	name.innerHTML = playerName;
@@ -1229,87 +1064,83 @@ function addPlayerStat(player, element, isGoalie = false) {
 	if (!isGoalie) {
 		const games = document.createElement("div");
 		addClass(games, "stat");
-		const gamesStat = stats.games;
+		const gamesStat = APIPopupDataUtility.getPlayerGamesPlayed(player);
 		games.innerHTML = gamesStat ? gamesStat : 0;
 		statsElement.appendChild(games);
 		const goals = document.createElement("div");
 		addClass(goals, "stat");
-		const goalsStat = stats.goals;
+		const goalsStat = APIPopupDataUtility.getPlayerGoals(player);
 		goals.innerHTML = goalsStat ? goalsStat : 0;
 		statsElement.appendChild(goals);
 		const assists = document.createElement("div");
 		addClass(assists, "stat");
-		const assistsStat = stats.assists;
+		const assistsStat = APIPopupDataUtility.getPlayerAssists(player);
 		assists.innerHTML = assistsStat ? assistsStat : 0;
 		statsElement.appendChild(assists);
 		const points = document.createElement("div");
 		addClass(points, "stat");
-		points.innerHTML = assistsStat && goalsStat ? assistsStat + goalsStat : 0;
+		const pointsStat = APIPopupDataUtility.getPlayerPoints(player);
+		points.innerHTML = pointsStat ? pointsStat : 0;
 		statsElement.appendChild(points);
 		const plusMinus = document.createElement("div");
 		addClass(plusMinus, "stat");
-		const plusMinusStat = stats.plusMinus;
+		const plusMinusStat = APIPopupDataUtility.getPlayerPlusMinus(player);
 		plusMinus.innerHTML = plusMinusStat ? plusMinusStat : 0;
 		statsElement.appendChild(plusMinus);
 		const penaltyMinutes = document.createElement("div");
 		addClass(penaltyMinutes, "stat");
-		const penaltyMinutesStat = stats.penaltyMinutes;
+		const penaltyMinutesStat = APIPopupDataUtility.getPlayerPIMs(player);
 		penaltyMinutes.innerHTML = penaltyMinutesStat ? penaltyMinutesStat : 0;
 		statsElement.appendChild(penaltyMinutes);
 		const powerPlay = document.createElement("div");
 		addClass(powerPlay, "stat");
-		const powerPlayStat = stats.powerPlayGoals;
+		const powerPlayStat = APIPopupDataUtility.getPlayerPowerPlayGoals(player);
 		powerPlay.innerHTML = powerPlayStat ? powerPlayStat : 0;
 		statsElement.appendChild(powerPlay);
 		const gameWinning = document.createElement("div");
 		addClass(gameWinning, "stat");
-		const gameWinningStat = stats.gameWinningGoals;
+		const gameWinningStat = APIPopupDataUtility.getPlayerGameWinningGoals(player);
 		gameWinning.innerHTML = gameWinningStat ? gameWinningStat : 0;
 		statsElement.appendChild(gameWinning);
 	} else {
 		const games = document.createElement("div");
 		addClass(games, "stat");
-		const gamesStat = stats.games;
+		const gamesStat = APIPopupDataUtility.getPlayerGamesPlayed(player);
 		games.innerHTML = gamesStat ? gamesStat : 0;
 		statsElement.appendChild(games);
 		const wins = document.createElement("div");
 		addClass(wins, "stat");
-		const winsStat = stats.wins;
+		const winsStat = APIPopupDataUtility.getGoalieWins(player);
 		wins.innerHTML = winsStat ? winsStat : 0;
 		statsElement.appendChild(wins);
 		const losses = document.createElement("div");
 		addClass(losses, "stat");
-		const lossesStat = stats.losses;
+		const lossesStat = APIPopupDataUtility.getGoalieLosses(player);
 		losses.innerHTML = lossesStat ? lossesStat : 0;
 		statsElement.appendChild(losses);
 		const shotsAgainst = document.createElement("div");
 		addClass(shotsAgainst, "stat");
-		const shotsAgainstStat = stats.shotsAgainst;
+		const shotsAgainstStat = APIPopupDataUtility.getGoalieShotsAgainst(player);
 		shotsAgainst.innerHTML = shotsAgainstStat ? shotsAgainstStat : 0;
 		statsElement.appendChild(shotsAgainst);
 		const goalsAgainst = document.createElement("div");
 		addClass(goalsAgainst, "stat");
-		const goalsAgainstStat = stats.goalsAgainst;
+		const goalsAgainstStat = APIPopupDataUtility.getGoalieGoalsAgainst(player);
 		goalsAgainst.innerHTML = goalsAgainstStat ? goalsAgainstStat : 0;
 		statsElement.appendChild(goalsAgainst);
 		const goalAgainstAverage = document.createElement("div");
 		addClass(goalAgainstAverage, "stat");
-		const goalsAgainstAverageStat = stats.goalAgainstAverage;
-		goalAgainstAverage.innerHTML = goalsAgainstAverageStat ? goalsAgainstAverageStat : 0;
+		const goalsAgainstAverageStat = APIPopupDataUtility.getGoalieGoalsAgainstAverage(player);
+		goalAgainstAverage.innerHTML = goalsAgainstAverageStat;
 		statsElement.appendChild(goalAgainstAverage);
 		const savePercent = document.createElement("div");
 		addClass(savePercent, "stat");
-		const savePercentageStat = stats.savePercentage;
-		let savePercentText = 0;
-		if (savePercentageStat) {
-			savePercentText = Number(savePercentageStat) * 100
-		}
-		savePercentText = savePercentText;
-		savePercent.innerHTML = savePercentText.toFixed(2) + "%";
+		const savePercentageStat = APIPopupDataUtility.getGoalieNonLiveSavePercentage(player);
+		savePercent.innerHTML = savePercentageStat;
 		statsElement.appendChild(savePercent);
 		const shutouts = document.createElement("div");
 		addClass(shutouts, "stat");
-		const shutoutsStat = stats.shutouts;
+		const shutoutsStat = APIPopupDataUtility.getGoalieShutouts(player);
 		shutouts.innerHTML = shutoutsStat ? shutoutsStat : 0;
 		statsElement.appendChild(shutouts);
 	}
@@ -1318,62 +1149,72 @@ function addPlayerStat(player, element, isGoalie = false) {
 	element.appendChild(statLine);
 }
 
-function setDivisionData(divisionElement) {
-	const divisionPromise = new Promise(function(resolve, reject) {
-		var divisionXmlHttp = new XMLHttpRequest();
-		divisionXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/byDivision");
-
-		divisionXmlHttp.onload = function() {
-			if (divisionXmlHttp.status == 200) {
-				resolve(JSON.parse(divisionXmlHttp.responseText));
-			} else {
-				reject(Error(divisionXmlHttp.statusText));
-			}
-		};
-
-		divisionXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		divisionXmlHttp.send();
-	});
-
-	divisionPromise.then(
-		function(divisionInfo) {
-			const divisions = divisionInfo.records;
-			const wildCardDivisions = [];
-			for (var i = 0; i < divisions.length; i++) {
-				if (divisions[i].division.id == commonUtilities.getTeamDivisionId()) {
-					addDivisionLines(divisions[i], divisionElement);
-				}
-				if (divisions[i].conference.id == commonUtilities.getTeamConferenceId()) {
-					wildCardDivisions.push(divisions[i]);
-					if (wildCardDivisions.length == 2) {
-						addWildCardLines(wildCardDivisions[0], wildCardDivisions[1]);
-					}
-				}
-			}
-		},
-		function(error) {
-			return null;
-		},
-	);
+function setStandingsData(standingsData) {
+	const divisionTeamStandings = document.getElementById("divisionTeamStandings");
+	const conferenceTeamStandings = document.getElementById("conferenceTeamStandings");
+	const leagueTeamStandings = document.getElementById("leagueTeamStandings");
+	clearElement(divisionTeamStandings);
+	clearElement(conferenceTeamStandings);
+	clearElement(leagueTeamStandings);
+	
+	setDivisionData(standingsData, divisionTeamStandings);
+	setConferenceData(standingsData, conferenceTeamStandings);
+	setLeagueData(standingsData, leagueTeamStandings);
 }
 
-function addDivisionLines(division, element) {
+function setDivisionData(standingsData, divisionElement) {
+	const teamDivisionAbbv = commonUtilities.getTeamDivisionAbbvs()[teamName];
+	const teamConferenceAbbv = commonUtilities.getTeamConferenceAbbvs()[teamName];
+	const divisionTeams = [];
+	for (let i = 0; i < standingsData.length; i++) {
+		const standing = standingsData[i];
+		if (APIPopupDataUtility.getStandingDivisionAbbrev(standing) === teamDivisionAbbv) {
+			divisionTeams.push(standing);
+		}
+	}
+	
+	addDivisionLines(divisionTeams, divisionElement);
+	
+	const conferenceTeams = [];
+	for (let i = 0; i < standingsData.length; i++) {
+		const standing = standingsData[i];
+		if (APIPopupDataUtility.getStandingConferenceAbbrev(standing) === teamConferenceAbbv) {
+			conferenceTeams.push(standing);
+		}
+	}
+	
+	const wildCardDivision1 = [];
+	for (let i = 0; i < conferenceTeams.length; i++) {
+		const standing = conferenceTeams[i];
+		if (APIPopupDataUtility.getStandingDivisionAbbrev(standing) === teamDivisionAbbv) {
+			wildCardDivision1.push(standing);
+		}
+	}
+	
+	const wildCardDivision2 = [];
+	for (let i = 0; i < conferenceTeams.length; i++) {
+		const standing = conferenceTeams[i];
+		if (APIPopupDataUtility.getStandingDivisionAbbrev(standing) !== teamDivisionAbbv) {
+			wildCardDivision2.push(standing);
+		}
+	}
+	
+	addWildCardLines(conferenceTeams, wildCardDivision1, wildCardDivision2);
+}
+
+function addDivisionLines(divisionTeams, element) {
 	const divisionElement = document.getElementById("division");
-	divisionElement.innerHTML = division.division.name;
-	const teams = division.teamRecords;
-	for (let i = 0; i < teams.length; i++) {
-		addStandingsLine(teams[i], element);
+	divisionElement.innerHTML = APIPopupDataUtility.getStandingDivisionName(divisionTeams[0]);
+	for (let i = 0; i < divisionTeams.length; i++) {
+		addStandingsLine(divisionTeams[i], element);
 	}
 }
 
-function addWildCardLines(division1, division2) {
+function addWildCardLines(conferenceTeams, division1Teams, division2Teams) {
 	const wildCardDivision = document.getElementById("wildCardDivision");
 	const wildCardDivision2 = document.getElementById("wildCardDivision2");
-	wildCardDivision.innerHTML = division1.division.name;
-	wildCardDivision2.innerHTML = division2.division.name;
+	wildCardDivision.innerHTML = APIPopupDataUtility.getStandingDivisionName(division1Teams[0]);
+	wildCardDivision2.innerHTML = APIPopupDataUtility.getStandingDivisionName(division2Teams[0]);
 
 	const wildCardDivisionLeadersTeamStandings = document.getElementById("wildCardDivisionLeadersTeamStandings");
 	const wildCardDivision2LeadersTeamStandings = document.getElementById("wildCardDivision2LeadersTeamStandings");
@@ -1384,142 +1225,53 @@ function addWildCardLines(division1, division2) {
 	clearElement(wildCardTop2TeamStandings);
 	clearElement(wildCardTeamStandings);
 
-	const teams1 = division1.teamRecords;
-	const teams2 = division2.teamRecords;
-	for (let i = 0; i < teams1.length; i++) {
-		if (teams1[i].wildCardRank === "0") {
-			addStandingsLine(teams1[i], wildCardDivisionLeadersTeamStandings);
+	for (let i = 0; i < division1Teams.length; i++) {
+		const team = division1Teams[i];
+		if (APIPopupDataUtility.getTeamWildcardSequence(team) === 0) {
+			addStandingsLine(team, wildCardDivisionLeadersTeamStandings);
 		}
 	}
-	for (let i = 0; i < teams2.length; i++) {
-		if (teams2[i].wildCardRank === "0") {
-			addStandingsLine(teams2[i], wildCardDivision2LeadersTeamStandings);
+	for (let i = 0; i < division2Teams.length; i++) {
+		const team = division2Teams[i];
+		if (APIPopupDataUtility.getTeamWildcardSequence(team) === 0) {
+			addStandingsLine(team, wildCardDivision2LeadersTeamStandings);
 		}
 	}
 
-	const wildCardPromise = new Promise(function(resolve, reject) {
-		var wildCardXmlHttp = new XMLHttpRequest();
-		wildCardXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/wildCard");
-
-		wildCardXmlHttp.onload = function() {
-			if (wildCardXmlHttp.status == 200) {
-				resolve(JSON.parse(wildCardXmlHttp.responseText));
-			} else {
-				reject(Error(wildCardXmlHttp.statusText));
-			}
-		};
-
-		wildCardXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		wildCardXmlHttp.send();
-	});
-
-	wildCardPromise.then(
-		function(wildCardInfo) {
-			const wildCard = wildCardInfo.records;
-			for (let i = 0; i < wildCard.length; i++) {
-				if (wildCard[i].conference.id == commonUtilities.getTeamConferenceId()) {
-					const teams = wildCard[i].teamRecords;
-					for (let j = 0; j < teams.length; j++) {
-						if (teams[j].wildCardRank === "1") {
-							addStandingsLine(teams[j], wildCardTop2TeamStandings);
-						} else if (teams[j].wildCardRank === "2") {
-							addStandingsLine(teams[j], wildCardTop2TeamStandings);
-						} else {
-							addStandingsLine(teams[j], wildCardTeamStandings);
-						}
-					}
-				}
-			}
-		},
-		function(error) {
-			return null;
-		},
-	);
-}
-
-function setConferenceData(conferenceElement) {
-	const conferencePromise = new Promise(function(resolve, reject) {
-		var conferenceXmlHttp = new XMLHttpRequest();
-		conferenceXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/byConference");
-
-		conferenceXmlHttp.onload = function() {
-			if (conferenceXmlHttp.status == 200) {
-				resolve(JSON.parse(conferenceXmlHttp.responseText));
-			} else {
-				reject(Error(conferenceXmlHttp.statusText));
-			}
-		};
-
-		conferenceXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		conferenceXmlHttp.send();
-	});
-
-	conferencePromise.then(
-		function(conferenceInfo) {
-			const conferences = conferenceInfo.records;
-			for (var i = 0; i < conferences.length; i++) {
-				if (conferences[i].conference.id == commonUtilities.getTeamConferenceId()) {
-					addConferenceLines(conferences[i], conferenceElement);
-				}
-			}
-		},
-		function(error) {
-			return null;
-		},
-	);
-}
-
-function addConferenceLines(conference, element) {
-	const conferenceElement = document.getElementById("conference");
-	conferenceElement.innerHTML = conference.conference.name;
-
-	let teams = conference.teamRecords;
-	for (let j = 0; j < teams.length; j++) {
-		addStandingsLine(teams[j], element);
+	for (let i = 0; i < conferenceTeams.length; i++) {
+		const team = conferenceTeams[i];
+		if (APIPopupDataUtility.getTeamWildcardSequence(team) === 0) {
+			continue;
+		} else if (APIPopupDataUtility.getTeamWildcardSequence(team) === 1) {
+			addStandingsLine(team, wildCardTop2TeamStandings);
+		} else if (APIPopupDataUtility.getTeamWildcardSequence(team) === 2) {
+			addStandingsLine(team, wildCardTop2TeamStandings);
+		} else {
+			addStandingsLine(team, wildCardTeamStandings);
+		}
 	}
 }
 
-function setLeagueData(leagueElement) {
-	const leaguePromise = new Promise(function(resolve, reject) {
-		var leagueXmlHttp = new XMLHttpRequest();
-		leagueXmlHttp.open("GET", "https://statsapi.web.nhl.com/api/v1/standings/byLeague");
-
-		leagueXmlHttp.onload = function() {
-			if (leagueXmlHttp.status == 200) {
-				resolve(JSON.parse(leagueXmlHttp.responseText));
-			} else {
-				reject(Error(leagueXmlHttp.statusText));
-			}
-		};
-
-		leagueXmlHttp.onerror = function() {
-			reject(Error("Network Error"));
-		};
-
-		leagueXmlHttp.send();
-	});
-
-	leaguePromise.then(
-		function(leagueInfo) {
-			const leagueRecords = leagueInfo.records;
-			addLeagueLines(leagueRecords[0], leagueElement);
-		},
-		function(error) {
-			return null;
-		},
-	);
+function setConferenceData(standingsData, conferenceElement) {
+	const conferenceTeams = [];
+	for (let i = 0; i < standingsData.length; i++) {
+		const standing = standingsData[i];
+		if (APIPopupDataUtility.getStandingConferenceAbbrev(standing) === commonUtilities.getTeamConferenceAbbvs()[teamName]) {
+			conferenceTeams.push(standing);
+		}
+	}
+	
+	const conferenceTitleElement = document.getElementById("conference");
+	conferenceTitleElement.innerHTML = APIPopupDataUtility.getStandingConferenceName(conferenceTeams[0]);
+	
+	for (let i = 0; i < conferenceTeams.length; i++) {
+		addStandingsLine(conferenceTeams[i], conferenceElement);
+	}
 }
 
-function addLeagueLines(league, element) {
-	let teams = league.teamRecords;
-	for (let j = 0; j < teams.length; j++) {
-		addStandingsLine(teams[j], element);
+function setLeagueData(standingsData, leagueElement) {
+	for (let i = 0; i < standingsData.length; i++) {
+		addStandingsLine(standingsData[i], leagueElement);
 	}
 }
 
@@ -1527,7 +1279,7 @@ function addStandingsLine(team, element) {
 	const statLine = document.createElement("div");
 	addClass(statLine, "standingsTeamLine");
 
-	var shortName = CommonPopupUtilities.getTeamNameIdMapping()[team.team.id];
+	var shortName = commonUtilities.getTeamNameAbbvMapping()[APIPopupDataUtility.getStandingTeamAbbrev(team)];
 
 	const standingsTeam = document.createElement("div");
 	addClass(standingsTeam, "standingsTeam");
@@ -1546,36 +1298,33 @@ function addStandingsLine(team, element) {
 
 	const games = document.createElement("div");
 	addClass(games, "stat");
-	games.innerHTML = team.gamesPlayed;
+	games.innerHTML = APIPopupDataUtility.getTeamGamesPlayed(team);
 	statsElement.appendChild(games);
 	const wins = document.createElement("div");
 	addClass(wins, "stat");
-	wins.innerHTML = team.leagueRecord.wins;
+	wins.innerHTML = APIPopupDataUtility.getTeamWins(team);
 	statsElement.appendChild(wins);
 	const losses = document.createElement("div");
 	addClass(losses, "stat");
-	losses.innerHTML = team.leagueRecord.losses;
+	losses.innerHTML = APIPopupDataUtility.getTeamLosses(team);
 	statsElement.appendChild(losses);
 	const overtime = document.createElement("div");
 	addClass(overtime, "stat");
-	overtime.innerHTML = team.leagueRecord.ot;
+	overtime.innerHTML = APIPopupDataUtility.getTeamOtLosses(team);
 	statsElement.appendChild(overtime);
 	const points = document.createElement("div");
 	addClass(points, "stat");
-	points.innerHTML = team.points;
+	points.innerHTML = APIPopupDataUtility.getTeamPoints(team);
 	statsElement.appendChild(points);
 	const row = document.createElement("div");
 	addClass(row, "stat");
-	row.innerHTML = team.row;
+	row.innerHTML = APIPopupDataUtility.getTeamRegulationPlusOtWins(team);
 	statsElement.appendChild(row);
 	const streak = document.createElement("div");
 	addClass(streak, "stat");
-	let streakCode = "-";
-	if (team.streak) {
-		streakCode = team.streak.streakCode;
-	}
+	let streakCode = "" + APIPopupDataUtility.getTeamStreakCode(team) + APIPopupDataUtility.getTeamStreakCount(team);
 	
-	streak.innerHTML = streakCode !== null ? streakCode : "-";
+	streak.innerHTML = streakCode ? streakCode : "-";
 	statsElement.appendChild(streak);
 
 	statLine.appendChild(statsElement);

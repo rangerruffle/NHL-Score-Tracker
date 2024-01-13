@@ -1,4 +1,7 @@
 import CommonUtilities from "./CommonUtilities.js";
+import APIDataUtility from "./APIDataUtility.js";
+import APICallsUtility from "./APICallsUtility.js";
+import APIGameStates from "./APIGameStates.js";
 
 var awayTeamInitial = "";
 var currentlyPreGame = true;
@@ -9,15 +12,14 @@ var homeTeamInitial = "";
 var iconCanvas = new OffscreenCanvas(128, 128)
 var lossIcon = "logos/loss.png";
 var teamId = 0;
+var teamAbbv = "";
 var teamIsHome = false;
-var teamMenuItems = [];
 var teamName = "";
 var winIcon = "logos/win.png";
 var localGameTime = false;
-var gameLiveLink = "";
 
-const commonUtilities = CommonUtilities.init();
-const teams = CommonUtilities.getTeams();
+let commonUtilities = CommonUtilities.init();
+let teams = commonUtilities.getTeams();
 chrome.alarms.create(
 	"NHLScoreTrackerIcon",
 	{
@@ -28,6 +30,11 @@ chrome.alarms.create(
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
 	if (alarm.name = "NHLScoreTrackerIcon") {
+		if (!commonUtilities.getTeamAbbv()) {
+			commonUtilities = CommonUtilities.init();
+			teams = commonUtilities.getTeams();
+		}
+		
 		commonUtilities.updateData();
 		updateGameData();
 	}
@@ -36,10 +43,15 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 chrome.runtime.onInstalled.addListener(() => {
 	addTeamSelectorMenuOptions();
 	addTimeZoneMenuOptions();
-	addBugReportingOption();
+	addTeamColorMenuOption();
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
+	if (!commonUtilities.getTeamAbbv()) {
+		commonUtilities = CommonUtilities.init();
+		teams = commonUtilities.getTeams();
+	}
+		
 	if (info.menuItemId === "timeZoneSelectorCentral") {
 		commonUtilities.saveTimeZone("US/Central");
 	} else if (info.menuItemId === "timeZoneSelectorEastern") {
@@ -48,8 +60,10 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 		commonUtilities.saveTimeZone("US/Mountain");
 	} else if (info.menuItemId === "timeZoneSelectorPacific") {
 		commonUtilities.saveTimeZone("US/Pacific");
+	} else if (info.menuItemId === "teamColorMenuOption") {
+		commonUtilities.saveShouldShowTeamColor(info.checked);
 	} else {
-		CommonUtilities.saveSelectedTeam(teamMenuItems[info.menuItemId]);
+		commonUtilities.saveSelectedTeam(info.menuItemId);
 	}
 	
 	updateGameData();
@@ -70,14 +84,12 @@ function addTeamSelectorMenuOptions() {
 			"title": team,
 			"parentId": teamMenuItem,
 			"contexts": ["action"],
-			"id": "teamSelectorRadioButton" + team
+			"id": team
 		}, function() {
 			if (chrome.runtime.lastError) {
 				console.log("error creating menu item:" + chrome.runtime.lastError);
 			}
 		});
-		
-		teamMenuItems[menuIndex] = team;
 	}
 }
 
@@ -122,75 +134,58 @@ function addTimeZoneMenuOptions() {
 	});
 }
 
-function addBugReportingOption() {
-	//chrome.contextMenus.create({
-		//"type": "separator",
-		//"id": "bugReportSeparator"
-	//});
-
-	//const bugReport = chrome.contextMenus.create({
-		//"type": "normal",
-		//"title": "Report a Bug",
-		//"contexts": ["action"],
-		//"id": "bugReport"
-	//});
-	
-	//bugReport.onClicked.addListener(function() {
-		//reportBug();
-	//});
-}
-
-function reportBug() {
-	alert("This is still being worked on. For the time being, feel free to email the developer with any bugs or concerns at erickson.russell.j@gmail.com.\n\nThank you for using my extension!");
+function addTeamColorMenuOption() {
+	chrome.storage.sync.get([ 'shouldShowTeamColor' ], function(result) {
+		var shouldShowTeamColor = false;
+		if (result.shouldShowTeamColor == undefined) {
+			chrome.storage.sync.set({'shouldShowTeamColor': true});
+			shouldShowTeamColor = true;
+		} else {
+			shouldShowTeamColor = result.shouldShowTeamColor;
+		}
+		
+		chrome.contextMenus.create({
+		"type":"checkbox",
+		"checked": shouldShowTeamColor,
+		"title":"Show Team Colors",
+		"contexts":["action"],
+		"id": "teamColorMenuOption"
+	});	
+	});
 }
 
 function updateGameData() {
 	teamId = commonUtilities.getTeamId();
+	teamAbbv = commonUtilities.getTeamAbbv();
 	teamName = commonUtilities.getTeamName();
-	const todayYear = commonUtilities.getTodayYear();
-	const todayMonth = commonUtilities.getTodayMonth();
-	const todayDay = commonUtilities.getTodayDay();
-	
-	fetch("https://statsapi.web.nhl.com/api/v1/schedule?startDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&endDate=" + todayYear + "-" + todayMonth + "-" + todayDay + "&expand=schedule.teams,schedule.game&site=en_nhl&teamId=" + teamId)
-		.catch(error => {
-			setNoGame(teamName);
-		})
-		.then(response => response.json())
-		.then(scheduleInfo => {
-			setScheduleData(scheduleInfo);
-		});
+
+	APICallsUtility.fetchTeamSeasonSchedule(teamAbbv, teamName, setScheduleData, setNoGame);
 }
 
 function setScheduleData(scheduleInfo) {
-	if (scheduleInfo.dates[0]) {
-		if (scheduleInfo.dates[0].games[0]) {
-			currentGameId = scheduleInfo.dates[0].games[0].gamePk;
-			var dateTime = new Date(scheduleInfo.dates[0].games[0].gameDate);
-			localGameTime = getTimeZoneAdjustedTime(dateTime);
-			gameLiveLink = scheduleInfo.dates[0].games[0].link;
-			
-			fetch("https://statsapi.web.nhl.com/" + gameLiveLink)
-				.catch(error => {
-					setNoGame(teamName);
-				})
-				.then(response => response.json())
-				.then(gameInfo => {
-					setGameData(gameInfo);
-				});
-		} else {
-			setNoGame(teamName);
-		}
+	const todayYear = commonUtilities.getTodayYear();
+	const todayMonth = commonUtilities.getTodayMonth();
+	const todayDay = commonUtilities.getTodayDay();
+	const gameIndex = APIDataUtility.findScheduleGameIndex(scheduleInfo, todayYear, todayMonth, todayDay);
+	
+	if (gameIndex && gameIndex >= 0) {
+		const todayGame = APIDataUtility.getTodaysGame(scheduleInfo, gameIndex);
+		
+		currentGameId = APIDataUtility.getTodaysGameId(todayGame);
+		var dateTime = new Date(APIDataUtility.getTodaysGameDateTime(todayGame));
+		localGameTime = getTimeZoneAdjustedTime(dateTime);
+		
+		APICallsUtility.fetchCurrentGameData(currentGameId, teamName, setGameData, setNoGame);
 	} else {
 		setNoGame(teamName);
 	}
 }
 
-function setGameData(gameInfo) {
+function setGameData(gameData) {
 	const teamName = commonUtilities.getTeamName();
-	var game = gameInfo.gameData;
-	teamIsHome = game.teams.home.id === teamId;
-	awayTeamInitial = game.teams.away.abbreviation.toLowerCase();
-	homeTeamInitial = game.teams.home.abbreviation.toLowerCase();
+	teamIsHome = APIDataUtility.getHomeTeamId(gameData) === teamId;
+	awayTeamInitial = APIDataUtility.getAwayTeamAbbrev(gameData);
+	homeTeamInitial = APIDataUtility.getHomeTeamAbbrev(gameData);
 	
 	var tagText = "No " + teamName + " game today.";
 	var badgeText = "";
@@ -198,94 +193,39 @@ function setGameData(gameInfo) {
 	var gameToday = currentGameId != false;
 	
 	if (gameToday) {
-		var awayScore = gameInfo.liveData.linescore.teams.away.goals;
-		var homeScore = gameInfo.liveData.linescore.teams.home.goals;
+		var awayScore = APIDataUtility.getAwayTeamScore(gameData);
+		var homeScore = APIDataUtility.getHomeTeamScore(gameData);
 		var otherTeamName = "other team";
-		var goalie = "";
-		var venue = game.teams.home.venue.name;
-		otherTeamName = teamIsHome ? game.teams.away.teamName : game.teams.home.teamName;
+		var venue = APIDataUtility.getVenueName(gameData);
+		otherTeamName = teamIsHome ? APIDataUtility.getAwayTeamName(gameData) : APIDataUtility.getHomeTeamName(gameData);
+		const gameState = APIDataUtility.getGameState(gameData);
 		
-		if (game.status.abstractGameState == "Preview") {
-			tagText = teamName + " vs " + otherTeamName + " at " + venue + ". Puck drops at " + localGameTime + ".";
-			badgeText = localGameTime.substring(0, localGameTime.length - 2);
-			currentlyPreGame = true;
-		} else if (game.status.abstractGameState == "Final") {
-			var gameResult;
+		var textItems;
+		if (gameState === APIGameStates.FUTURE || gameState === APIGameStates.PREGAME) {
+			textItems = setPregame(teamName, otherTeamName, venue, localGameTime);
+		} else if (gameState === APIGameStates.FINAL || gameState === APIGameStates.OFF) {
+			textItems = setFinal(teamIsHome, otherTeamName, homeScore, awayScore, venue);
+			
 			var teamScore = teamIsHome ? homeScore : awayScore;
 			var otherTeamScore = teamIsHome ? awayScore : homeScore;
+			
 			if (otherTeamScore > teamScore) {
-				gameResult = "lost to";
 				icon = lossIcon;
 			} else {
-				gameResult = "beat";
 				icon = winIcon;
 			}
-			
-			tagText = "The " + teamName + " " + gameResult + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at " + venue;
-			badgeText = awayScore + "-" + homeScore;
-			
-			if (gameTimeDataRefreshTimer) {
-				clearInterval(gameTimeDataRefreshTimer);
-				gameTimeDataRefreshTimer = false;
-			}
-			currentlyPreGame = false;
-		} else if (game.status.abstractGameState == "Live") {
-			var scoreStatus;
-			var teamScore = teamIsHome ? homeScore : awayScore;
-			var otherTeamScore = teamIsHome ? awayScore : homeScore;
-			if (teamScore > otherTeamScore) {
-				scoreStatus = "leading";
-			} else if (teamScore < otherTeamScore) {
-				scoreStatus = "trailing"
-			} else if (awayScore == homeScore) {
-				scoreStatus = "tied with";
-			}
-			
-			var period = gameInfo.liveData.linescore.currentPeriod;
-			var isShootout = period === 5;
-			switch (period) {
-				case 1:
-					period = "the 1st period";
-					break;
-				case 2:
-					period = "the 2nd period";
-					break;
-				case 3:
-					period = "the 3rd period";
-					break;
-				case 4:
-					period = "overtime";
-					break;
-				case 5:
-					period = "the shootout";
-					break;
-			}
-			
-			if (gameInfo.liveData.linescore.currentPeriodTimeRemaining === "END") {
-				tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at the end of " + period + ".";
-			} else {
-				if (isShootout) {
-					home = gameInfo.liveData.linescore.shootoutInfo.home.scores;
-					away = gameInfo.liveData.linescore.shootoutInfo.away.scores;
-					if (teamIsHome) {
-						teamScore = home;
-						otherTeamScore = away;
-					} else {
-						teamScore = away;
-						otherTeamScore = home;
-					}
-					tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period;
-				} else {
-					tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period + " with " + gameInfo.liveData.linescore.currentPeriodTimeRemaining + " remaining";
-				}
-			}
-			
-			badgeText = awayScore + "-" + homeScore;
-			startInGameDataUpdateTimerIfNeeded();
-			currentlyPreGame = false;
+		} else if (gameState === APIGameStates.LIVE || gameState === APIGameStates.CRITICAL) {
+			textItems = setLive(teamIsHome, homeScore, awayScore, gameData, otherTeamName);
+		} else if (gameState === APIGameStates.POSTPONED) {
+			textItems = setPostponed(teamName, otherTeamName, venue);
 		} else {
 			badgeText = "TBD";
 			tagText = "The status of the game could not be determined at this time. Please try reselecting your team. If that does not work, please send a bug report to the developer.";
+		}
+		
+		if (textItems) {
+			badgeText = textItems[0];
+			tagText = textItems[1];
 		}
 	}
 	
@@ -298,6 +238,96 @@ function setGameData(gameInfo) {
 	}
 
 	drawLogo(icon, gameToday);
+}
+
+function setPregame(teamName, otherTeamName, venue, localGameTime) {
+	currentlyPreGame = true;
+	
+	return [localGameTime.substring(0, localGameTime.length - 2), teamName + " vs " + otherTeamName + " at " + venue + ". Puck drops at " + localGameTime + "."];
+}
+
+function setPostponed(teamName, otherTeamName, venue) {
+	currentlyPreGame = false;
+	
+	return [APIGameStates.POSTPONED, teamName + " vs " + otherTeamName + " at " + venue + " has been postponed."];
+}
+
+function setFinal(teamIsHome, otherTeamName, homeScore, awayScore, venue) {
+	var gameResult;
+	var teamScore = teamIsHome ? homeScore : awayScore;
+	var otherTeamScore = teamIsHome ? awayScore : homeScore;
+	if (otherTeamScore > teamScore) {
+		gameResult = "lost to";
+	} else {
+		gameResult = "beat";
+	}
+	
+	if (gameTimeDataRefreshTimer) {
+		clearInterval(gameTimeDataRefreshTimer);
+		gameTimeDataRefreshTimer = false;
+	}
+	currentlyPreGame = false;
+	
+	return [awayScore + "-" + homeScore, "The " + teamName + " " + gameResult + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at " + venue];
+}
+
+function setLive(teamIsHome, homeScore, awayScore, gameData, otherTeamName) {
+	var scoreStatus;
+	var teamScore = teamIsHome ? homeScore : awayScore;
+	var otherTeamScore = teamIsHome ? awayScore : homeScore;
+	if (teamScore > otherTeamScore) {
+		scoreStatus = "leading";
+	} else if (teamScore < otherTeamScore) {
+		scoreStatus = "trailing"
+	} else if (awayScore === homeScore) {
+		scoreStatus = "tied with";
+	}
+	
+	var period = APIDataUtility.getCurrentPeriod(gameData);
+	var isShootout = APIDataUtility.getCurrentPeriodType(gameData) === APIGameStates.SHOOTOUT;
+	switch (period) {
+		case 1:
+			period = "the 1st period";
+			break;
+		case 2:
+			period = "the 2nd period";
+			break;
+		case 3:
+			period = "the 3rd period";
+			break;
+		default:
+			period = "overtime";
+			break;
+	}
+	
+	if (isShootout) {
+		period = "the shootout";
+	}
+	
+	var tagText;
+	if (APIDataUtility.getIsInIntermission(gameData)) {
+		tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " at the end of " + period + ".";
+	} else {
+		if (isShootout) {
+			home = APIDataUtility.getHomeTeamShootoutGoals(gameData);
+			away = APIDataUtility.getAwayTeamShootoutGoals(gameData);
+			if (teamIsHome) {
+				teamScore = home;
+				otherTeamScore = away;
+			} else {
+				teamScore = away;
+				otherTeamScore = home;
+			}
+			tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period;
+		} else {
+			tagText = "The " + teamName + " are " + scoreStatus + " the " + otherTeamName + " " + teamScore + "-" + otherTeamScore + " in " + period + " with " + APIDataUtility.getGameTimeRemaining(gameData) + " remaining";
+		}
+	}
+	
+	startInGameDataUpdateTimerIfNeeded();
+	currentlyPreGame = false;
+	
+	return [awayScore + "-" + homeScore, tagText];
 }
 
 function setNoGame(teamName) {
@@ -314,6 +344,11 @@ function startInGameDataUpdateTimerIfNeeded() {
 }
 
 function updateData() {
+	if (!commonUtilities.getTeamAbbv()) {
+		commonUtilities = CommonUtilities.init();
+		teams = commonUtilities.getTeams();
+	}
+	
 	commonUtilities.updateData();
 	updateGameData();
 }
