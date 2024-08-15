@@ -819,7 +819,6 @@ function setAwayNonLivePlayerStats(playerStats, teamAbbv) {
 	clearElement(awayTeamForwards);
 	clearElement(awayTeamDefense);
 	clearElement(awayTeamGoalies);
-	teamAbbv = commonUtilities.getTeamAbbv();
 	
 	APIPopupCallsUtility.fetchNonLiveRosterStats(teamAbbv, addPlayerStats, playerStats, awayTeamDefense, awayTeamForwards, awayTeamGoalies);
 }
@@ -831,7 +830,6 @@ function setHomeNonLivePlayerStats(playerStats, teamAbbv) {
 	clearElement(homeTeamForwards);
 	clearElement(homeTeamDefense);
 	clearElement(homeTeamGoalies);
-	teamAbbv = commonUtilities.getTeamAbbv();
 	
 	APIPopupCallsUtility.fetchNonLiveRosterStats(teamAbbv, addPlayerStats, playerStats, homeTeamDefense, homeTeamForwards, homeTeamGoalies);
 }
