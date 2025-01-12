@@ -48,11 +48,11 @@ const APIPopupDataUtility = {
 	},
 	
 	getAwayTeamName(gameData) {
-		return gameData.awayTeam.name.default;
+		return gameData.awayTeam.commonName.default;
 	},
 	
 	getHomeTeamName(gameData) {
-		return gameData.homeTeam.name.default;
+		return gameData.homeTeam.commonName.default;
 	},
 	
 	getGameState(gameData) {
@@ -60,7 +60,7 @@ const APIPopupDataUtility = {
 	},
 	
 	getCurrentPeriod(gameData) {
-		return gameData.period;
+		return gameData.periodDescriptor.number;
 	},
 	
 	getCurrentPeriodType(gameData) {
@@ -76,11 +76,11 @@ const APIPopupDataUtility = {
 	},
 	
 	getAwayTeamShootoutGoals(gameData) {
-		return gameData.boxscore.linescore.shootout.awayConversions;
+		return gameData.linescore.shootout.awayConversions;
 	},
 	
 	getHomeTeamShootoutGoals(gameData) {
-		return gameData.boxscore.linescore.shootout.homeConversions;
+		return gameData.linescore.shootout.homeConversions;
 	},
 	
 	getCalendarGames(calendarData) {
@@ -88,11 +88,11 @@ const APIPopupDataUtility = {
 	},
 	
 	getAwayTeamOnIce(gameData) {
-		return gameData.awayTeam.onIce;
+		return gameData.summary.iceSurface.awayTeam;
 	},
 	
 	getHomeTeamOnIce(gameData) {
-		return gameData.homeTeam.onIce;
+		return gameData.summary.iceSurface.homeTeam;
 	},
 	
 	getRosterSpots(gameData) {
@@ -124,7 +124,11 @@ const APIPopupDataUtility = {
 	},
 	
 	getPlayerSweaterNumber(player) {
-		return player.sweaterNumber;
+		if (!player) {
+			return "-";
+		}
+
+		return player.sweaterNumber ?? "-";
 	},
 	
 	getPlayerPositionCode(player) {
@@ -140,11 +144,11 @@ const APIPopupDataUtility = {
 	},
 	
 	getAwayPlayerByGameStats(gameData) {
-		return gameData.boxscore.playerByGameStats.awayTeam;
+		return gameData.playerByGameStats.awayTeam;
 	},
 	
 	getHomePlayerByGameStats(gameData) {
-		return gameData.boxscore.playerByGameStats.homeTeam;
+		return gameData.playerByGameStats.homeTeam;
 	},
 	
 	getAwayTeamForwards(awayTeamPlayers) {
@@ -196,7 +200,7 @@ const APIPopupDataUtility = {
 	},
 	
 	getPlayerShots(player) {
-		return player.shots;
+		return player.sog;
 	},
 	
 	getPlayerGoals(player) {
@@ -224,7 +228,7 @@ const APIPopupDataUtility = {
 	},
 	
 	getPlayerShorthandedGoals(player) {
-		return player.shorthandedGoals;
+		return player.shorthandedGoals ?? 0;
 	},
 	
 	getPlayerGameWinningGoals(player) {

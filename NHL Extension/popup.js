@@ -305,7 +305,7 @@ function setLive(gameInfo) {
 function setFinal(gameInfo) {
 	hide(previewTab);
 	hide(liveTab);
-	show(teamStatsTab);
+	hide(teamStatsTab); // Not coming through in the new API data
 	show(playerStatsTab);
 	show(standingsTab);
 
@@ -321,7 +321,7 @@ function setFinal(gameInfo) {
 		setStandingsSection();
 	}
 
-	setActiveTab(teamStats, "Final");
+	setActiveTab(inGamePlayerStats, "Final");
 }
 
 function setNoGame() {
@@ -511,14 +511,21 @@ function setRinkSection(gameData) {
 	const homeGoalie = document.getElementById("homeGoalie");
 
 	// Live rink stats
-	const awayOnIce = APIPopupDataUtility.getAwayTeamOnIce(gameData);
-	const homeOnIce = APIPopupDataUtility.getHomeTeamOnIce(gameData);
-	const rosterSpots = APIPopupDataUtility.getRosterSpots(gameData);
+	const awayTeamOnIceData = APIPopupDataUtility.getAwayTeamOnIce(gameData);
+	const awayOnIce = awayTeamOnIceData.forwards.concat(awayTeamOnIceData.defensemen).concat(awayTeamOnIceData.goalies);
+	const homeTeamOnIceData = APIPopupDataUtility.getHomeTeamOnIce(gameData);
+	const homeOnIce = homeTeamOnIceData.forwards.concat(homeTeamOnIceData.defensemen).concat(homeTeamOnIceData.goalies);
+	// const rosterSpots = APIPopupDataUtility.getRosterSpots(gameData);
 
 	if(awayTeamOnIce !== awayOnIce) {
 		for(var i = 0; i < awayOnIce.length; i++) {
-			const player = APIPopupDataUtility.getOnIcePlayer(rosterSpots, awayOnIce[i]);
-			const fullName = APIPopupDataUtility.getPlayerFullName(player);
+			const player = awayOnIce[i];
+			// const player = APIPopupDataUtility.getOnIcePlayer(rosterSpots, awayOnIce[i]);
+			if (!player) {
+				continue;
+			}
+
+			const fullName = APIPopupDataUtility.getPlayerName(player);
 			const sweaterNumber = APIPopupDataUtility.getPlayerSweaterNumber(player);
 			
 			switch(APIPopupDataUtility.getPlayerPositionCode(player)) {
@@ -586,8 +593,13 @@ function setRinkSection(gameData) {
 	
 	if(homeTeamOnIce !== homeOnIce) {
 		for(var i = 0; i < homeOnIce.length; i++) {
-			const player = APIPopupDataUtility.getOnIcePlayer(rosterSpots, homeOnIce[i]);
-			const fullName = APIPopupDataUtility.getPlayerFullName(player);
+			const player = homeOnIce[i];
+			// const player = APIPopupDataUtility.getOnIcePlayer(rosterSpots, homeOnIce[i]);
+			if (!player) {
+				continue;
+			}
+
+			const fullName = APIPopupDataUtility.getPlayerName(player);
 			const sweaterNumber = APIPopupDataUtility.getPlayerSweaterNumber(player);
 			
 			switch(APIPopupDataUtility.getPlayerPositionCode(player)) {
@@ -853,12 +865,23 @@ function addPlayerStats(playerStats, rosterData, defenseElement, forwardsElement
 	const skaters = APIPopupDataUtility.getSkatersStats(playerStats);
 	for(let i = 0; i < skaters.length; i++) {
 		const player = skaters[i];
+		if (!player) {
+			continue;
+		}
 		
 		if (APIPopupDataUtility.getPlayerPositionCode(player) === "D") {
 			const defenseman = APIPopupDataUtility.findDefensemanByFullName(rosterData, player);
+			if (!defenseman) {
+				continue;
+			}
+
 			addPlayerStat(player, defenseElement, false, APIPopupDataUtility.getPlayerSweaterNumber(defenseman));
 		} else {
 			const forward = APIPopupDataUtility.findForwardByFullName(rosterData, player);
+			if (!forward) {
+				continue;
+			}
+
 			addPlayerStat(player, forwardsElement, false, APIPopupDataUtility.getPlayerSweaterNumber(forward));
 		}
 	}
@@ -866,7 +889,14 @@ function addPlayerStats(playerStats, rosterData, defenseElement, forwardsElement
 	const goalies = APIPopupDataUtility.getGoaliesStats(playerStats);
 	for(let i = 0; i < goalies.length; i++) {
 		const player = goalies[i];
+		if (!player) {
+			continue;
+		}
+
 		const goalie = APIPopupDataUtility.findGoalieByFullName(rosterData, player);
+		if (!goalie) {
+			continue;
+		}
 		
 		addPlayerStat(player, goaliesElement, true, APIPopupDataUtility.getPlayerSweaterNumber(goalie));
 	}
@@ -945,6 +975,10 @@ function setFooterLinkHref(gameStatus, currentGameId, awayTeamInitial, homeTeamI
 }
 
 function addInGamePlayerStat(player, element, isGoalie = false) {
+	if (!player) {
+		return;
+	}
+
 	const playerNameArray = APIPopupDataUtility.getPlayerNameArray(player);
 	const statLine = document.createElement("div");
 	addClass(statLine, "playerStatsLine");
@@ -953,7 +987,8 @@ function addInGamePlayerStat(player, element, isGoalie = false) {
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
 	addClass(number, "number");
-	number.innerHTML = APIPopupDataUtility.getPlayerSweaterNumber(player);
+	const sweaterNumber = APIPopupDataUtility.getPlayerSweaterNumber(player);
+	number.innerHTML = sweaterNumber < 10 ? "&nbsp;&nbsp;" + sweaterNumber : sweaterNumber;
 	const name = document.createElement("div");
 	addClass(name, "name");
 	name.innerHTML = playerNameArray[playerNameArray.length - 1];
@@ -1048,7 +1083,7 @@ function addPlayerStat(player, element, isGoalie = false, sweaterNumber = 0) {
 	addClass(nameNumber, "nameNumber");
 	const number = document.createElement("div");
 	addClass(number, "number");
-	number.innerHTML = sweaterNumber;
+	number.innerHTML = sweaterNumber < 10 ? "&nbsp;&nbsp;" + sweaterNumber : sweaterNumber;
 	const name = document.createElement("div");
 	addClass(name, "name");
 	name.innerHTML = playerName;
