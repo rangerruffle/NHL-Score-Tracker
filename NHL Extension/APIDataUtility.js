@@ -40,11 +40,11 @@ const APIDataUtility = {
 	},
 	
 	getAwayTeamName(gameData) {
-		return gameData.awayTeam.name.default;
+		return gameData.awayTeam.commonName.default;
 	},
 	
 	getHomeTeamName(gameData) {
-		return gameData.homeTeam.name.default;
+		return gameData.homeTeam.commonName.default;
 	},
 	
 	getGameState(gameData) {

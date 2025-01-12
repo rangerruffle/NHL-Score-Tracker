@@ -88,7 +88,9 @@
 .avalanche .nhlLinkContainer {
         background-color: #6F263D;
         color: #FFFFFF;
-}.blackhawks .headingRoot {
+}
+
+.blackhawks .headingRoot {
 	background-color: #000000;
 }
 
@@ -2788,7 +2790,101 @@
 .stars .nhlLinkContainer {
         background-color: #006847;
         color: #FFFFFF;
-}.wild .headingRoot {
+}
+
+.utah .headingRoot {
+	background-color: #69B3E7;
+}
+
+.utah .tabSelected {
+	background-color: #69B3E7;
+}
+
+.utah .calendarHeader {
+	background-color: #69B3E7;
+}
+
+.utah .calendarDay.homeGame {
+	background-color: #69B3E7;
+}
+
+.utah .legendHomeGameIcon {
+	background-color: #69B3E7;
+	border-color: #69B3E7;
+}
+
+.utah .statButton {
+	border-color: #69B3E7;
+	color: #69B3E7;
+}
+
+.utah .selected.statButton {
+	background-color: #69B3E7;
+        color: #FFFFFF;
+}
+
+.utah .playersStats {
+	border-color: #69B3E7;
+}
+
+.utah .playerStatsHeaderLine {
+	background-color: #69B3E7;
+}
+
+.utah .playerStatsLine {
+	border-bottom-color: #69B3E7;
+}
+
+.utah .playerStatsLine .nameNumber {
+	border-right-color: #69B3E7;
+}
+
+.utah .standingsTabButton {
+	border-color: #69B3E7;
+	color: #69B3E7;
+}
+
+.utah .selected.standingsTabButton {
+	background-color: #69B3E7;
+        color: #FFFFFF;
+}
+
+.utah .divisionStandingsButton {
+	border-left-color: #69B3E7;
+	border-right-color: #69B3E7;
+}
+
+.utah .conferenceStandingsButton {
+	border-right-color: #69B3E7;
+}
+
+.utah .standingsSpacerLine {
+	border-left-color: #69B3E7;
+	border-right-color: #69B3E7;
+}
+
+.utah .standingsHeaderLine {
+	background-color: #69B3E7;
+}
+
+.utah .standingsTeamLines {
+	border-color: #69B3E7;
+}
+
+.utah .standingsTeamLine {
+	border-bottom-color: #69B3E7;
+}
+
+.utah .standingsTeamLine .standingsTeam {
+	border-right-color: #69B3E7;
+}
+
+.utah .nhlLinkContainer {
+	background-color: #69B3E7;
+	color: #FFFFFF;
+}
+
+.wild .headingRoot {
 	background-color: #154734;
 }
 

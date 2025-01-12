@@ -7,15 +7,15 @@
 
   "offline_enabled": false,
   "short_name": "NhlScoreTracker",
-  "version": "1.90.1",
+  "version": "1.91.0",
 
   "background": {
     "service_worker": "background.js",
-	"type": "module"
+	  "type": "module"
   },
 
   "action": {
-	"default_popup": "popup.html",
+	  "default_popup": "popup.html",
     "default_icon": "logos/nhl.png",
     "default_title": "If you have not selected your team yet, right click on this icon to do so. Otherwise, please wait 5 seconds for the system to update."
   },
